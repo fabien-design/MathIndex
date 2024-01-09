@@ -15,7 +15,7 @@ Lancement de la compilation de sass
 ```bash
   npm init
   
-  npm install node-sass
+  npm install @symfony/stimulus-bridge
   
   npm run watch
 ```
