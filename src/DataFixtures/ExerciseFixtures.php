@@ -6,12 +6,15 @@ use App\Entity\Exercise;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use DateTimeImmutable;
 
 
 class ExerciseFixtures extends Fixture implements DependentFixtureInterface
 {
+
     public function load(ObjectManager $manager)
     {
+
         // Exercice 1 maths
         $exercise1 = new Exercise();
         $exercise1->setName('Factorisation polynomiale');
@@ -31,6 +34,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         $exercise1->setExerciseFile($this->getReference('original-file1.pdf-file'));
         $exercise1->setCorrectionFile($this->getReference('original-file2.docx-file'));
         $exercise1->setCreatedBy($this->getReference('guyard-mathTeacher'));
+        $exercise1->setCreatedAt(DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
         $manager->persist($exercise1);
 
         // Exercice 2 maths
@@ -52,6 +56,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         $exercise2->setExerciseFile($this->getReference('original-file3.pdf-file'));
         $exercise2->setCorrectionFile($this->getReference('original-file4.pdf-file'));
         $exercise2->setCreatedBy($this->getReference('guyard-mathTeacher'));
+        $exercise2->setCreatedAt(DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
         $manager->persist($exercise2);
         $manager->flush();
 
@@ -74,6 +79,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         $exercise3->setExerciseFile($this->getReference('original-file5.pdf-file'));
         $exercise3->setCorrectionFile($this->getReference('original-file6.pdf-file'));
         $exercise3->setCreatedBy($this->getReference('guyard-mathTeacher'));
+        $exercise3->setCreatedAt(DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
         $manager->persist($exercise3);
 
         // Exercice fr 1
@@ -93,6 +99,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         $exercise4->setExerciseFile($this->getReference('original-file7.pdf-file'));
         $exercise4->setCorrectionFile($this->getReference('original-file8.pdf-file'));
         $exercise4->setCreatedBy($this->getReference('hougron-frTeacher'));
+        $exercise4->setCreatedAt(DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
         $manager->persist($exercise4);
 
         // Exercice fr 2
@@ -114,12 +121,11 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         $exercise5->setExerciseFile($this->getReference('original-file9.pdf-file'));
         $exercise5->setCorrectionFile($this->getReference('original-file10.pdf-file'));
         $exercise5->setCreatedBy($this->getReference('hougron-frTeacher'));
+        $exercise5->setCreatedAt(DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
         $manager->persist($exercise5);
 
         $manager->flush();
     }
-
-
 
 
     public function getDependencies() : array

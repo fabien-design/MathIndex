@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ExerciseRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use DateTimeImmutable;
 
 #[ORM\Entity(repositoryClass: ExerciseRepository::class)]
 class Exercise
@@ -59,6 +61,13 @@ class Exercise
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $proposedByLasName = null;
+
+    /**
+     * @var string A "Y-m-d H:i:s" formatted value
+     */
+    #[ORM\Column]
+    #[Assert\DateTime]
+    private \DateTimeImmutable $createdAt;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -279,5 +288,15 @@ class Exercise
         $this->createdBy = $createdBy;
 
         return $this;
+    }
+
+    public function getCreateAt(): string
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTimeImmutable $date): void
+    {
+        $this->createdAt = $date;
     }
 }
