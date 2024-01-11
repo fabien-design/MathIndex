@@ -22,7 +22,7 @@ class Thematic
     #[ORM\JoinColumn(nullable: false)]
     private ?course $course = null;
 
-    #[ORM\OneToMany(mappedBy: 'thematicId', targetEntity: Exercise::class)]
+    #[ORM\OneToMany(mappedBy: 'thematic', targetEntity: Exercise::class)]
     private Collection $exercises;
 
     public function __construct()

@@ -18,7 +18,7 @@ class Classroom
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'Classroom', targetEntity: Exercise::class)]
+    #[ORM\OneToMany(mappedBy: 'classroom', targetEntity: Exercise::class)]
     private Collection $exercises;
 
     public function __construct()

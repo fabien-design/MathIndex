@@ -18,13 +18,13 @@ class Course
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'Course')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'course')]
     private Collection $skills;
 
-    #[ORM\OneToMany(mappedBy: 'Course', targetEntity: Thematic::class)]
+    #[ORM\OneToMany(mappedBy: 'course', targetEntity: Thematic::class)]
     private Collection $thematics;
 
-    #[ORM\OneToMany(mappedBy: 'Course', targetEntity: Exercise::class)]
+    #[ORM\OneToMany(mappedBy: 'course', targetEntity: Exercise::class)]
     private Collection $exercises;
 
     public function __construct()
