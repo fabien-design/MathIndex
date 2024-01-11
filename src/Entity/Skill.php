@@ -18,12 +18,12 @@ class Skill
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: course::class, inversedBy: 'skills')]
-    private Collection $courseId;
+    #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'skills')]
+    private Collection $course;
 
     public function __construct()
     {
-        $this->courseId = new ArrayCollection();
+        $this->course = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,23 +46,23 @@ class Skill
     /**
      * @return Collection<int, course>
      */
-    public function getCourseId(): Collection
+    public function getCourse(): Collection
     {
-        return $this->courseId;
+        return $this->course;
     }
 
-    public function addCourseId(course $courseId): static
+    public function addCourse(course $Course): static
     {
-        if (!$this->courseId->contains($courseId)) {
-            $this->courseId->add($courseId);
+        if (!$this->course->contains($Course)) {
+            $this->course->add($Course);
         }
 
         return $this;
     }
 
-    public function removeCourseId(course $courseId): static
+    public function removeCourse(course $Course): static
     {
-        $this->courseId->removeElement($courseId);
+        $this->course->removeElement($Course);
 
         return $this;
     }

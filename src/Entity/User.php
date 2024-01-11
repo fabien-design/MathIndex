@@ -6,31 +6,35 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
+    #[ORM\Column(length: 255, nullable:false)]
+    private ?string $lastname = null;
+    #[ORM\Column(length: 255, nullable:false)]
+    private ?string $firstname = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $fisrtName = null;
+    #[ORM\Column]
+    private array $roles = [];
 
-    #[ORM\Column(length: 255)]
-    private ?string $lastName = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $role = null;
-
-    #[ORM\Column(length: 255)]
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'createdById', targetEntity: Exercise::class)]
+
+    #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Exercise::class)]
     private Collection $exercises;
 
     public function __construct()
@@ -55,43 +59,39 @@ class User
         return $this;
     }
 
-    public function getFisrtName(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->fisrtName;
+        return (string) $this->email;
     }
 
-    public function setFisrtName(string $fisrtName): static
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->fisrtName = $fisrtName;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(string $lastName): static
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): static
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -102,6 +102,44 @@ class User
 
         return $this;
     }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+	
+    public function getLastname() : string
+    {
+		return $this->lastname;
+    }
+
+	
+    public function setLastname(string $lastname) : static
+    {
+		$this->lastname = $lastname;
+
+		return $this;
+    }
+
+
+	
+    public function getFirstname() : string
+    {
+		return $this->firstname;
+    }
+
+	
+    public function setFirstname(string $firstname) : static
+    {
+		$this->firstname = $firstname;
+
+		return $this;
+    }
+
 
     /**
      * @return Collection<int, Exercise>
@@ -115,7 +153,7 @@ class User
     {
         if (!$this->exercises->contains($exercise)) {
             $this->exercises->add($exercise);
-            $exercise->setCreatedById($this);
+            $exercise->setCreatedBy($this);
         }
 
         return $this;
@@ -125,11 +163,12 @@ class User
     {
         if ($this->exercises->removeElement($exercise)) {
             // set the owning side to null (unless already changed)
-            if ($exercise->getCreatedById() === $this) {
-                $exercise->setCreatedById(null);
+            if ($exercise->getCreatedBy() === $this) {
+                $exercise->setCreatedBy(null);
             }
         }
 
         return $this;
     }
+
 }

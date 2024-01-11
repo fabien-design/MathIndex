@@ -18,7 +18,7 @@ class Origin
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'originId', targetEntity: Exercise::class)]
+    #[ORM\OneToMany(mappedBy: 'Origin', targetEntity: Exercise::class)]
     private Collection $exercises;
 
     public function __construct()
@@ -55,7 +55,7 @@ class Origin
     {
         if (!$this->exercises->contains($exercise)) {
             $this->exercises->add($exercise);
-            $exercise->setOriginId($this);
+            $exercise->setOrigin($this);
         }
 
         return $this;
@@ -65,8 +65,8 @@ class Origin
     {
         if ($this->exercises->removeElement($exercise)) {
             // set the owning side to null (unless already changed)
-            if ($exercise->getOriginId() === $this) {
-                $exercise->setOriginId(null);
+            if ($exercise->getOrigin() === $this) {
+                $exercise->setOrigin(null);
             }
         }
 

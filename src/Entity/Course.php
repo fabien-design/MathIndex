@@ -18,13 +18,13 @@ class Course
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'courseId')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'Course')]
     private Collection $skills;
 
-    #[ORM\OneToMany(mappedBy: 'courseId', targetEntity: Thematic::class)]
+    #[ORM\OneToMany(mappedBy: 'Course', targetEntity: Thematic::class)]
     private Collection $thematics;
 
-    #[ORM\OneToMany(mappedBy: 'courseId', targetEntity: Exercise::class)]
+    #[ORM\OneToMany(mappedBy: 'Course', targetEntity: Exercise::class)]
     private Collection $exercises;
 
     public function __construct()
@@ -63,7 +63,7 @@ class Course
     {
         if (!$this->skills->contains($skill)) {
             $this->skills->add($skill);
-            $skill->addCourseId($this);
+            $skill->addCourse($this);
         }
 
         return $this;
@@ -72,7 +72,7 @@ class Course
     public function removeSkill(Skill $skill): static
     {
         if ($this->skills->removeElement($skill)) {
-            $skill->removeCourseId($this);
+            $skill->removeCourse($this);
         }
 
         return $this;
@@ -90,7 +90,7 @@ class Course
     {
         if (!$this->thematics->contains($thematic)) {
             $this->thematics->add($thematic);
-            $thematic->setCourseId($this);
+            $thematic->setCourse($this);
         }
 
         return $this;
@@ -100,8 +100,8 @@ class Course
     {
         if ($this->thematics->removeElement($thematic)) {
             // set the owning side to null (unless already changed)
-            if ($thematic->getCourseId() === $this) {
-                $thematic->setCourseId(null);
+            if ($thematic->getCourse() === $this) {
+                $thematic->setCourse(null);
             }
         }
 
@@ -120,7 +120,7 @@ class Course
     {
         if (!$this->exercises->contains($exercise)) {
             $this->exercises->add($exercise);
-            $exercise->setCourseId($this);
+            $exercise->setCourse($this);
         }
 
         return $this;
@@ -130,8 +130,8 @@ class Course
     {
         if ($this->exercises->removeElement($exercise)) {
             // set the owning side to null (unless already changed)
-            if ($exercise->getCourseId() === $this) {
-                $exercise->setCourseId(null);
+            if ($exercise->getCourse() === $this) {
+                $exercise->setCourse(null);
             }
         }
 

@@ -18,7 +18,7 @@ class Classroom
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'classroomId', targetEntity: Exercise::class)]
+    #[ORM\OneToMany(mappedBy: 'Classroom', targetEntity: Exercise::class)]
     private Collection $exercises;
 
     public function __construct()
@@ -55,7 +55,7 @@ class Classroom
     {
         if (!$this->exercises->contains($exercise)) {
             $this->exercises->add($exercise);
-            $exercise->setClassroomId($this);
+            $exercise->setClassroom($this);
         }
 
         return $this;
@@ -65,8 +65,8 @@ class Classroom
     {
         if ($this->exercises->removeElement($exercise)) {
             // set the owning side to null (unless already changed)
-            if ($exercise->getClassroomId() === $this) {
-                $exercise->setClassroomId(null);
+            if ($exercise->getClassroom() === $this) {
+                $exercise->setClassroom(null);
             }
         }
 

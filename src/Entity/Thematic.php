@@ -71,7 +71,7 @@ class Thematic
     {
         if (!$this->exercises->contains($exercise)) {
             $this->exercises->add($exercise);
-            $exercise->setThematicId($this);
+            $exercise->setThematic($this);
         }
 
         return $this;
@@ -81,8 +81,8 @@ class Thematic
     {
         if ($this->exercises->removeElement($exercise)) {
             // set the owning side to null (unless already changed)
-            if ($exercise->getThematicId() === $this) {
-                $exercise->setThematicId(null);
+            if ($exercise->getThematic() === $this) {
+                $exercise->setThematic(null);
             }
         }
 
