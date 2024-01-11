@@ -20,10 +20,18 @@ Lancement de la compilation de sass
   npm run watch
 ```
 
-
-
 Lancement de la compilation de sass sur terminal SSH
 
 ```bash
   npm run build
+```
+
+Initialisation de la base de données
+
+```bash
+  symfony console doctrine:database:create
+  
+  symfony console doctrine:schema:update
+  
+  symfony console doctrine:fixtures:load
 ```
