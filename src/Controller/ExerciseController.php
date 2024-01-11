@@ -16,11 +16,10 @@ class ExerciseController extends AbstractController
 
         // Si l'utilisateur est connecté, forcer l'initialisation de la collection d'exercices
         if ($user) {
-            $user->getExercises()->initialize();
+            $user->getExercises()->initialize(); //pas touché Important 
             $exercises = $user->getExercises();
         } else {
-            // Gérer le cas où l'utilisateur n'est pas connecté
-            // ...
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('exercise/index.html.twig', [

@@ -1,10 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ExerciseController!{% endblock %}
+{% block title %}Mes exercices{% endblock %}
 
 {% block body %}
 <h1 class="text-cse font-bold text-3xl pb-6">Mes exercices</h1>
 <div class="bg-white rounded-lg p-8">
-    
+    <p class="pb-6">
+       Vous pouvez modifier ou supprimer un de vos exercices.
+    </p>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Nom
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Matière
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Niveau
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Thématique
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Fichiers
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if exercises is not empty %}
+                        {% for exercise in exercises %}
+                           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row" class="px-6 py-4">
+                                    {{ exercise.name }}
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{ exercise.course.name }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ exercise.classroom.name }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ exercise.thematic.name }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ exercise.exerciseFile.originalName }}
+                                    {{ exercise.correctionFile.originalName }}
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex">
+                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a>
+                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Supprimer</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                {% else %}
+                    <p>Aucun exercice trouvé.</p>
+                {% endif %}
+                
+            </tbody>
+        </table>
+    </div>
+
 </div>
 {% endblock %}

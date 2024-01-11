@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTimeImmutable;
+use DateTimeInterface;
 
 #[ORM\Entity(repositoryClass: ExerciseRepository::class)]
 class Exercise
@@ -65,9 +66,10 @@ class Exercise
     /**
      * @var string A "Y-m-d H:i:s" formatted value
      */
-    #[ORM\Column]
+    #[ORM\Column(options:['default' => 'CURRENT_TIMESTAMP'])]
     #[Assert\DateTime]
     private \DateTimeImmutable $createdAt;
+
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -290,13 +292,16 @@ class Exercise
         return $this;
     }
 
-    public function getCreateAt(): string
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeImmutable $date): void
+    public function setCreatedAt(DateTimeImmutable $createdAt): static
     {
-        $this->createdAt = $date;
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
+
 }
