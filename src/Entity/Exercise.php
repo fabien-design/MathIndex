@@ -19,15 +19,15 @@ class Exercise
 
     #[ORM\ManyToOne(inversedBy: 'exercises')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?course $course = null;
+    private ?Course $course = null;
 
     #[ORM\ManyToOne(inversedBy: 'exercises')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?classroom $classroom = null;
+    private ?Classroom $classroom = null;
 
     #[ORM\ManyToOne(inversedBy: 'exercises')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?thematic $thematic = null;
+    private ?Thematic $thematic = null;
 
     #[ORM\Column(length: 255)]
     private ?string $chapter = null;
@@ -43,7 +43,7 @@ class Exercise
 
     #[ORM\ManyToOne(inversedBy: 'exercises')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?origin $origin = null;
+    private ?Origin $origin = null;
 
     #[ORM\Column(length: 255)]
     private ?string $originName = null;
@@ -62,11 +62,11 @@ class Exercise
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?file $exerciseFile = null;
+    private ?File $exerciseFile = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?file $correctionFile = null;
+    private ?File $correctionFile = null;
 
     #[ORM\ManyToOne(inversedBy: 'exercises')]
     #[ORM\JoinColumn(nullable: false)]
@@ -89,36 +89,36 @@ class Exercise
         return $this;
     }
 
-    public function getCourse(): ?course
+    public function getCourse(): ?Course
     {
         return $this->course;
     }
 
-    public function setCourse(?course $course): static
+    public function setCourse(?Course $course): static
     {
         $this->course = $course;
 
         return $this;
     }
 
-    public function getClassroom(): ?classroom
+    public function getClassroom(): ?Classroom
     {
         return $this->classroom;
     }
 
-    public function setClassroom(?classroom $classroom): static
+    public function setClassroom(?Classroom $classroom): static
     {
         $this->classroom = $classroom;
 
         return $this;
     }
 
-    public function getThematic(): ?thematic
+    public function getThematic(): ?Thematic
     {
         return $this->thematic;
     }
 
-    public function setThematic(?thematic $thematic): static
+    public function setThematic(?Thematic $thematic): static
     {
         $this->thematic = $thematic;
 
@@ -173,12 +173,12 @@ class Exercise
         return $this;
     }
 
-    public function getOrigin(): ?origin
+    public function getOrigin(): ?Origin
     {
         return $this->origin;
     }
 
-    public function setOrigin(?origin $origin): static
+    public function setOrigin(?Origin $origin): static
     {
         $this->origin = $origin;
 
@@ -245,19 +245,19 @@ class Exercise
         return $this;
     }
 
-    public function getExerciseFile(): ?file
+    public function getExerciseFile(): ?File
     {
         return $this->exerciseFile;
     }
 
-    public function setExerciseFile(?file $exerciseFile): static
+    public function setExerciseFile(?File $exerciseFile): static
     {
         $this->exerciseFile = $exerciseFile;
 
         return $this;
     }
 
-    public function getCorrectionFile(): ?file
+    public function getCorrectionFile(): ?File
     {
         return $this->correctionFile;
     }
