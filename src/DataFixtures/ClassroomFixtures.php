@@ -23,6 +23,7 @@ class ClassroomFixtures extends Fixture
             $classroom = new Classroom();
             $classroom->setName($className);
             $manager->persist($classroom);
+            $this->addReference(strtolower(str_replace(' ', '-', $className)).'-class', $classroom);
         }
 
         $manager->flush();

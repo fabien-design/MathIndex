@@ -1,7 +1,5 @@
 <?php
 
-// src/DataFixtures/FileFixtures.php
-
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -31,6 +29,48 @@ class FileFixtures extends Fixture
                 'extension' => 'pdf',
                 'size' => 3072,
             ],
+            [
+                'name' => 'file4',
+                'originalName' => 'original_file4.pdf',
+                'extension' => 'pdf',
+                'size' => 3072,
+            ],
+            [
+                'name' => 'file5',
+                'originalName' => 'original_file5.pdf',
+                'extension' => 'pdf',
+                'size' => 3072,
+            ],
+            [
+                'name' => 'file6',
+                'originalName' => 'original_file6.pdf',
+                'extension' => 'pdf',
+                'size' => 3072,
+            ],
+            [
+                'name' => 'file7',
+                'originalName' => 'original_file7.pdf',
+                'extension' => 'pdf',
+                'size' => 3072,
+            ],
+            [
+                'name' => 'file8',
+                'originalName' => 'original_file8.pdf',
+                'extension' => 'pdf',
+                'size' => 3072,
+            ],
+            [
+                'name' => 'file9',
+                'originalName' => 'original_file9.pdf',
+                'extension' => 'pdf',
+                'size' => 3072,
+            ],
+            [
+                'name' => 'file10',
+                'originalName' => 'original_file10.pdf',
+                'extension' => 'pdf',
+                'size' => 3072,
+            ],
             // Add more files here using the same structure
         ];
 
@@ -40,8 +80,8 @@ class FileFixtures extends Fixture
             $file->setOriginalName($fileData['originalName']);
             $file->setExtension($fileData['extension']);
             $file->setSize($fileData['size']);
-
             $manager->persist($file);
+            $this->addReference(strtolower(str_replace('_', '-', $fileData['originalName'])) . '-file', $file);
         }
 
         $manager->flush();

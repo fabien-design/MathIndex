@@ -1,7 +1,5 @@
 <?php
 
-// src/DataFixtures/OriginFixtures.php
-
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -21,7 +19,7 @@ class OriginFixtures extends Fixture
             $manager->persist($origin);
 
             // You can add a reference to this origin if needed
-            $this->addReference(strtolower(str_replace(' ', '_', $originName)) . '-origin', $origin);
+            $this->addReference(strtolower(str_replace(' ', '-', $originName)) . '-origin', $origin);
         }
 
         $manager->flush();
