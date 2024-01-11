@@ -23,7 +23,7 @@ class SkillFixtures extends Fixture
         foreach ($francaisSkills as $skillName) {
             $francaisSkill = new Skill();
             $francaisSkill->setName($skillName);
-            $francaisSkill->addCourseId($francaisCourse);
+            $francaisSkill->addCourse($francaisCourse);
             $manager->persist($francaisSkill);
         }
 
@@ -33,7 +33,7 @@ class SkillFixtures extends Fixture
         foreach ($mathematiqueSkills as $skillName) {
             $mathematiqueSkill = new Skill();
             $mathematiqueSkill->setName($skillName);
-            $mathematiqueSkill->addCourseId($mathematiqueCourse);
+            $mathematiqueSkill->addCourse($mathematiqueCourse);
             $manager->persist($mathematiqueSkill);
         }
 
