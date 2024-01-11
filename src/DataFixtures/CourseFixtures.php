@@ -1,7 +1,5 @@
 <?php
 
-// src/DataFixtures/CourseFixtures.php
-
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -13,7 +11,7 @@ class CourseFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         // Courses 'Français' and 'Mathématique'
-        $courseNames = ['Français', 'Mathématique'];
+        $courseNames = ['Francais', 'Mathématique'];
 
         foreach ($courseNames as $courseName) {
             $course = new Course();

@@ -14,7 +14,7 @@ class SkillFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         // Get references to the courses
-        $francaisCourse = $this->getReference('français-course');
+        $francaisCourse = $this->getReference('francais-course');
         $mathematiqueCourse = $this->getReference('mathématique-course');
 
         // Skills for 'Français'
@@ -25,6 +25,7 @@ class SkillFixtures extends Fixture
             $francaisSkill->setName($skillName);
             $francaisSkill->addCourse($francaisCourse);
             $manager->persist($francaisSkill);
+            $this->addReference(strtolower(str_replace(' ', '-', $skillName)).'-francaisSkill', $francaisSkill);
         }
 
         // Skills for 'Mathématique'
@@ -35,6 +36,7 @@ class SkillFixtures extends Fixture
             $mathematiqueSkill->setName($skillName);
             $mathematiqueSkill->addCourse($mathematiqueCourse);
             $manager->persist($mathematiqueSkill);
+            $this->addReference(strtolower(str_replace(' ', '-', $skillName)).'-mathSkill', $mathematiqueSkill);
         }
 
         $manager->flush();

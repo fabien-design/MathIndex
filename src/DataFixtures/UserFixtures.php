@@ -35,17 +35,32 @@ class UserFixtures extends Fixture
         $student->setPassword($this->passwordHasher->hashPassword($student, 'student'));
 
         // Create teacher user
-        $teacher = new User();
-        $teacher->setEmail('teacher@example.com');
-        $teacher->setFirstname('Laurent');
-        $teacher->setLastname('Guyard');
-        $teacher->setRoles(['ROLE_TEACHER']);
-        $teacher->setPassword($this->passwordHasher->hashPassword($teacher, 'teacher'));
+        $mathTeacher = new User();
+        $mathTeacher->setEmail('teacher@example.com');
+        $mathTeacher->setFirstname('Laurent');
+        $mathTeacher->setLastname('Guyard');
+        $mathTeacher->setRoles(['ROLE_TEACHER']);
+        $mathTeacher->setPassword($this->passwordHasher->hashPassword($mathTeacher, 'teacher'));
+
+        $frTeacher = new User();
+        $frTeacher->setEmail('frteacher@example.com');
+        $frTeacher->setFirstname('Virginie');
+        $frTeacher->setLastname('Hougron');
+        $frTeacher->setRoles(['ROLE_TEACHER']);
+        $frTeacher->setPassword($this->passwordHasher->hashPassword($frTeacher, 'frteacher'));
 
         // Persist the users
         $manager->persist($admin);
+        $this->addReference(strtolower(str_replace(' ', '-', $admin->GetLastname())).'-admin', $admin);
+
         $manager->persist($student);
-        $manager->persist($teacher);
+        $this->addReference(strtolower(str_replace(' ', '-', $student->GetLastname())).'-student', $student);
+
+        $manager->persist($mathTeacher);
+        $this->addReference(strtolower(str_replace(' ', '-', $mathTeacher->GetLastname())).'-mathTeacher', $mathTeacher);
+
+        $manager->persist($frTeacher);
+        $this->addReference(strtolower(str_replace(' ', '-', $frTeacher->GetLastname())).'-frTeacher', $frTeacher);
 
         $manager->flush();
     }

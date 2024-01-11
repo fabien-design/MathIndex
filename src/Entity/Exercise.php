@@ -54,10 +54,10 @@ class Exercise
     #[ORM\Column(length: 255)]
     private ?string $proposedByType = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $proposedByFirstName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $proposedByLasName = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
