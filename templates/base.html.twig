@@ -135,7 +135,7 @@
 									<img class="bg-white ring-1 ring-gray-500 object-cover w-10 h-10 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" src="{{ 'ROLE_ADMIN' in app.user.roles ? asset('images/icon-admin.svg') : ('ROLE_TEACHER' in app.user.roles ? asset('images/teacher.png') : asset('images/graduated.png')) }}" alt="pfp">
 								</button>
 								{# Dropdown Menu #}
-								<div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+								<div class="z-30 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
 									<div class="px-4 py-3">
 										<span class="block text-sm  text-gray-500 truncate dark:text-gray-400">
 											{% if app.user is defined and app.user is not null %}
@@ -153,7 +153,7 @@
 											</li>
 										{% endif %}
 										<li>
-											<a href="{{path('app_logout')}}" class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+											<a data-modal-target="default-modal" data-modal-toggle="default-modal" class="flex cursor-pointer items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
 												Déconnexion
 												<svg class="flex-shrink-0 w-4 h-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-cse group-hover:transition-all dark:group-hover:text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewbox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128zM160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0z"/></svg>
 											</a>
@@ -210,8 +210,8 @@
 			</nav>
 
 			{# Main Content #}
-			<div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 md:mt-0 mt-3 transition-all m-4 ">
-				<div class="bg-gray-100 dark:bg-gray-800 px-8 py-14 h-full">
+			<div class="p-4 md:border-2 border-gray-200 md:border-dashed rounded-lg dark:border-gray-700 md:mt-0 mt-3 transition-all md:m-4 ">
+				<div class="md:bg-gray-100 dark:bg-gray-800 md:px-8 md:py-14 h-full">
 					{% block body %}
 						{# First Square #}
 						<div class="flex items-center justify-center h-24 rounded dark:bg-gray-800"></div>
