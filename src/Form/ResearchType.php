@@ -20,7 +20,7 @@ class ResearchType extends AbstractType
             ->add('keywords',TextType::class, [
                     'label' => 'Mots-clés',
                     'attr' => [
-                        'class' => 'flex items-center justify-center'
+                    'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] '
                     ],
                 ]
             )
@@ -29,7 +29,7 @@ class ResearchType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Thématiques',
                 'attr' => [
-                    'class' => 'flex items-center justify-center'
+                    'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] '
                 ],
             ])
             ->add('levels', EntityType::class, [
@@ -37,13 +37,13 @@ class ResearchType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Niveaux',
                 'attr' => [
-                        'class' => 'flex items-center justify-center'
+                        'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px]'
                     ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher',
                 'attr' => [
-                    'class' => 'flex items-center justify-center p-2 bg-gray-100'
+                'class' => 'flex items-center justify-center px-8 bg-gray-100 rounded-lg w-full h-[56px] text-[#757575] hover:bg-gray-200 transition-all hover:text-[#4D4D4D]'
                 ],
             ])
         ;
@@ -53,7 +53,7 @@ class ResearchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Exercise::class,
-            'attr' => ['class' => 'researchForm flex justify-evenly items-center flex-wrap w-4/4'],
+            'attr' => ['class' => 'researchForm flex justify-between items-end flex-wrap w-11/12'],
         ]);
     }
 }
