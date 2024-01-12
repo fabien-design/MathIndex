@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1 class="text-cse font-bold text-3xl pb-6">Rechercher un exercice</h1>
-    <div class="bg-white rounded-lg p-4">
+    <div class="bg-white rounded-lg p-4 flex flex-col justify-start">
         {{ form_start(researchForm) }}
         <div class="levels flex flex-col ">
             {{ form_label(researchForm.levels) }}
@@ -18,7 +18,10 @@
             {{ form_label(researchForm.keywords) }}
             {{ form_widget(researchForm.keywords) }}
         </div>
-        {{ form_end(researchForm) }}
+        <div class="submitButton">
+            {{ form_label(researchForm.submit)}}
+        </div>
+         {{ form_end(researchForm) }}
+    <h1 class="text-cse font-bold text-2xl pb-6 mt-10">3 exercices trouvés</h1>
     </div>
-
 {% endblock %}
