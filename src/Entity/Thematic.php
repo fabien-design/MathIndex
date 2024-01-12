@@ -20,7 +20,7 @@ class Thematic
 
     #[ORM\ManyToOne(inversedBy: 'thematics')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?course $course = null;
+    private ?Course $course = null;
 
     #[ORM\OneToMany(mappedBy: 'thematic', targetEntity: Exercise::class)]
     private Collection $exercises;

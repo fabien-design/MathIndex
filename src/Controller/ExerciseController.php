@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\ResearchType;
 
 class ExerciseController extends AbstractController
 {
@@ -25,6 +26,15 @@ class ExerciseController extends AbstractController
         return $this->render('exercise/index.html.twig', [
             'controller_name' => 'ExerciseController',
             'exercises' => $exercises,
+        ]);
+    }
+
+    #[Route('/exercise/research', name: 'app_research')]
+    public function research(): Response
+    {
+       $form = $this->createForm(ResearchType::class);
+       return $this->render('exercise/research.html.twig', [
+            'researchForm' => $form,
         ]);
     }
 }

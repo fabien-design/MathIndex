@@ -3,7 +3,8 @@ module.exports = {
   content: [
     "./assets/**/*.js",
     "./templates/**/*.html.twig",
-    "./node_modules/flowbite/**/*.js"
+    "./node_modules/flowbite/**/*.js",
+    "./src/Form/**/*.php"
   ],
   theme: {
     extend: {},

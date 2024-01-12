@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rechercher un exercice{% endblock %}
+
+{% block body %}
+    <h1 class="text-cse font-bold text-3xl pb-6">Rechercher un exercice</h1>
+    <div class="bg-white rounded-lg p-4">
+        {{ form_start(researchForm) }}
+        <div class="levels flex flex-col ">
+            {{ form_label(researchForm.levels) }}
+            {{ form_widget(researchForm.levels) }}
+        </div>
+        <div class="thematics flex flex-col ">
+            {{ form_label(researchForm.thematics) }}
+            {{ form_widget(researchForm.thematics) }}
+        </div>
+        <div class="keywords flex flex-col ">
+            {{ form_label(researchForm.keywords) }}
+            {{ form_widget(researchForm.keywords) }}
+        </div>
+        {{ form_end(researchForm) }}
+    </div>
+
+{% endblock %}
