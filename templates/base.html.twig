@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Accueil - Math Index
+			{% block title %}Accueil - {{project_name}}
 			{% endblock %}
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -37,7 +37,7 @@
 					<a href="#" class="flex items-center px-2 mb-5">
 						<img src="{{ asset('images/logo_st_vincent_propre.png') }}" class="h-6 me-3 sm:h-7" alt="MathIndex Logo"/>
 						<div class="grid">
-							<span class="self-center text-xl font-semibold whitespace-nowrap text-cse dark:text-white">Math Index</span>
+							<span class="self-center text-xl font-semibold whitespace-nowrap text-cse dark:text-white">{{project_name}}</span>
 							<span class="self-center text-sm lightgray whitespace-nowrap text-slate-500 dark:text-white">Lycée Saint-Vincent - Senlis</span>
 						</div>
 					</a>
@@ -132,7 +132,7 @@
 											{{ app.user.lastname }}
 										{% endif %}
 									</span>
-									<img class="bg-white ring-1 ring-gray-500 object-none w-10 h-10 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" src="{{ 'ROLE_ADMIN' in app.user.roles ? asset('images/icon-admin.svg') : ('ROLE_TEACHER' in app.user.roles ? asset('images/teacher.png') : asset('images/graduated.png')) }}" alt="pfp">
+									<img class="bg-white ring-1 ring-gray-500 object-cover w-10 h-10 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" src="{{ 'ROLE_ADMIN' in app.user.roles ? asset('images/icon-admin.svg') : ('ROLE_TEACHER' in app.user.roles ? asset('images/teacher.png') : asset('images/graduated.png')) }}" alt="pfp">
 								</button>
 								{# Dropdown Menu #}
 								<div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
