@@ -19,6 +19,7 @@ class ResearchType extends AbstractType
         $builder
             ->add('keywords',TextType::class, [
                     'label' => 'Mots-clés',
+                    'required'=>false,
                     'attr' => [
                     'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] '
                     ],
@@ -28,6 +29,8 @@ class ResearchType extends AbstractType
                 'class' => Thematic::class,
                 'choice_label' => 'name',
                 'label' => 'Thématiques',
+                'placeholder' => '---',
+                'required'=>false,
                 'attr' => [
                     'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] '
                 ],
@@ -36,6 +39,8 @@ class ResearchType extends AbstractType
                 'class' => Classroom::class,
                 'choice_label' => 'name',
                 'label' => 'Niveaux',
+                'placeholder' => '---',
+                'required'=>false,
                 'attr' => [
                         'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px]'
                     ],
