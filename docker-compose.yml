@@ -11,7 +11,7 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     
-  myapp:
+  symfony:
     image: docker.io/bitnami/symfony:7.0
     ports:
       - '8001:8000'
