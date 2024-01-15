@@ -2,7 +2,7 @@
 
 Projet fin d'année BTS2 - Symfony 
 
-## Installation
+## Installation sans Docker
 
 Initialisation du projet
 
@@ -34,4 +34,37 @@ Initialisation de la base de données
   symfony console doctrine:schema:update
   
   symfony console doctrine:fixtures:load
+```
+
+
+
+## Installation avec Docker
+
+Initialisation du projet
+
+```bash
+  docker compose up
+```
+
+Accès au bash du conteneur symfony de docker
+
+```bash
+  docker compose exec symfony bash
+```
+```bash
+  composer install
+  
+  php bin/console doctrine:create:database
+
+  php bin/console doctrine:schema:update --force
+
+  php bin/console doctrine:fixtures:load
+```
+Accès au bash du conteneur node de docker
+
+```bash
+  docker compose exec node bash
+  ```
+```bash
+  npm run watch
 ```
