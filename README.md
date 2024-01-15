@@ -54,7 +54,7 @@ Accès au bash du conteneur symfony de docker
 ```bash
   composer install
   
-  php bin/console doctrine:create:database
+  php bin/console doctrine:database:create
 
   php bin/console doctrine:schema:update --force
 
