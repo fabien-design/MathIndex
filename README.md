@@ -60,11 +60,9 @@ Accès au bash du conteneur symfony de docker
 
   php bin/console doctrine:fixtures:load -n
 ```
-Accès au bash du conteneur node de docker
 
+Lancement de la compilation de sass sur terminal SSH
 ```bash
-  docker compose exec node bash
-  ```
-```bash
-  npm run watch
+  npm run build
 ```
+
