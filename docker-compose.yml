@@ -1,0 +1,40 @@
+# Copyright VMware, Inc.
+# SPDX-License-Identifier: APACHE-2.0
+
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb:10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/mysql
+    
+  myapp:
+    image: docker.io/bitnami/symfony:7.0
+    ports:
+      - '8001:8000'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - SYMFONY_DATABASE_HOST=mariadb
+      - SYMFONY_DATABASE_PORT_NUMBER=3306
+      - SYMFONY_DATABASE_USER=mariadbuser
+      - SYMFONY_DATABASE_NAME=mathindex
+      - SYMFONY_DATABASE_PASSWORD=
+      - SYMFONY_PROJECT_SKELETON=symfony/skeleton
+    volumes:
+      - './:/app'
+    depends_on:
+      - mariadb
+      
+  node:
+    image: docker.io/node
+    volumes:
+      - './:/app'
+    working_dir: /app
+    command: npm run watch
+
+volumes:
+  db-data:
