@@ -58,7 +58,7 @@ Accès au bash du conteneur symfony de docker
 
   php bin/console doctrine:schema:update --force
 
-  php bin/console doctrine:fixtures:load
+  php bin/console doctrine:fixtures:load -n
 ```
 Accès au bash du conteneur node de docker
 
