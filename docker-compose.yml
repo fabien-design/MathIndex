@@ -36,5 +36,13 @@ services:
     working_dir: /app
     command: bash -c "npm install && npm run watch" # install and run watch for npm (if it work)
 
+  # dcru phpqa php-cs-fixer fix --config=".php-cs-fixer.php"
+  # dcru phpqa phpstan analyse --level=max src
+  phpqa:
+    image: jakzal/phpqa
+    working_dir: /project
+    volumes:
+      - .:/project
+
 volumes:
   db-data:
