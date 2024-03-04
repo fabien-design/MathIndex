@@ -2,6 +2,15 @@
 
 Projet fin d'année BTS2 - Symfony 
 
+#Identifiants
+
+| Email                     | Password | Roles                                    |
+|---------------------------|----------|------------------------------------------|
+| admin@example.com         | xxx      | ROLE_ADMIN                               |
+| student@example.com       | xxx      | ROLE_TEACHER                             |
+| mathteacher@example.com   | xxx      | ROLE_STUDENT                             |
+| frteacher@example.com     | xxx      | ROLE_STUDENT                             |
+
 ## Installation sans Docker
 
 Initialisation du projet
