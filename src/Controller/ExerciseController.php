@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
+use App\Form\ResearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\ResearchType;
 
 class ExerciseController extends AbstractController
 {
@@ -17,7 +17,7 @@ class ExerciseController extends AbstractController
 
         // Si l'utilisateur est connecté, forcer l'initialisation de la collection d'exercices
         if ($user) {
-            $user->getExercises()->initialize(); //pas touché Important 
+            $user->getExercises()->initialize(); // pas touché Important
             $exercises = $user->getExercises();
         } else {
             return $this->redirectToRoute('app_login');
@@ -32,9 +32,10 @@ class ExerciseController extends AbstractController
     #[Route('/exercise/research', name: 'app_research')]
     public function research(): Response
     {
-       $form = $this->createForm(ResearchType::class);
-       return $this->render('exercise/research.html.twig', [
-            'researchForm' => $form,
-        ]);
+        $form = $this->createForm(ResearchType::class);
+
+        return $this->render('exercise/research.html.twig', [
+             'researchForm' => $form,
+         ]);
     }
 }

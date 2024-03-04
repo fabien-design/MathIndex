@@ -17,11 +17,11 @@ class ResearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('keywords',TextType::class, [
+            ->add('keywords', TextType::class, [
                     'label' => 'Mots-clés',
-                    'required'=>false,
+                    'required' => false,
                     'attr' => [
-                    'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] '
+                    'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] ',
                     ],
                 ]
             )
@@ -30,9 +30,9 @@ class ResearchType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Thématiques',
                 'placeholder' => '---',
-                'required'=>false,
+                'required' => false,
                 'attr' => [
-                    'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] '
+                    'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] ',
                 ],
             ])
             ->add('levels', EntityType::class, [
@@ -40,15 +40,15 @@ class ResearchType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Niveaux',
                 'placeholder' => '---',
-                'required'=>false,
+                'required' => false,
                 'attr' => [
-                        'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px]'
+                        'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px]',
                     ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher',
                 'attr' => [
-                'class' => 'flex items-center justify-center px-8 bg-gray-100 rounded-lg w-full h-[56px] text-[#757575] hover:bg-gray-200 transition-all hover:text-[#4D4D4D]'
+                'class' => 'flex items-center justify-center px-8 bg-gray-100 rounded-lg w-full h-[56px] text-[#757575] hover:bg-gray-200 transition-all hover:text-[#4D4D4D]',
                 ],
             ])
         ;
