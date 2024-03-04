@@ -236,18 +236,18 @@
 	<script>
 
 		function rotateChevron(button) {
-var chevron = button.querySelector('.chevron-rotate');
-if (chevron.classList.contains('rotate-keyframesOpen')) {
-chevron.classList.remove('rotate-keyframesOpen');
-chevron.classList.add('rotate-keyframesClose');
+			var chevron = button.querySelector('.chevron-rotate');
+			if (chevron.classList.contains('rotate-keyframesOpen')) {
+				chevron.classList.remove('rotate-keyframesOpen');
+				chevron.classList.add('rotate-keyframesClose');
 
-} else {
-if (chevron.classList.contains('rotate-keyframesClose')) {
-chevron.classList.remove('rotate-keyframesClose')
-}
-chevron.classList.add('rotate-keyframesOpen');
-}
+			} else {
+				if (chevron.classList.contains('rotate-keyframesClose')) {
+					chevron.classList.remove('rotate-keyframesClose')
+				}
+				chevron.classList.add('rotate-keyframesOpen');
+			}
 
-}
+		}
 	</script>
 </html>
