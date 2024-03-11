@@ -2,24 +2,30 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Origin;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Origin;
 
 class OriginFixtures extends Fixture
 {
+    public const REFERENCE_IDENTIFIER = 'origin_';
+
+    public const ORIGINS = [
+        [
+            'Livre',
+            'Site Web',
+            'Manuel scolaire',
+        ],
+    ];
+
     public function load(ObjectManager $manager)
     {
-        // Origins
-        $origins = ['Livre', 'Site Web', 'Manuel scolaire'];
+        foreach (self::ORIGINS as $i => $originName) {
+            $origin = (new Origin())
+                ->setName($originName[]);
 
-        foreach ($origins as $originName) {
-            $origin = new Origin();
-            $origin->setName($originName);
             $manager->persist($origin);
-
-            // You can add a reference to this origin if needed
-            $this->addReference(strtolower(str_replace(' ', '-', $originName)) . '-origin', $origin);
+            $this->addReference(self::REFERENCE_IDENTIFIER.$i, $origin);
         }
 
         $manager->flush();

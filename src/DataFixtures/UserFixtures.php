@@ -9,58 +9,53 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
-    private UserPasswordHasherInterface $passwordHasher;
+    public const REFERENCE_IDENTIFIER = 'user_';
 
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
-    {
-        $this->passwordHasher = $passwordHasher;
+    public function __construct(
+        private readonly UserPasswordHasherInterface $passwordHasher,
+    ) {
     }
 
-    public function load(ObjectManager $manager)
+    public const USERS = [
+        [
+            'firstname' => 'Super',
+            'lastname' => 'Admin',
+            'email' => 'admin@example.com',
+            'role' => 'ROLE_ADMIN',
+        ],
+        [
+            'firstname' => 'Lucas',
+            'lastname' => 'Dupas',
+            'email' => 'student@example.com',
+            'role' => 'ROLE_STUDENT',
+        ],
+        [
+            'firstname' => 'Laurent',
+            'lastname' => 'Guyard',
+            'email' => 'mathteacher@example.com',
+            'role' => 'ROLE_TEACHER',
+        ],
+        [
+            'firstname' => 'Virginie',
+            'lastname' => 'Hougron',
+            'email' => 'frteacher@example.com',
+            'role' => 'ROLE_TEACHER',
+        ],
+    ];
+
+    public function load(ObjectManager $manager): void
     {
-        // Create admin user
-        $admin = new User();
-        $admin->setEmail('admin@example.com');
-        $admin->setFirstname('Super');
-        $admin->setLastname('Admin');
-        $admin->setRoles(['ROLE_ADMIN']);
-        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'admin'));
+        foreach (self::USERS as $i => $appUser) {
+            $user = new User();
+            $user->setFirstname($appUser['firstname'])
+                ->setLastname($appUser['lastname'])
+                ->setEmail($appUser['email'])
+                ->setRoles([$appUser['role']])
+                ->setPassword($this->passwordHasher->hashPassword($user, 'xxx'));
 
-        // Create student user
-        $student = new User();
-        $student->setEmail('student@example.com');
-        $student->setFirstname('Lucas');
-        $student->setLastname('Dupas');
-        $student->setRoles(['ROLE_STUDENT']);
-        $student->setPassword($this->passwordHasher->hashPassword($student, 'student'));
-
-        // Create teacher user
-        $mathTeacher = new User();
-        $mathTeacher->setEmail('teacher@example.com');
-        $mathTeacher->setFirstname('Laurent');
-        $mathTeacher->setLastname('Guyard');
-        $mathTeacher->setRoles(['ROLE_TEACHER']);
-        $mathTeacher->setPassword($this->passwordHasher->hashPassword($mathTeacher, 'teacher'));
-
-        $frTeacher = new User();
-        $frTeacher->setEmail('frteacher@example.com');
-        $frTeacher->setFirstname('Virginie');
-        $frTeacher->setLastname('Hougron');
-        $frTeacher->setRoles(['ROLE_TEACHER']);
-        $frTeacher->setPassword($this->passwordHasher->hashPassword($frTeacher, 'frteacher'));
-
-        // Persist the users
-        $manager->persist($admin);
-        $this->addReference(strtolower(str_replace(' ', '-', $admin->GetLastname())).'-admin', $admin);
-
-        $manager->persist($student);
-        $this->addReference(strtolower(str_replace(' ', '-', $student->GetLastname())).'-student', $student);
-
-        $manager->persist($mathTeacher);
-        $this->addReference(strtolower(str_replace(' ', '-', $mathTeacher->GetLastname())).'-mathTeacher', $mathTeacher);
-
-        $manager->persist($frTeacher);
-        $this->addReference(strtolower(str_replace(' ', '-', $frTeacher->GetLastname())).'-frTeacher', $frTeacher);
+            $manager->persist($user);
+            $this->addReference(self::REFERENCE_IDENTIFIER.$i, $user);
+        }
 
         $manager->flush();
     }

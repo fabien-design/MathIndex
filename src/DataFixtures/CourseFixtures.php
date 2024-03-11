@@ -2,22 +2,27 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Course;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Course;
 
 class CourseFixtures extends Fixture
 {
+    public const REFERENCE_IDENTIFIER = 'course_';
+
+    public const COURSES = [
+        'Francais',
+        'Mathématique',
+    ];
+
     public function load(ObjectManager $manager)
     {
-        // Courses 'Français' and 'Mathématique'
-        $courseNames = ['Francais', 'Mathématique'];
+        foreach (self::COURSES as $i => $courseName) {
+            $course = (new Course())
+                ->setName($courseName);
 
-        foreach ($courseNames as $courseName) {
-            $course = new Course();
-            $course->setName($courseName);
             $manager->persist($course);
-            $this->addReference(strtolower(str_replace(' ', '-', $courseName)).'-course', $course);
+            $this->addReference(self::REFERENCE_IDENTIFIER.$i, $course);
         }
 
         $manager->flush();
