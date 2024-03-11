@@ -19,9 +19,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
-    #[ORM\Column(length: 255, nullable:false)]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $lastname = null;
-    #[ORM\Column(length: 255, nullable:false)]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $firstname = null;
 
     #[ORM\Column]
@@ -32,7 +32,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
-
 
     #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Exercise::class)]
     private Collection $exercises;
@@ -111,35 +110,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-	
-    public function getLastname() : string
+
+    public function getLastname(): string
     {
-		return $this->lastname;
+        return $this->lastname;
     }
 
-	
-    public function setLastname(string $lastname) : static
+    public function setLastname(string $lastname): static
     {
-		$this->lastname = $lastname;
+        $this->lastname = $lastname;
 
-		return $this;
+        return $this;
     }
 
-
-	
-    public function getFirstname() : string
+    public function getFirstname(): string
     {
-		return $this->firstname;
+        return $this->firstname;
     }
 
-	
-    public function setFirstname(string $firstname) : static
+    public function setFirstname(string $firstname): static
     {
-		$this->firstname = $firstname;
+        $this->firstname = $firstname;
 
-		return $this;
+        return $this;
     }
-
 
     /**
      * @return Collection<int, Exercise>
@@ -170,5 +164,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 }
