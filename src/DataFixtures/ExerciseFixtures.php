@@ -6,6 +6,7 @@ use App\Entity\Exercise;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Random\RandomException;
 
 class ExerciseFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -14,120 +15,103 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
     public const EXERCISES = [
         [
             'name' => 'Factorisation polynomiale',
-            'course' => 'mathématique-course',
-            'classroom' => 'seconde-class',
-            'thematic' => 'calcul-intégral-maths',
+            'course' => 'course_1',
             'chapter' => 'Chapitre 2',
             'keywords' => 'algèbre@maths@calcul',
             'difficulty' => 3,
             'duration' => 45.5,
-            'origin' => 'manuel-scolaire-origin',
-            'originName' => 'Mathématiques avancées',
+            'original_name' => 'Mathématiques avancées',
             'originInformation' => 'Exercice tiré du livre "Mathématiques avancées".',
             'proposedByType' => 'Enseignant',
             'proposedByFirstName' => 'Laurent',
             'proposedByLasName' => 'Guyard',
-            'exerciseFile' => 'original-file1.pdf-file',
-            'correctionFile' => 'original-file2.docx-file',
-            'createdBy' => 'guyard-mathTeacher',
+            'file' => 'file_0',
+            'correction_file' => 'file_5',
         ],
         [
             'name' => "Dérivation d'une fonction exponentielle",
-            'course' => 'mathématique-course',
-            'classroom' => 'première-class',
-            'thematic' => 'calcul-intégral-maths',
+            'course' => 'course_1',
             'chapter' => 'Chapitre 3',
             'keywords' => 'algèbre@maths@calcul',
             'difficulty' => 4,
             'duration' => 200,
-            'origin' => 'manuel-scolaire-origin',
-            'originName' => 'Mathématiques avancées',
+            'original_name' => 'Mathématiques avancées',
             'originInformation' => 'Exercice tiré du livre "Mathématiques avancées".',
             'proposedByType' => 'Enseignant',
             'proposedByFirstName' => 'Laurent',
             'proposedByLasName' => 'Guyard',
-            'exerciseFile' => 'original-file3.pdf-file',
-            'correctionFile' => 'original-file4.pdf-file',
-            'createdBy' => 'guyard-mathTeacher',
+            'file' => 'file_4',
+            'correction_file' => 'file_6',
         ],
         [
             'name' => 'Coordonnées',
-            'course' => 'mathématique-course',
-            'classroom' => '3ème-class',
-            'thematic' => 'géométrie-euclidienne-maths',
+            'course' => 'course_1',
             'chapter' => 'Chapitre 5',
             'keywords' => 'algèbre@maths@calcul',
             'difficulty' => 2,
             'duration' => 150,
-            'origin' => 'manuel-scolaire-origin',
-            'originName' => 'Mathématiques avancées',
+            'original_name' => 'Mathématiques avancées',
             'originInformation' => 'Exercice tiré du livre "Mathématiques avancées".',
             'proposedByType' => 'Enseignant',
             'proposedByFirstName' => 'Laurent',
             'proposedByLasName' => 'Guyard',
-            'exerciseFile' => 'original-file5.pdf-file',
-            'correctionFile' => 'original-file6.pdf-file',
-            'createdBy' => 'guyard-mathTeacher',
+            'file' => 'file_3',
+            'correction_file' => 'file_7',
         ],
         [
             'name' => 'Molière, le malade imaginaire',
-            'course' => 'francais-course',
-            'classroom' => 'seconde-class',
-            'thematic' => 'théatre-francais',
+            'course' => 'course_0',
             'chapter' => 'Chapitre 5',
             'keywords' => 'théatre@molière',
             'difficulty' => 2,
             'duration' => 150,
-            'origin' => 'livre-origin',
-            'originName' => 'Le Malade Imaginaire',
+            'original_name' => 'Le Malade Imaginaire',
             'originInformation' => 'Livre de molière',
             'proposedByType' => 'Livre',
-            'exerciseFile' => 'original-file7.pdf-file',
-            'correctionFile' => 'original-file8.pdf-file',
-            'createdBy' => 'hougron-frTeacher',
+            'file' => 'file_2',
+            'correction_file' => 'file_8',
         ],
         [
             'name' => 'Paris Ville Lumière',
-            'course' => 'francais-course',
-            'classroom' => 'bts-1-class',
-            'thematic' => 'culture-générale-francais',
+            'course' => 'course_0',
             'chapter' => 'Chapitre 2',
             'keywords' => 'paris@littérature@arts',
             'difficulty' => 2,
             'duration' => 90,
-            'origin' => 'livre-origin',
-            'origin_name' => 'classique&cie BTS',
+            'original_name' => 'classique&cie BTS',
             'origin_information' => 'Johan Faerber',
             'proposedByType' => 'Enseignant',
             'proposedByFirstName' => 'Virginie',
             'proposedByLasName' => 'Hougron',
-            'exerciseFile' => 'original-file9.pdf-file',
-            'correctionFile' => 'original-file10.pdf-file',
-            'createdBy' => 'hougron-frTeacher',
+            'file' => 'file_1',
+            'correction_file' => 'file_9',
         ],
     ];
 
+    /**
+     * @throws RandomException
+     */
     public function load(ObjectManager $manager)
     {
         foreach (self::EXERCISES as $i => $exerciseInfo) {
             $exercise = (new Exercise())
                 ->setName($exerciseInfo['name'])
                 ->setCourse($this->getReference($exerciseInfo['course']))
-                ->setClassroom($this->getReference($exerciseInfo['classroom']))
-                ->setThematic($this->getReference($exerciseInfo['thematic']))
+                ->setClassroom($this->getReference(ClassroomFixtures::REFERENCE_IDENTIFIER.random_int(0, count(ClassroomFixtures::CLASSROOMS) - 1)))
+                ->setThematic($this->getReference(ThematicFixtures::REFERENCE_IDENTIFIER.random_int(0, count(ThematicFixtures::THEMATICS) - 1)))
                 ->setChapter($exerciseInfo['chapter'])
                 ->setKeywords($exerciseInfo['keywords'])
                 ->setDifficulty(3)
                 ->setDuration(45.5)
-                ->setOrigin($this->getReference($exerciseInfo['origin']))
-                ->setOriginName($exerciseInfo['origin_name'])
+                ->setOrigin($this->getReference(OriginFixtures::REFERENCE_IDENTIFIER.random_int(0, count(OriginFixtures::ORIGINS) - 1)))
+                ->setoriginName($exerciseInfo['original_name'])
                 ->setOriginInformation('Exercice tiré du livre "Mathématiques avancées".')
                 ->setProposedByType('Enseignant')
                 ->setProposedByFirstName('Laurent')
                 ->setProposedByLasName('Guyard')
-                ->setExerciseFile($this->getReference('original-file1.pdf-file'))
-                ->setCorrectionFile($this->getReference('original-file2.docx-file'))
-                ->setCreatedBy($this->getReference('guyard-mathTeacher'))
+                ->setExerciseFile($this->getReference($exerciseInfo['file']))
+                ->setCorrectionFile($this->getReference($exerciseInfo['correction_file']))
+                ->setCreatedBy($this->getReference(UserFixtures::REFERENCE_IDENTIFIER.random_int(0, count(UserFixtures::USERS) - 1)))
                 ->setCreatedAt(\DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
 
             $manager->persist($exercise);

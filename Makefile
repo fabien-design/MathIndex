@@ -28,6 +28,10 @@ dsu-d:
 		echo "Nothing has been updated. End of make."; \
 	fi
 
+fixtures:
+	docker compose exec symfony bin/console d:f:l && \
+	echo "Fixtures has been loaded. End of make.";
+
 gp:
 	git reset --hard origin/develop && \
 	git pull && \

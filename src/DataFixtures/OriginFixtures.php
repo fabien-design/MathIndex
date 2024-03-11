@@ -22,7 +22,7 @@ class OriginFixtures extends Fixture
     {
         foreach (self::ORIGINS as $i => $originName) {
             $origin = (new Origin())
-                ->setName($originName[]);
+                ->setName($originName[$i]);
 
             $manager->persist($origin);
             $this->addReference(self::REFERENCE_IDENTIFIER.$i, $origin);
