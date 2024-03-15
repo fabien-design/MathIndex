@@ -7,8 +7,8 @@
 
 import './styles/app.scss'
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉')
-
+import './js/DeleteExercice.js';
+import './js/AddElementIdToDeleteModal.js';
 
 
 
