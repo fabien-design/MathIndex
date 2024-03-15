@@ -3,6 +3,7 @@
 {% block title %}Mes exercices - {{project_name}}{% endblock %}
 
 {% block body %}
+{{ component('DeleteModal') }}
 <h1 class="text-cse font-bold text-3xl pb-6">Mes exercices</h1>
 <div class="bg-white rounded-lg p-8">
     <p class="pb-6">
@@ -48,14 +49,14 @@
                                 <td class="px-6 py-4">
                                     {{ exercise.thematic.name }}
                                 </td>
-                                <td class="px-6 py-4">
-                                    {{ exercise.exerciseFile.originalName }}
-                                    {{ exercise.correctionFile.originalName }}
+                                <td class="px-6 py-4 grid">
+                                    <a class="flex gap-2 items-center justify-start" href="{{ exercise.exerciseFile.originalName }}" download="enonce"><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                                    <a class="flex gap-2 items-center justify-start" href="{{ exercise.correctionFile.originalName }}" download="correction"><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
                                 </td>
                                 <td class="px-6 py-4 text-right">
-                                    <div class="flex">
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a>
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Supprimer</a>
+                                    <div class="flex gap-4">
+                                        <a href="#" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2"><i class="fa-solid fa-pen-to-square"></i>Modifier</a>
+                                        <a href="#" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2" data-modal-target="popup-modal" data-modal-toggle="popup-modal"><i class="fa-solid fa-trash-can"></i>Supprimer</a>
                                     </div>
                                 </td>
                             </tr>

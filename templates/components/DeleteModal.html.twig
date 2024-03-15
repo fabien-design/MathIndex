@@ -1,0 +1,38 @@
+<div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full md:max-w-lg sm:max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+             <!-- Modal header -->
+            <div class="flex items-center justify-end p-2 md:p-4">
+                <button type="button" class="text-gray-600 bg-gray-200 hover:bg-gray-300 hover:text-gray-900 rounded-full text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Fermer</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="pb-4 px-8 md:px-5 md:pb-5 text-center">
+                <div class="flex justify-center gap-4 mb-5">
+                    <div class="p-4 bg-gray-200 text-gray-900 w-12 h-12 dark:text-gray-200 flex justify-center items-center rounded-lg" aria-hidden="true">
+                        <i class="fa-regular fa-circle-check"></i>
+                    </div>
+                    <div class="flex flex-col text-left justify-between">
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-gray-500">Confirmer la suppression</h3>
+                        <h3 class="text-xs font-normal text-gray-500 dark:text-gray-400">Êtes-vous certain de vouloir supprimer cet exercice ?</h3>
+                    </div>
+
+                </div>
+                <div class="flex justify-evenly items-center gap-4 px-4">
+                    <button data-modal-hide="popup-modal" type="button" class="w-full py-2.5 px-5 ms-3 text-sm
+                    font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200
+                    hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-100
+                    dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600
+                    dark:hover:text-white dark:hover:bg-gray-700">Annuler</button>
+                    <button data-modal-hide="popup-modal" type="button" class="w-full text-center flex justify-center items-center text-white bg-[rgb(82,82,82)] hover:bg-[rgb(64,64,64)] focus:ring-4 focus:outline-none focus:ring-neutral-300 dark:focus:ring-neutral-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                        Confirmer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
