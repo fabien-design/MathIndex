@@ -19,6 +19,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'thematic' => 'thematic_3',
             'chapter' => 'Chapitre 2',
             'keywords' => 'algèbre@maths@calcul',
+            'thematic' => 'thematic_3',
             'difficulty' => 3,
             'duration' => 45.5,
             'original_name' => 'Mathématiques avancées',
@@ -28,6 +29,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'proposedByLasName' => 'Guyard',
             'file' => 'file_0',
             'correction_file' => 'file_5',
+            'created_by' => 'user_1',
         ],
         [
             'name' => "Dérivation d'une fonction exponentielle",
@@ -35,6 +37,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'chapter' => 'Chapitre 3',
             'thematic' => 'thematic_4',
             'keywords' => 'algèbre@maths@calcul',
+            'thematic' => 'thematic_4',
             'difficulty' => 4,
             'duration' => 200,
             'original_name' => 'Mathématiques avancées',
@@ -44,6 +47,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'proposedByLasName' => 'Guyard',
             'file' => 'file_4',
             'correction_file' => 'file_6',
+            'created_by' => 'user_1',
         ],
         [
             'name' => 'Coordonnées',
@@ -51,6 +55,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'chapter' => 'Chapitre 5',
             'thematic' => 'thematic_5',
             'keywords' => 'algèbre@maths@calcul',
+            'thematic' => 'thematic_5',
             'difficulty' => 2,
             'duration' => 150,
             'original_name' => 'Mathématiques avancées',
@@ -60,6 +65,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'proposedByLasName' => 'Guyard',
             'file' => 'file_3',
             'correction_file' => 'file_7',
+            'created_by' => 'user_1',
         ],
         [
             'name' => 'Molière, le malade imaginaire',
@@ -67,6 +73,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'chapter' => 'Chapitre 5',
             'thematic' => 'thematic_2',
             'keywords' => 'théatre@molière',
+            'thematic' => 'thematic_2',
             'difficulty' => 2,
             'duration' => 150,
             'original_name' => 'Le Malade Imaginaire',
@@ -74,6 +81,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'proposedByType' => 'Livre',
             'file' => 'file_2',
             'correction_file' => 'file_8',
+            'created_by' => 'user_2',
         ],
         [
             'name' => 'Paris Ville Lumière',
@@ -90,6 +98,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'proposedByLasName' => 'Hougron',
             'file' => 'file_1',
             'correction_file' => 'file_9',
+            'created_by' => 'user_2',
         ],
     ];
 
@@ -103,7 +112,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
                 ->setName($exerciseInfo['name'])
                 ->setCourse($this->getReference($exerciseInfo['course']))
                 ->setClassroom($this->getReference(ClassroomFixtures::REFERENCE_IDENTIFIER.random_int(0, count(ClassroomFixtures::CLASSROOMS) - 1)))
-                ->setThematic($exerciseInfo['thematic'])
+                ->setThematic($this->getReference($exerciseInfo['thematic']))
                 ->setChapter($exerciseInfo['chapter'])
                 ->setKeywords($exerciseInfo['keywords'])
                 ->setDifficulty(3)
@@ -116,7 +125,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
                 ->setProposedByLasName('Guyard')
                 ->setExerciseFile($this->getReference($exerciseInfo['file']))
                 ->setCorrectionFile($this->getReference($exerciseInfo['correction_file']))
-                ->setCreatedBy($this->getReference(UserFixtures::REFERENCE_IDENTIFIER.random_int(0, count(UserFixtures::USERS) - 1)))
+                ->setCreatedBy($this->getReference($exerciseInfo['created_by']))
                 ->setCreatedAt(\DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
 
             $manager->persist($exercise);
