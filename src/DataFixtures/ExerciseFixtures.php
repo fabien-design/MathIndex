@@ -16,6 +16,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         [
             'name' => 'Factorisation polynomiale',
             'course' => 'course_1',
+            'thematic' => 'thematic_3',
             'chapter' => 'Chapitre 2',
             'keywords' => 'algèbre@maths@calcul',
             'difficulty' => 3,
@@ -32,6 +33,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'name' => "Dérivation d'une fonction exponentielle",
             'course' => 'course_1',
             'chapter' => 'Chapitre 3',
+            'thematic' => 'thematic_4',
             'keywords' => 'algèbre@maths@calcul',
             'difficulty' => 4,
             'duration' => 200,
@@ -47,6 +49,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'name' => 'Coordonnées',
             'course' => 'course_1',
             'chapter' => 'Chapitre 5',
+            'thematic' => 'thematic_5',
             'keywords' => 'algèbre@maths@calcul',
             'difficulty' => 2,
             'duration' => 150,
@@ -62,6 +65,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'name' => 'Molière, le malade imaginaire',
             'course' => 'course_0',
             'chapter' => 'Chapitre 5',
+            'thematic' => 'thematic_2',
             'keywords' => 'théatre@molière',
             'difficulty' => 2,
             'duration' => 150,
@@ -75,6 +79,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'name' => 'Paris Ville Lumière',
             'course' => 'course_0',
             'chapter' => 'Chapitre 2',
+            'thematic' => 'thematic_1',
             'keywords' => 'paris@littérature@arts',
             'difficulty' => 2,
             'duration' => 90,
@@ -98,7 +103,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
                 ->setName($exerciseInfo['name'])
                 ->setCourse($this->getReference($exerciseInfo['course']))
                 ->setClassroom($this->getReference(ClassroomFixtures::REFERENCE_IDENTIFIER.random_int(0, count(ClassroomFixtures::CLASSROOMS) - 1)))
-                ->setThematic($this->getReference(ThematicFixtures::REFERENCE_IDENTIFIER.random_int(0, count(ThematicFixtures::THEMATICS) - 1)))
+                ->setThematic($exerciseInfo['thematic'])
                 ->setChapter($exerciseInfo['chapter'])
                 ->setKeywords($exerciseInfo['keywords'])
                 ->setDifficulty(3)
