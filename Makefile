@@ -54,3 +54,9 @@ install:
 	docker compose exec symfony bin/console d:d:c --if-not-exists && \
 	make dsu-f && \
 	docker compose exec symfony bin/console d:f:l -n
+
+vendor:
+	docker compose exec symfony composer install
+
+bash:
+	docker compose exec symfony bash
