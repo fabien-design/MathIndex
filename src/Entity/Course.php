@@ -51,9 +51,6 @@ class Course
         return $this;
     }
 
-
-   
-
     /**
      * @return Collection<int, Thematic>
      */
