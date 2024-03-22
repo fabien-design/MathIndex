@@ -1,13 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_administration.html.twig' %}
 
-{% block title %}Edit Course{% endblock %}
+{% block title %}Modifier une Matière{% endblock %}
 
 {% block body %}
-    <h1>Edit Course</h1>
+    <h1  class="text-xl font-bold py-5">Modifier une Matière</h1>
 
-    {{ include('administration/course/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('administration/course/_form.html.twig') }}
 
-    <a href="{{ path('app_administration_course_index') }}">back to list</a>
-
-    {{ include('administration/course/_delete_form.html.twig') }}
 {% endblock %}

@@ -226,7 +226,7 @@
 							<a href="{{path("app_administration_course_index") }}" class="active bg-cse text-white opacity-80 inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Matières</a>
 						</li>
 						<li class="me-2">
-							<a href="#" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Classes</a>
+							<a href="{{path("app_administration_classroom_index") }}" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Classes</a>
 						</li>
 						<li class="me-2">
 							<a href="#" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Thématiques</a>
@@ -266,17 +266,20 @@
 	<script>
         // JavaScript code to set active class based on current URL
         document.addEventListener("DOMContentLoaded", function() {
-            var url = window.location.pathname;
-            var navItems = document.getElementById("navigation").getElementsByTagName("a");
+			var url = window.location.pathname;
+			var navItems = document.getElementById("navigation").getElementsByTagName("a");
 
-            for (var i = 0; i < navItems.length; i++) {
-                if (navItems[i].getAttribute("href") === url) {
-                    navItems[i].classList.add("active");
+			for (var i = 0; i < navItems.length; i++) {
+				var href = navItems[i].getAttribute("href");
+
+				// Vérifie si l'URL contient la partie spécifique
+				if (url.includes(href)) {
+					navItems[i].classList.add("active");
 					navItems[i].classList.remove("opacity-80");
 					navItems[i].setAttribute("aria-current", "page");
-                }
-            }
-        });
+				}
+			}
+		});
 
 		function rotateChevron(button) {
 			var chevron = button.querySelector('.chevron-rotate');

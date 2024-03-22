@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_administration.html.twig' %}
 
-{% block title %}New Course{% endblock %}
+{% block title %}Ajouter une Matière{% endblock %}
 
 {% block body %}
-    <h1>Create new Course</h1>
+    <h2 class="text-xl font-bold py-5">Ajouter une Matière</h2>
 
     {{ include('administration/course/_form.html.twig') }}
 
-    <a href="{{ path('app_administration_course_index') }}">back to list</a>
+    
 {% endblock %}
