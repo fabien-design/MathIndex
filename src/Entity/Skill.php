@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\SkillRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
@@ -18,15 +16,9 @@ class Skill
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'skills')]
-    #[ORM\JoinTable(name: 'skill_courses')]
-    private Collection $courses;
-
-
-    public function __construct()
-    {
-        $this->courses = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'skills')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Course $course = null;
 
     public function getId(): ?int
     {
@@ -45,29 +37,14 @@ class Skill
         return $this;
     }
 
-    /**
-     * @return Collection<int, course>
-     */
-    public function getCourses(): Collection
+    public function getCourse(): ?Course
     {
-        return $this->courses;
+        return $this->course;
     }
 
-    public function addCourse(Course $course): static // Correction ici
+    public function setCourse(?Course $course): static
     {
-        if (!$this->courses->contains($course)) {
-            $this->courses->add($course);
-            $course->addSkill($this); // Ajout pour maintenir la relation dans les deux sens
-        }
-
-        return $this;
-    }
-
-    public function removeCourse(Course $course): static // Correction ici
-    {
-        if ($this->courses->removeElement($course)) {
-            $course->removeSkill($this); // Ajout pour maintenir la relation dans les deux sens
-        }
+        $this->course = $course;
 
         return $this;
     }

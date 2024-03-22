@@ -16,12 +16,6 @@ class CourseType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom'])
-            ->add('skills', EntityType::class, [
-                'label' => 'Compétences',
-                'class' => Skill::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-            ])
         ;
     }
 

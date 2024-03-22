@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 #[Route('/administration/course')]
 class CourseController extends AbstractController
@@ -70,26 +71,39 @@ class CourseController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'app_administration_course_delete', methods: ['POST'])]
-    public function delete(Request $request, Course $course, EntityManagerInterface $entityManager, \Twig\Environment $twig): Response
+    public function delete(Request $request, Course $course, EntityManagerInterface $entityManager, Environment $twig): Response
     {
         $user = $this->getUser();
 
         // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
         if (!$user) {
-
             // Rendre le template Twig
             $renderedTemplate = $twig->render('components/Alert.html.twig', [
                 'type' => 'error',
-                'message' => "Vous n'avez pas le droit de supprimer cette matière"
+                'message' => "Vous n'avez pas le droit de supprimer ce cours"
             ]);
-
             return new JsonResponse(["html" => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
         }
 
-        //if ($this->isCsrfTokenValid('delete'.$course->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($course);
-            $entityManager->flush();
-        //}
+        // Supprimer les exercices associés au cours
+        foreach ($course->getExercises() as $exercise) {
+            $course->removeExercise($exercise);
+            $entityManager->remove($exercise);
+        }
+        // Supprimer les compétences associées au cours
+        foreach ($course->getSkills() as $skill) {
+            $course->removeSkill($skill);
+            $entityManager->remove($skill);
+        }
+        // Supprimer les thematiques associées au cours
+        foreach ($course->getThematics() as $thematic) {
+            $course->removeThematic($thematic);
+            $entityManager->remove($thematic);
+        }
+
+        // Supprimer le cours lui-même
+        $entityManager->remove($course);
+        $entityManager->flush();
 
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',
@@ -98,7 +112,6 @@ class CourseController extends AbstractController
 
         // Retourner une réponse JSON avec le résultat du rendu du template
         return new JsonResponse(["html" => $renderedTemplate], Response::HTTP_OK);
-        // return $this->redirectToRoute('app_administration_course_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}/research', name: 'app_administration_course_research', methods: ['GET'])]
