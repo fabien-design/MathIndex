@@ -3,7 +3,7 @@
 {% block title %}Mes exercices - {{project_name}}{% endblock %}
 
 {% block body %}
-{{ component('DeleteModal') }}
+{{ component('DeleteModal', { message: "Êtes-vous certain de vouloir supprimer cet exercice ?"}) }}
 <h1 class="text-cse font-bold text-3xl pb-6">Mes exercices</h1>
 <div class="bg-white rounded-lg p-8">
     <p class="pb-6">

@@ -6,6 +6,7 @@ use App\Repository\CourseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Skill;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
 class Course
@@ -18,7 +19,8 @@ class Course
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'course')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'courses')]
+    #[ORM\JoinTable(name: 'skill_courses')]
     private Collection $skills;
 
     #[ORM\OneToMany(mappedBy: 'course', targetEntity: Thematic::class)]
@@ -63,7 +65,7 @@ class Course
     {
         if (!$this->skills->contains($skill)) {
             $this->skills->add($skill);
-            $skill->addCourse($this);
+            $skill->addCourse($this); // Correction ici
         }
 
         return $this;
@@ -72,7 +74,7 @@ class Course
     public function removeSkill(Skill $skill): static
     {
         if ($this->skills->removeElement($skill)) {
-            $skill->removeCourse($this);
+            $skill->removeCourse($this); // Correction ici
         }
 
         return $this;

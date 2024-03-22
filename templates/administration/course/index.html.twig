@@ -3,7 +3,7 @@
 {% block title %}Gestion des Matières{% endblock %}
 
 {% block body %}
-
+    {{ component('DeleteModal', {  message: 'Êtes-vous certain de vouloir supprimer cette matière ?' } ) }}
     <h2 class="text-xl font-bold py-5">Gestion des Matières</h2>
     <div class="flex w-full mb-5 justify-between">
         <form class="flex items-end  pr-10">   
@@ -36,13 +36,13 @@
             <tbody>
                 {% for course in courses %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="{{ course.id }}">
-                        <th scope="row" class="px-6 py-4">
+                        <td scope="row" class="px-6 py-4">
                             {{ course.name }}
-                        </th>
+                        </td>
                         <td class="px-6 py-4 text-right">
                             <div class="flex gap-4">
-                                <a href="{{ path('app_administration_course_show', {'id': course.id}) }}" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2"><i class="fa-solid fa-pen-to-square"></i>Modifier</a>
-                                <a href="{{ path('app_administration_course_edit', {'id': course.id}) }}" class="open-delete-modal font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2" data-modal-target="popup-modal" data-modal-toggle="popup-modal" data-modal-element-id="{{ course.id }}" ><i class="fa-solid fa-trash-can"></i>Supprimer</a>
+                                <a href="{{ path('app_administration_course_edit', {'id': course.id}) }}" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2"><i class="fa-solid fa-pen-to-square"></i>Modifier</a>
+                                <button class="open-delete-modal font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2" data-modal-target="popup-modal" data-modal-toggle="popup-modal" data-modal-element-id="{{ course.id }}" ><i class="fa-solid fa-trash-can"></i>Supprimer</button>
                             </div>
                         </td>
                     </tr>

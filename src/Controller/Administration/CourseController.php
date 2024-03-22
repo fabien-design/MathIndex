@@ -7,6 +7,7 @@ use App\Form\CourseType;
 use App\Repository\CourseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -68,14 +69,44 @@ class CourseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_administration_course_delete', methods: ['POST'])]
-    public function delete(Request $request, Course $course, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_administration_course_delete', methods: ['POST'])]
+    public function delete(Request $request, Course $course, EntityManagerInterface $entityManager, \Twig\Environment $twig): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$course->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($course);
-            $entityManager->flush();
+        $user = $this->getUser();
+
+        // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
+        if (!$user) {
+
+            // Rendre le template Twig
+            $renderedTemplate = $twig->render('components/Alert.html.twig', [
+                'type' => 'error',
+                'message' => "Vous n'avez pas le droit de supprimer cette matière"
+            ]);
+
+            return new JsonResponse(["html" => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
         }
 
-        return $this->redirectToRoute('app_administration_course_index', [], Response::HTTP_SEE_OTHER);
+        //if ($this->isCsrfTokenValid('delete'.$course->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($course);
+            $entityManager->flush();
+        //}
+
+        $renderedTemplate = $twig->render('components/Alert.html.twig', [
+            'type' => 'success',
+            'message' => 'Suppression réussie'
+        ]);
+
+        // Retourner une réponse JSON avec le résultat du rendu du template
+        return new JsonResponse(["html" => $renderedTemplate], Response::HTTP_OK);
+        // return $this->redirectToRoute('app_administration_course_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/research', name: 'app_administration_course_research', methods: ['GET'])]
+    public function research(Request $request, Course $course, EntityManagerInterface $entityManager, CourseRepository $courseRepository): JsonResponse
+    {
+        $query = $request->query->get('value');
+        $courses = $courseRepository->findBy(['name' => $query]);
+
+        return new JsonResponse(['course' => $courses], Response::HTTP_OK);
     }
 }
