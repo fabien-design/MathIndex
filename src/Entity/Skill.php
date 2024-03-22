@@ -19,11 +19,13 @@ class Skill
     private ?string $name = null;
 
     #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'skills')]
-    private Collection $course;
+    #[ORM\JoinTable(name: 'skill_courses')]
+    private Collection $courses;
+
 
     public function __construct()
     {
-        $this->course = new ArrayCollection();
+        $this->courses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,23 +48,26 @@ class Skill
     /**
      * @return Collection<int, course>
      */
-    public function getCourse(): Collection
+    public function getCourses(): Collection
     {
-        return $this->course;
+        return $this->courses;
     }
 
-    public function addCourse(course $Course): static
+    public function addCourse(Course $course): static // Correction ici
     {
-        if (!$this->course->contains($Course)) {
-            $this->course->add($Course);
+        if (!$this->courses->contains($course)) {
+            $this->courses->add($course);
+            $course->addSkill($this); // Ajout pour maintenir la relation dans les deux sens
         }
 
         return $this;
     }
 
-    public function removeCourse(course $Course): static
+    public function removeCourse(Course $course): static // Correction ici
     {
-        $this->course->removeElement($Course);
+        if ($this->courses->removeElement($course)) {
+            $course->removeSkill($this); // Ajout pour maintenir la relation dans les deux sens
+        }
 
         return $this;
     }

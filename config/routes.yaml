@@ -8,7 +8,17 @@ app_logout:
     path: /logout
     methods: GET
 
-app_api_exercices_delete:
-    path: /api/exercices/{id}/delete
+app_api_exercise_delete:
+    path: /api/exercises/{id}/delete
     controller: App\Controller\ExerciseController::delete
+    methods: ["POST"]
+
+app_administration_classroom_delete:
+    path: /api/administration/classroom/{id}/delete
+    controller: App\Controller\Administration\ClassroomController::delete
+    methods: ["POST"]
+
+app_administration_course_delete:
+    path: /api/administration/course/{id}/delete
+    controller: App\Controller\Administration\CourseController::delete
     methods: ["POST"]

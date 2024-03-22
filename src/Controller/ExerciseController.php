@@ -34,7 +34,7 @@ class ExerciseController extends AbstractController
         ]);
     }
 
-    #[Route('/api/exercises/{id}/delete', name: 'app_api_exercice_delete', methods: ['POST'])]
+    #[Route('/exercises/{id}/delete', name: 'app_api_exercise_delete', methods: ['POST'])]
     public function delete(Request $request, Exercise $exercise, EntityManagerInterface $entityManager, \Twig\Environment $twig): JsonResponse
     {
         // Récupérer l'utilisateur connecté

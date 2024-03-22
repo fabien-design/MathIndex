@@ -1,5 +1,6 @@
 @import 'scss/base.scss';
 @import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -30,4 +31,48 @@
   to{
     transform: rotate(0deg);
   }
+}
+
+h1{
+  color: #1B3168;
+  font-weight: 600;
+  font-family: 'Epilogue', sans-serif;
+  font-size: 28px;
+  margin: 5px 0 20px;
+}
+
+h2{
+  color: #1E1E1E;
+  font-weight: 600;
+  font-family: 'Epilogue', sans-serif;
+  font-size: 20px;
+  margin: 5px 0 20px;
+}
+
+table {
+  border: 1px solid #E7E7E7;
+
+  .tableHeader{
+    @apply text-gray-700 bg-gray-100 font-normal; 
+  }
+  th, td{
+    @apply px-6 py-4;
+    font-size: 14px;
+    font-weight: 500;
+    font-family:"Poppins", sans-serif;
+  }
+}
+
+.keyword{
+  display: block;
+  height: fit-content;
+  width: fit-content;
+  padding: 6px 10px;
+  color: #222222;
+  border: 0px solid transparent;
+  border-radius: 5rem;
+  background-color: #DBDBDB;
+  margin: 0 2px 5px;
+  font-size: 14px;
+  font-weight: 400;
 }
