@@ -7,72 +7,120 @@
 @tailwind utilities;
 
 
-.rotate-keyframesOpen{
-  animation: rotateOpen 250ms forwards;
+.rotate-keyframesOpen {
+    animation: rotateOpen 250ms forwards;
 }
 
-.rotate-keyframesClose{
-  animation: rotateClose 250ms forwards;
+.rotate-keyframesClose {
+    animation: rotateClose 250ms forwards;
 }
 
-@keyframes rotateOpen{
-  from{
-    transform: rotate(0deg);
-  }
-  to{
-    transform: rotate(-180deg);
-  }
+@keyframes rotateOpen {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-180deg);
+    }
 }
 
-@keyframes rotateClose{
-  from{
-    transform: rotate(-180deg);
-  }
-  to{
-    transform: rotate(0deg);
-  }
+@keyframes rotateClose {
+    from {
+        transform: rotate(-180deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
 }
 
-h1{
-  color: #1B3168;
-  font-weight: 600;
-  font-family: 'Epilogue', sans-serif;
-  font-size: 28px;
-  margin: 5px 0 20px;
+h1 {
+    color: #1B3168;
+    font-weight: 600;
+    font-family: 'Epilogue', sans-serif;
+    font-size: 28px;
+    margin: 5px 0 20px;
 }
 
-h2{
-  color: #1E1E1E;
-  font-weight: 600;
-  font-family: 'Epilogue', sans-serif;
-  font-size: 20px;
-  margin: 5px 0 20px;
+h2 {
+    color: #1E1E1E;
+    font-weight: 600;
+    font-family: 'Epilogue', sans-serif;
+    font-size: 20px;
+    margin: 5px 0 20px;
 }
 
 table {
-  border: 1px solid #E7E7E7;
+    border: 1px solid #E7E7E7;
 
-  .tableHeader{
-    @apply text-gray-700 bg-gray-100 font-normal; 
-  }
-  th, td{
-    @apply px-6 py-4;
-    font-size: 14px;
-    font-weight: 500;
-    font-family:"Poppins", sans-serif;
-  }
+    .tableHeader {
+        @apply text-gray-700 bg-gray-100 font-normal;
+    }
+
+    th,
+    td {
+        @apply px-6 py-4;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: "Poppins", sans-serif;
+    }
 }
 
-.keyword{
-  display: block;
-  height: fit-content;
-  width: fit-content;
-  padding: 6px 10px;
-  color: #222222;
-  border: 0px solid transparent;
-  border-radius: 5rem;
-  background-color: #DBDBDB;
-  margin: 0 2px 5px;
-  font-size: 14px;
-  font-weight: 400;
+.keyword {
+    display: block;
+    height: fit-content;
+    width: fit-content;
+    padding: 6px 10px;
+    color: #222222;
+    border: 0px solid transparent;
+    border-radius: 5rem;
+    background-color: #DBDBDB;
+    margin: 0 2px 5px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+form {
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="date"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="number"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="color"],
+    input[type="file"],
+    input[type="range"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="color"],
+    input[type="file"],
+    input[type="range"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="color"],
+    input[type="file"],
+    input[type="range"],
+    input[type="search"]
+    {
+        display: block !important;
+        padding: 0.625rem !important;
+        border-radius: 0.5rem !important;
+        border-width: 1px !important;
+        border-color: #D1D5DB !important;
+        width: 100% !important;
+        color: #111827 !important;
+        background-color: #F9FAFB !important;
+    }
+    :disabled{
+        cursor: not-allowed !important;
+    }
 }

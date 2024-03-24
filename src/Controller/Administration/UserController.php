@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/administration/user')]
@@ -18,7 +20,7 @@ class UserController extends AbstractController
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('administration/user/index.html.twig', [
-            'users' => $userRepository->findBy(array('roles' => '["ROLE_CONTRIBUTOR"]')),
+            'users' => $userRepository->findAll()
         ]);
     }
 
@@ -51,12 +53,15 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_administration_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($form["password"]->getData() != null){
+                $user->setPassword($passwordHasher->hashPassword($user ,$form["password"]->getData()));
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_administration_user_index', [], Response::HTTP_SEE_OTHER);

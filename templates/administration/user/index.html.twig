@@ -1,43 +1,65 @@
 {% extends 'base_administration.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Gestion des contributeurs{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
+    {{ component('DeleteModal', {  message: 'Êtes-vous certain de vouloir supprimer ce contributeur ?' } ) }}
+    <h2 class="text-xl font-bold py-5">Gestion des contributeurs</h2>
+    <div class="flex w-full mb-5 justify-between">
+        <form class="flex items-end  pr-10">   
+            <div class="relative w-full">
+                <label for="voice-search" class="text-stone-500 text-md">Rechercher un contributeur par nom, prénom ou email :</label>
+                <input type="text" id="voice-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+            </div>
+            <button type="submit" class="inline-flex items-center py-2.5 px-3 ms-2 text-md font-medium  bg-gray-100 rounded-lg border border-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300">
+                Rechercher
+            </button>
+        </form>
+        <div class="flex items-end ">
+            <a href="{{ path('app_administration_user_new') }}" class="!ml-5 focus:outline-none text-white bg-green-400 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-8 py-5 ">Ajouter +</a>
+        </div>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Lastname</th>
-                <th>Firstname</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.lastname }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
-                <td>
-                    <a href="{{ path('app_administration_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_administration_user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 tableHeader">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                            Nom
+                        </th>
+                    <th>Prénom</th>
+                    <th>Rôle</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="{{ user.id }}">
+                    <td scope="row" class="px-6 py-4">
+                        {{ user.firstname }}
+                    </td>
+                    <td scope="row" class="px-6 py-4">
+                        {{ user.lastname }}
+                    </td>
+                    <td scope="row" class="px-6 py-4">
+                        {{ user.roles ? user.roles|json_encode : '' }}
+                    </td>
+                    <td scope="row" class="px-6 py-4">
+                        {{ user.email }}
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                            <div class="flex gap-4">
+                                <a href="{{ path('app_administration_user_edit', {'id': user.id}) }}" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2"><i class="fa-solid fa-pen-to-square"></i>Modifier</a>
+                                <button class="open-delete-modal font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2" data-modal-target="popup-modal" data-modal-toggle="popup-modal" data-modal-element-id="{{ user.id }}" ><i class="fa-solid fa-trash-can"></i>Supprimer</button>
+                            </div>
+                        </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="5" class='text-center text-lg p-4'>Aucun contributeur trouvé.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{{ path('app_administration_user_new') }}">Create new</a>
 {% endblock %}
