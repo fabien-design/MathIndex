@@ -114,13 +114,4 @@ class CourseController extends AbstractController
         // Retourner une réponse JSON avec le résultat du rendu du template
         return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_OK);
     }
-
-    #[Route('/{id}/research', name: 'app_administration_course_research', methods: ['GET'])]
-    public function research(Request $request, Course $course, EntityManagerInterface $entityManager, CourseRepository $courseRepository): JsonResponse
-    {
-        $query = $request->query->get('value');
-        $courses = $courseRepository->findBy(['name' => $query]);
-
-        return new JsonResponse(['course' => $courses], Response::HTTP_OK);
-    }
 }
