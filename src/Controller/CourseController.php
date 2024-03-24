@@ -12,7 +12,7 @@ class CourseController extends AbstractController
     #[Route('/matiere/{course}', name: 'app_course')]
     public function index(Course $course): Response
     {
-        $exercises = ($course->getExercises());
+        $exercises = $course->getExercises();
         // foreach($exercises as $exercises){
         //     var_dump($exercises->getName());
         // }

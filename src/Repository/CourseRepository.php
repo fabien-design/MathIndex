@@ -21,8 +21,6 @@ class CourseRepository extends ServiceEntityRepository
         parent::__construct($registry, Course::class);
     }
 
-       
-
     //    public function findOneBySomeField($value): ?Course
     //    {
     //        return $this->createQueryBuilder('c')

@@ -22,7 +22,6 @@ class Skill
     #[ORM\JoinTable(name: 'skill_courses')]
     private Collection $courses;
 
-
     public function __construct()
     {
         $this->courses = new ArrayCollection();

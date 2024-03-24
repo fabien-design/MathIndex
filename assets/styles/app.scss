@@ -51,16 +51,26 @@ h2 {
     margin: 5px 0 20px;
 }
 
+div:has(table){
+    @apply relative overflow-x-auto shadow-md sm:rounded-lg;
+}
+
 table {
     border: 1px solid #E7E7E7;
+    @apply w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400;
 
-    .tableHeader {
-        @apply text-gray-700 bg-gray-100 font-normal;
+    .tableHeader, thead {
+        @apply w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400 bg-gray-100;
+        
+    }
+
+    th{
+        font-weight: 400 !important;
     }
 
     th,
     td {
-        @apply px-6 py-4;
+        @apply px-6 py-3;
         font-size: 14px;
         font-weight: 500;
         font-family: "Poppins", sans-serif;
@@ -83,6 +93,8 @@ table {
 
 form {
     input[type="text"],
+    textarea,
+    select,
     input[type="password"],
     input[type="email"],
     input[type="tel"],

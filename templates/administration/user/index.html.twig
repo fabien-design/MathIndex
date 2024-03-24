@@ -1,10 +1,10 @@
 {% extends 'base_administration.html.twig' %}
 
-{% block title %}Gestion des contributeurs{% endblock %}
+{% block title %}Gestion des Contributeurs{% endblock %}
 
 {% block body %}
     {{ component('DeleteModal', {  message: 'Êtes-vous certain de vouloir supprimer ce contributeur ?' } ) }}
-    <h2 class="text-xl font-bold py-5">Gestion des contributeurs</h2>
+    <h2 class="text-xl font-bold py-5">Gestion des Contributeurs</h2>
     <div class="flex w-full mb-5 justify-between">
         <form class="flex items-end  pr-10">   
             <div class="relative w-full">
@@ -20,13 +20,11 @@
         </div>
     </div>
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 tableHeader">
+    <div>
+        <table >
+            <thead>
                 <tr>
-                    <th scope="col" class="px-6 py-3">
-                            Nom
-                        </th>
+                    <th>Nom</th>
                     <th>Prénom</th>
                     <th>Rôle</th>
                     <th>Email</th>

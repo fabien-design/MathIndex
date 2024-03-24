@@ -10,21 +10,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/administration/user')]
+#[Route('/administration')]
 class UserController extends AbstractController
 {
-    #[Route('/', name: 'app_administration_user_index', methods: ['GET'])]
+    #[Route('/', name: 'app_administration_user_redirectToIndex', methods: ['GET'])]
+    public function redirectToIndex(): Response
+    {
+        return $this->redirectToRoute('app_administration_user_index');
+    }
+
+    #[Route('/user', name: 'app_administration_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('administration/user/index.html.twig', [
-            'users' => $userRepository->findAll()
+            'users' => $userRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'app_administration_user_new', methods: ['GET', 'POST'])]
+    #[Route('/user/new', name: 'app_administration_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -44,7 +49,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_administration_user_show', methods: ['GET'])]
+    #[Route('/user/{id}', name: 'app_administration_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
         return $this->render('administration/user/show.html.twig', [
@@ -52,15 +57,15 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_administration_user_edit', methods: ['GET', 'POST'])]
+    #[Route('/user/{id}/edit', name: 'app_administration_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($form["password"]->getData() != null){
-                $user->setPassword($passwordHasher->hashPassword($user ,$form["password"]->getData()));
+            if (null != $form['password']->getData()) {
+                $user->setPassword($passwordHasher->hashPassword($user, $form['password']->getData()));
             }
             $entityManager->flush();
 
@@ -73,7 +78,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_administration_user_delete', methods: ['POST'])]
+    #[Route('/user/{id}', name: 'app_administration_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
