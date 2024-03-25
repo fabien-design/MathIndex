@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 #[Route('/administration/classroom')]
 class ClassroomController extends AbstractController
@@ -70,7 +71,7 @@ class ClassroomController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'app_administration_classroom_delete', methods: ['POST'])]
-    public function delete(Request $request, Classroom $classroom, EntityManagerInterface $entityManager, \Twig\Environment $twig): JsonResponse
+    public function delete(Request $request, Classroom $classroom, EntityManagerInterface $entityManager, Environment $twig): JsonResponse
     {
         $user = $this->getUser();
 
@@ -85,10 +86,13 @@ class ClassroomController extends AbstractController
             return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
         }
 
-        // if ($this->isCsrfTokenValid('delete'.$classroom->getId(), $request->request->get('_token'))) {
+        // Supprimer les exercices associés à la classe
+        foreach ($classroom->getExercises() as $exercise) {
+            $classroom->removeExercise($exercise);
+            $entityManager->remove($exercise);
+        }
         $entityManager->remove($classroom);
         $entityManager->flush();
-        // }
 
         // Rendre le template Twig
         $renderedTemplate = $twig->render('components/Alert.html.twig', [

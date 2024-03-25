@@ -11,6 +11,7 @@ use App\Entity\Thematic;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,30 +30,27 @@ class ExerciseType extends AbstractType
             ->add('proposedByType')
             ->add('proposedByFirstName')
             ->add('proposedByLasName')
-            ->add('createdAt')
             ->add('course', EntityType::class, [
                 'class' => Course::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
             ->add('classroom', EntityType::class, [
                 'class' => Classroom::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
             ->add('thematic', EntityType::class, [
                 'class' => Thematic::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
             ->add('origin', EntityType::class, [
                 'class' => Origin::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
-            ->add('exerciseFile', EntityType::class, [
-                'class' => File::class,
-                'choice_label' => 'id',
-            ])
-            ->add('correctionFile', EntityType::class, [
-                'class' => File::class,
-                'choice_label' => 'id',
+            ->add('exerciseFile', FileType::class, [
+                'data_class' => File::class,
+             ])
+            ->add('correctionFile', FileType::class, [
+                'data_class' => File::class,
             ])
             ->add('createdBy', EntityType::class, [
                 'class' => User::class,

@@ -13,10 +13,6 @@ class CourseController extends AbstractController
     public function index(Course $course): Response
     {
         $exercises = $course->getExercises();
-        // foreach($exercises as $exercises){
-        //     var_dump($exercises->getName());
-        // }
-        // die;
 
         return $this->render('course/index.html.twig', [
             'controller_name' => 'CourseController',
