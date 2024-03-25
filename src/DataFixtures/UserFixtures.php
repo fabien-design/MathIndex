@@ -27,13 +27,13 @@ class UserFixtures extends Fixture
             'firstname' => 'Laurent',
             'lastname' => 'Guyard',
             'email' => 'mathteacher@example.com',
-            'role' => 'ROLE_CONTRIBUTOR',
+            'role' => 'ROLE_TEACHER',
         ],
         [
             'firstname' => 'Virginie',
             'lastname' => 'Hougron',
             'email' => 'frteacher@example.com',
-            'role' => 'ROLE_CONTRIBUTOR',
+            'role' => 'ROLE_TEACHER',
         ],
     ];
 

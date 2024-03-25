@@ -32,8 +32,8 @@ class UserType extends AbstractType
             //     'label'    => 'Roles',
             //     'required' => false,
             //     'choices'  => [
-            //         'Étudiant' => 'ROLE_USER',
-            //         'Contributeur' => 'ROLE_CONTRIBUTOR',
+            //         'Étudiant' => 'ROLE_STUDENT',
+            //         'Contributeur' => 'ROLE_TEACHER',
             //         'Administrateur' => 'ROLE_ADMIN',
             //         // Add more roles here as needed
             //     ],

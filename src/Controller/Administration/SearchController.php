@@ -29,6 +29,59 @@ class SearchController extends AbstractController
             $query = strip_tags($query);
             $html = '';
             switch ($entity) {
+
+                case 'user':
+                    $values = $userRepository->findByName($query);
+                    if (empty($values)) {
+                        $html = '<tr><td colspan="2" class="text-center text-lg p-4">Aucun contributeur "'.$query.'" n\'a été trouvée.</td></tr>';
+                    }
+                    foreach ($values as $item) {
+                        $roles = $item->getRoles();
+                        $roleLabel = '';
+                
+                        if (in_array('ROLE_ADMIN', $roles)) {
+                            $roleLabel = 'Administrateur';
+                        } elseif (in_array('ROLE_TEACHER', $roles)) {
+                            $roleLabel = 'Enseignant';
+                        } elseif (in_array('ROLE_STUDENT', $roles)) {
+                            $roleLabel = 'Étudiant';
+                        }
+                
+                        $html .= '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="'.$item->getId().'">
+                        <td scope="row" class="px-6 py-4">'.$item->getLastname().'</td>
+                        <td scope="row" class="px-6 py-4">'.$item->getFirstname().'</td>
+                            <td scope="row" class="px-6 py-4">'.$roleLabel.'</td>
+                            <td scope="row" class="px-6 py-4">'.$item->getEmail().'</td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex gap-4">
+                                    <a href="'.$urlGenerator->generate('app_administration_user_edit', ['id' => $item->getId()]).'" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2"><i class="fa-solid fa-pen-to-square"></i>Modifier</a>
+                                    <button class="open-delete-modal font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2" data-modal-target="popup-modal" data-modal-toggle="popup-modal" data-modal-element-id="'.$item->getId().'" ><i class="fa-solid fa-trash-can"></i>Supprimer</button>
+                                </div>
+                            </td>
+                        </tr>';
+                    }
+                    break;
+                
+
+                case 'exercise':
+                    $values = $exerciseRepository->findByName($query);
+                    if (empty($values)) {
+                        $html = '<tr><td colspan="12" class="text-center text-lg p-4">Aucun exercice "'.$query.'" n\'a été trouvée.</td></tr>';
+                    }
+                    foreach ($values as $item) {
+                        $html .= '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="'.$item->getId().'">
+                            <td scope="row" class="px-6 py-4">'.$item->getName().'</td>
+                            <td scope="row" class="px-6 py-4">'.$item->getName().'</td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex gap-4">
+                                    <a href="'.$urlGenerator->generate('app_administration_exercise_edit', ['id' => $item->getId()]).'" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2"><i class="fa-solid fa-pen-to-square"></i>Modifier</a>
+                                    <button class="open-delete-modal font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2" data-modal-target="popup-modal" data-modal-toggle="popup-modal" data-modal-element-id="'.$item->getId().'" ><i class="fa-solid fa-trash-can"></i>Supprimer</button>
+                                </div>
+                            </td>
+                        </tr>';
+                    }
+                    break;
+
                 case 'course':
                     $values = $courseRepository->findByName($query);
                     if (empty($values)) {
@@ -71,9 +124,6 @@ class SearchController extends AbstractController
                     break;
                 case 'skill':
                     $values = $skillRepository->findBy(['name' => $query]);
-                    break;
-                case 'exercise':
-                    $values = $exerciseRepository->findBy(['name' => $query]);
                     break;
                 default:
                     $values = $userRepository->findBy(['firstname' => $query]);

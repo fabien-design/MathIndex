@@ -6,10 +6,10 @@
     {{ component('DeleteModal', {  message: 'Êtes-vous certain de vouloir supprimer ce contributeur ?' } ) }}
     <h2 class="text-xl font-bold py-5">Gestion des Contributeurs</h2>
     <div class="flex w-full mb-5 justify-between">
-        <form class="flex items-end  pr-10">   
+        <form class="flex items-end  pr-10" id="researchForm">   
             <div class="relative w-full">
-                <label for="voice-search" class="text-stone-500 text-md">Rechercher un contributeur par nom, prénom ou email :</label>
-                <input type="text" id="voice-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+                <label for="search" class="text-stone-500 text-md">Rechercher un contributeur par nom, prénom ou email :</label>
+                <input type="text" id="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
             </div>
             <button type="submit" class="inline-flex items-center py-2.5 px-3 ms-2 text-md font-medium  bg-gray-100 rounded-lg border border-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300">
                 Rechercher
@@ -34,14 +34,24 @@
             <tbody>
             {% for user in users %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="{{ user.id }}">
-                    <td scope="row" class="px-6 py-4">
-                        {{ user.firstname }}
                     </td>
                     <td scope="row" class="px-6 py-4">
                         {{ user.lastname }}
                     </td>
                     <td scope="row" class="px-6 py-4">
+                        {{ user.firstname }}
+                    {# <td scope="row" class="px-6 py-4">
                         {{ user.roles ? user.roles|json_encode : '' }}
+                    </td> #}
+                    <td scope="row" class="px-6 py-4">
+                        {% set roles = user.roles ? user.roles|json_encode : [] %}
+                        {% if 'ROLE_ADMIN' in roles %}
+                            Administrateur
+                        {% elseif 'ROLE_TEACHER' in roles %}
+                            Enseignant
+                        {% elseif 'ROLE_STUDENT' in roles %}
+                            Étudiant
+                        {% endif %}
                     </td>
                     <td scope="row" class="px-6 py-4">
                         {{ user.email }}
