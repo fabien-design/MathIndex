@@ -6,6 +6,7 @@ use App\Entity\Course;
 use App\Form\CourseType;
 use App\Repository\CourseRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +18,18 @@ use Twig\Environment;
 class CourseController extends AbstractController
 {
     #[Route('/', name: 'app_administration_course_index', methods: ['GET'])]
-    public function index(CourseRepository $courseRepository): Response
+    public function index(CourseRepository $courseRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $courses = $courseRepository->findAll();
+
+        $pagination = $paginator->paginate(
+            $courses,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('administration/course/index.html.twig', [
-            'courses' => $courseRepository->findAll(),
+            'courses' => $pagination,
         ]);
     }
 
@@ -41,14 +50,6 @@ class CourseController extends AbstractController
         return $this->render('administration/course/new.html.twig', [
             'course' => $course,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_administration_course_show', methods: ['GET'])]
-    public function show(Course $course): Response
-    {
-        return $this->render('administration/course/show.html.twig', [
-            'course' => $course,
         ]);
     }
 

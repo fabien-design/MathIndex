@@ -6,6 +6,7 @@ use App\Entity\Classroom;
 use App\Form\ClassroomType;
 use App\Repository\ClassroomRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +18,18 @@ use Twig\Environment;
 class ClassroomController extends AbstractController
 {
     #[Route('/', name: 'app_administration_classroom_index', methods: ['GET'])]
-    public function index(ClassroomRepository $classroomRepository): Response
+    public function index(ClassroomRepository $classroomRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $classrooms = $classroomRepository->findAll();
+
+        $pagination = $paginator->paginate(
+            $classrooms,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('administration/classroom/index.html.twig', [
-            'classrooms' => $classroomRepository->findAll(),
+            'classrooms' => $pagination,
         ]);
     }
 
@@ -41,14 +50,6 @@ class ClassroomController extends AbstractController
         return $this->render('administration/classroom/new.html.twig', [
             'classroom' => $classroom,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_administration_classroom_show', methods: ['GET'])]
-    public function show(Classroom $classroom): Response
-    {
-        return $this->render('administration/classroom/show.html.twig', [
-            'classroom' => $classroom,
         ]);
     }
 
@@ -84,6 +85,7 @@ class ClassroomController extends AbstractController
             ]);
 
             return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
+
         }
 
         // Supprimer les exercices associés à la classe
