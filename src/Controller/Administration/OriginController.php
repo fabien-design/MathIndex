@@ -6,6 +6,7 @@ use App\Entity\Origin;
 use App\Form\OriginType;
 use App\Repository\OriginRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +18,18 @@ use Twig\Environment;
 class OriginController extends AbstractController
 {
     #[Route('/', name: 'app_administration_origin_index', methods: ['GET'])]
-    public function index(OriginRepository $originRepository): Response
+    public function index(OriginRepository $originRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $origins = $originRepository->findAll();
+
+        $pagination = $paginator->paginate(
+            $origins,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('administration/origin/index.html.twig', [
-            'origins' => $originRepository->findAll(),
+            'origins' => $pagination,
         ]);
     }
 

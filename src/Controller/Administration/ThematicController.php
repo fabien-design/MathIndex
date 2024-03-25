@@ -25,7 +25,7 @@ class ThematicController extends AbstractController
         $pagination = $paginator->paginate(
             $thematics,
             $request->query->getInt('page', 1),
-            5
+            10
         );
 
         return $this->render('administration/thematic/index.html.twig', [
