@@ -3,10 +3,8 @@
 namespace App\Controller\Administration;
 
 use App\Entity\Skill;
-use App\Entity\Thematic;
 use App\Form\SkillType;
 use App\Repository\SkillRepository;
-use App\Repository\ThematicRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
