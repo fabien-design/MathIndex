@@ -9,7 +9,5 @@ import './styles/app.scss'
 
 import './js/DeleteExercice.js';
 import './js/AddElementIdToDeleteModal.js';
+import './js/SearchFunction.js';
 import './js/keywordsSplit.js';
-
-
-

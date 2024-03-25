@@ -6,6 +6,7 @@ use App\Entity\Course;
 use App\Form\CourseType;
 use App\Repository\CourseRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +18,18 @@ use Twig\Environment;
 class CourseController extends AbstractController
 {
     #[Route('/', name: 'app_administration_course_index', methods: ['GET'])]
-    public function index(CourseRepository $courseRepository): Response
+    public function index(CourseRepository $courseRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $courses = $courseRepository->findAll();
+
+        $pagination = $paginator->paginate(
+            $courses,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('administration/course/index.html.twig', [
-            'courses' => $courseRepository->findAll(),
+            'courses' => $pagination,
         ]);
     }
 
@@ -41,14 +50,6 @@ class CourseController extends AbstractController
         return $this->render('administration/course/new.html.twig', [
             'course' => $course,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_administration_course_show', methods: ['GET'])]
-    public function show(Course $course): Response
-    {
-        return $this->render('administration/course/show.html.twig', [
-            'course' => $course,
         ]);
     }
 
@@ -80,7 +81,7 @@ class CourseController extends AbstractController
             // Rendre le template Twig
             $renderedTemplate = $twig->render('components/Alert.html.twig', [
                 'type' => 'error',
-                'message' => "Vous n'avez pas le droit de supprimer ce cours"
+                'message' => "Vous n'avez pas le droit de supprimer ce cours",
             ]);
 
             return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
@@ -112,15 +113,6 @@ class CourseController extends AbstractController
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template
-        return new JsonResponse(["html" => $renderedTemplate], Response::HTTP_OK);
-    }
-
-    #[Route('/{id}/research', name: 'app_administration_course_research', methods: ['GET'])]
-    public function research(Request $request, Course $course, EntityManagerInterface $entityManager, CourseRepository $courseRepository): JsonResponse
-    {
-        $query = $request->query->get('value');
-        $courses = $courseRepository->findBy(['name' => $query]);
-
-        return new JsonResponse(['course' => $courses], Response::HTTP_OK);
+        return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_OK);
     }
 }

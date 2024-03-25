@@ -7,6 +7,7 @@ use App\Entity\File;
 use App\Form\ExerciseType;
 use App\Repository\ExerciseRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +17,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ExerciseController extends AbstractController
 {
     #[Route('/', name: 'app_administration_exercise_index', methods: ['GET'])]
-    public function index(ExerciseRepository $exerciseRepository): Response
+    public function index(ExerciseRepository $exerciseRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $exercises = $exerciseRepository->findAll();
+
+        $pagination = $paginator->paginate(
+            $exercises,
+            $request->query->getInt('page', 1),
+            5
+        );
+
         return $this->render('administration/exercise/index.html.twig', [
-            'exercises' => $exerciseRepository->findAll(),
+            'exercises' => $pagination,
         ]);
     }
 
@@ -50,14 +59,6 @@ class ExerciseController extends AbstractController
         return $this->render('administration/exercise/new.html.twig', [
             'exercise' => $exercise,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_administration_exercise_show', methods: ['GET'])]
-    public function show(Exercise $exercise): Response
-    {
-        return $this->render('administration/exercise/show.html.twig', [
-            'exercise' => $exercise,
         ]);
     }
 
