@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Exercise;
 use App\Form\ResearchType;
+use App\Repository\ExerciseRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,12 +67,23 @@ class ExerciseController extends AbstractController
     }
 
     #[Route('/exercise/research', name: 'app_research')]
-    public function research(): Response
+    public function research(ExerciseRepository $exerciseRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $form = $this->createForm(ResearchType::class);
 
+        $exercices = $exerciseRepository->findAll();
+        $results = count($exercices);
+
+        $pagination = $paginator->paginate(
+            $exercices,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('exercise/research.html.twig', [
-             'researchForm' => $form,
+            'researchForm' => $form,
+            'exercises' => $pagination,
+            'results' => $results
          ]);
     }
 }
