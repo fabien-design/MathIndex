@@ -44,14 +44,6 @@ class ThematicController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_administration_thematic_show', methods: ['GET'])]
-    public function show(Thematic $thematic): Response
-    {
-        return $this->render('administration/thematic/show.html.twig', [
-            'thematic' => $thematic,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_administration_thematic_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Thematic $thematic, EntityManagerInterface $entityManager): Response
     {
