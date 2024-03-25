@@ -3,6 +3,7 @@
 namespace App\Controller\Administration;
 
 use App\Entity\Exercise;
+use App\Entity\File;
 use App\Form\ExerciseType;
 use App\Repository\ExerciseRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,10 +36,20 @@ class ExerciseController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $exercise = new Exercise();
-        $form = $this->createForm(ExerciseType::class, $exercise);
+        $form = $this->createForm(ExerciseType::class, $exercise, ['validation_groups' => ['new']]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($form['enonceFile']->getData()){
+                $file = new File($form['enonceFile']->getData());
+                $entityManager->persist($file);
+                $exercise->setExerciseFile($file);
+            }
+            if($form['correctFile']->getData()){
+                $correctionFile = new File($form['correctFile']->getData());
+                $entityManager->persist($correctionFile);
+                $exercise->setCorrectionFile($correctionFile);
+            }
             $entityManager->persist($exercise);
             $entityManager->flush();
 
@@ -54,10 +65,21 @@ class ExerciseController extends AbstractController
     #[Route('/{id}/edit', name: 'app_administration_exercise_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Exercise $exercise, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ExerciseType::class, $exercise);
+        $form = $this->createForm(ExerciseType::class, $exercise, ['validation_groups' => ['edit']]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($form['enonceFile']->getData()){
+                $enonceFile = new File($form['enonceFile']->getData());
+                $entityManager->persist($enonceFile);
+                $exercise->setExerciseFile($enonceFile);
+            }
+            if($form['correctFile']->getData()){
+                $correctionFile = new File($form['correctFile']->getData());
+                $entityManager->persist($correctionFile);
+                $exercise->setCorrectionFile($correctionFile);
+            }
+            
             $entityManager->flush();
 
             return $this->redirectToRoute('app_administration_exercise_index', [], Response::HTTP_SEE_OTHER);
