@@ -80,9 +80,10 @@ class ClassroomController extends AbstractController
             // Rendre le template Twig
             $renderedTemplate = $twig->render('components/Alert.html.twig', [
                 'type' => 'error',
-                'message' => "Vous n'avez pas le droit de supprimer cette classe",
+                'message' => "Vous n'avez pas le droit de supprimer cette classe",,
             ]);
 
+            return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
             return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
         }
 
@@ -98,10 +99,10 @@ class ClassroomController extends AbstractController
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',
             'message' => 'Suppression réussie',
+            'message' => 'Suppression réussie',
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template
         return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_OK);
-        // return $this->redirectToRoute('app_administration_classroom_index', [], Response::HTTP_SEE_OTHER);
     }
 }

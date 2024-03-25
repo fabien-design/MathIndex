@@ -31,10 +31,7 @@ class LoginController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // You can handle the login logic here
-            // Typically, you will authenticate the user using Symfony's Security component
 
-            // Example:
             $user = $this->getUser();
 
             return $this->redirectToRoute('app_home');
