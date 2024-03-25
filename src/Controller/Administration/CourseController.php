@@ -80,7 +80,7 @@ class CourseController extends AbstractController
             // Rendre le template Twig
             $renderedTemplate = $twig->render('components/Alert.html.twig', [
                 'type' => 'error',
-                'message' => "Vous n'avez pas le droit de supprimer ce cours"
+                'message' => "Vous n'avez pas le droit de supprimer ce cours",
             ]);
 
             return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
@@ -112,7 +112,7 @@ class CourseController extends AbstractController
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template
-        return new JsonResponse(["html" => $renderedTemplate], Response::HTTP_OK);
+        return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_OK);
     }
 
     #[Route('/{id}/research', name: 'app_administration_course_research', methods: ['GET'])]
