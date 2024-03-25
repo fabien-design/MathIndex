@@ -77,6 +77,11 @@ table {
     }
 }
 
+.keywordsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
 .keyword {
     display: block;
     height: fit-content;
