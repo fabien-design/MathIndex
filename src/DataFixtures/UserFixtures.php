@@ -24,22 +24,16 @@ class UserFixtures extends Fixture
             'role' => 'ROLE_ADMIN',
         ],
         [
-            'firstname' => 'Lucas',
-            'lastname' => 'Dupas',
-            'email' => 'student@example.com',
-            'role' => 'ROLE_STUDENT',
-        ],
-        [
             'firstname' => 'Laurent',
             'lastname' => 'Guyard',
             'email' => 'mathteacher@example.com',
-            'role' => 'ROLE_TEACHER',
+            'role' => 'ROLE_CONTRIBUTOR',
         ],
         [
             'firstname' => 'Virginie',
             'lastname' => 'Hougron',
             'email' => 'frteacher@example.com',
-            'role' => 'ROLE_TEACHER',
+            'role' => 'ROLE_CONTRIBUTOR',
         ],
     ];
 

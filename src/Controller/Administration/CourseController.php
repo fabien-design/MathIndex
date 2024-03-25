@@ -82,7 +82,8 @@ class CourseController extends AbstractController
                 'type' => 'error',
                 'message' => "Vous n'avez pas le droit de supprimer ce cours"
             ]);
-            return new JsonResponse(["html" => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
+
+            return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
         }
 
         // Supprimer les exercices associés au cours
@@ -107,7 +108,7 @@ class CourseController extends AbstractController
 
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',
-            'message' => 'Suppression réussie'
+            'message' => 'Suppression réussie',
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template

@@ -12,11 +12,7 @@ class CourseController extends AbstractController
     #[Route('/matiere/{course}', name: 'app_course')]
     public function index(Course $course): Response
     {
-        $exercises = ($course->getExercises());
-        // foreach($exercises as $exercises){
-        //     var_dump($exercises->getName());
-        // }
-        // die;
+        $exercises = $course->getExercises();
 
         return $this->render('course/index.html.twig', [
             'controller_name' => 'CourseController',

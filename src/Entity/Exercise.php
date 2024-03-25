@@ -291,7 +291,7 @@ class Exercise
 
     public function getCreatedAt(): string
     {
-        return $this->createdAt;
+        return $this->createdAt->format('Y-m-d H:i:s');
     }
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
