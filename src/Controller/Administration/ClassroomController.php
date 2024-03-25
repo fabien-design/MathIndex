@@ -80,7 +80,7 @@ class ClassroomController extends AbstractController
             // Rendre le template Twig
             $renderedTemplate = $twig->render('components/Alert.html.twig', [
                 'type' => 'error',
-                'message' => "Vous n'avez pas le droit de supprimer cette classe",,
+                'message' => "Vous n'avez pas le droit de supprimer cette classe",
             ]);
 
             return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
