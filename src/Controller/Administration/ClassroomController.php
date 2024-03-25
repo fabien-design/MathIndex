@@ -84,7 +84,6 @@ class ClassroomController extends AbstractController
             ]);
 
             return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
-            return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
         }
 
         // Supprimer les exercices associés à la classe
