@@ -20,4 +20,13 @@ class OriginRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Origin::class);
     }
+
+    public function findByName($value): array
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.name LIKE :val')
+            ->setParameter('val', '%'.$value.'%')
+            ->getQuery()
+            ->getResult();
+    }
 }

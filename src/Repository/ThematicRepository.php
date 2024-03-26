@@ -20,4 +20,13 @@ class ThematicRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Thematic::class);
     }
+
+    public function findByName($value): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.name LIKE :val')
+            ->setParameter('val', '%'.$value.'%')
+            ->getQuery()
+            ->getResult();
+    }
 }

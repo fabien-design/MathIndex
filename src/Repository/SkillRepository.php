@@ -20,4 +20,13 @@ class SkillRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Skill::class);
     }
+
+    public function findByName($value): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.name LIKE :val')
+            ->setParameter('val', '%'.$value.'%')
+            ->getQuery()
+            ->getResult();
+    }
 }

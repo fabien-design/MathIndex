@@ -1,4 +1,5 @@
 import { initFlowbite } from 'flowbite'
+import { keywordsSplit } from './keywordsSplit';
 
 
 class AdminSearch {
@@ -47,6 +48,7 @@ class AdminSearch {
                         });
                     });
                     initFlowbite(); // refresh data-modal attribute
+                    document.querySelector(".keywordsContainer") && keywordsSplit(); // refresh keywords attribute
                 })
                 .catch(error => {
                     document.querySelector("tbody").innerHTML = TableContent;

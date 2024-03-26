@@ -55,6 +55,12 @@ div:has(> table){
     @apply relative overflow-x-auto shadow-md sm:rounded-lg;
 }
 
+.administrationContainer h2{
+    @apply text-2xl font-bold py-5;
+    margin: 0 !important;
+
+}
+
 table {
     border: 1px solid #E7E7E7;
     @apply w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400;
@@ -66,6 +72,7 @@ table {
 
     th{
         font-weight: 400 !important;
+        font-size: 15px !important;
     }
 
     th,

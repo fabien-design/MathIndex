@@ -17,6 +17,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class ExerciseType extends AbstractType
@@ -53,38 +54,46 @@ class ExerciseType extends AbstractType
             ->add('enonceFile', FileType::class, [
                 'mapped' => false,
                 'required' => false,
-                'attr' => [
-                    'accept' => '.pdf, application/pdf, .doc, .docx, .odt'
-                ],
                 'constraints' => [
+                    new NotBlank(['groups' => ['new'], 'message' => "Le fichier du sujet est obligatoire."]),
                     new \Symfony\Component\Validator\Constraints\File([
                         'mimeTypes' => [
                             'application/pdf',
-                            'application/msword',       // MIME type for .doc files
-                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // MIME type for .docx files
-                            'application/vnd.oasis.opendocument.text', // MIME type for .odt files
+                            'application/msword',
+                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                            'application/vnd.oasis.opendocument.text',
                         ],
+                        'groups' => ['new'],
+                        'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF, DOC ou ODT valide.',
                     ]),
-                ]
+                ],
+                'attr' => [
+                    'accept' => '.pdf,.doc,.docx,.odt',
+                ],
             ])
-            
             ->add('correctFile', FileType::class, [
                 'mapped' => false,
                 'required' => false,
-                'attr' => [
-                    'accept' => '.pdf, application/pdf, .doc, .docx, .odt'
-                ],
                 'constraints' => [
+                    new NotBlank(['groups' => ['new'], 'message' => "Le fichier de correction est obligatoire."]),
                     new \Symfony\Component\Validator\Constraints\File([
                         'mimeTypes' => [
                             'application/pdf',
-                            'application/msword',       // MIME type for .doc files
-                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // MIME type for .docx files
-                            'application/vnd.oasis.opendocument.text', // MIME type for .odt files
+                            'application/msword',
+                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                            'application/vnd.oasis.opendocument.text',
                         ],
+                        'groups' => ['new'],
+                        'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF, DOC ou ODT valide.',
                     ]),
-                ]
+                ],
+                'attr' => [
+                    'accept' => '.pdf,.doc,.docx,.odt',
+                ],
             ])
+            
+            
+            
             ->add('createdBy', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'id',
