@@ -24,7 +24,7 @@ class ExerciseRepository extends ServiceEntityRepository
     public function findExercise($searchTerm): array
     {
         $qb = $this->createQueryBuilder('c');
-        
+
         $qb->innerJoin('c.course', 'course')
         ->innerJoin('c.classroom', 'classroom')
         ->innerJoin('c.thematic', 'thematic')
@@ -46,10 +46,8 @@ class ExerciseRepository extends ServiceEntityRepository
                 $qb->expr()->like('origin.name', ':search'),
             )
         )
-        ->setParameter('search', '%' . $searchTerm . '%');
+        ->setParameter('search', '%'.$searchTerm.'%');
 
         return $qb->getQuery()->getResult();
     }
-
-
 }

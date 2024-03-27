@@ -30,7 +30,6 @@ class SearchController extends AbstractController
             $query = strip_tags($query);
             $html = '';
             switch ($entity) {
-
                 case 'user':
                     $values = $userRepository->findByName($query);
                     if (empty($values)) {
@@ -39,7 +38,7 @@ class SearchController extends AbstractController
                     foreach ($values as $item) {
                         $roles = $item->getRoles();
                         $roleLabel = '';
-                
+
                         if (in_array('ROLE_ADMIN', $roles)) {
                             $roleLabel = 'Administrateur';
                         } elseif (in_array('ROLE_TEACHER', $roles)) {
@@ -47,7 +46,7 @@ class SearchController extends AbstractController
                         } elseif (in_array('ROLE_STUDENT', $roles)) {
                             $roleLabel = 'Étudiant';
                         }
-                
+
                         $html .= '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="'.$item->getId().'">
                         <td scope="row" class="px-6 py-4">'.$item->getLastname().'</td>
                         <td scope="row" class="px-6 py-4">'.$item->getFirstname().'</td>
@@ -62,7 +61,6 @@ class SearchController extends AbstractController
                         </tr>';
                     }
                     break;
-                
 
                 case 'exercise':
                     $values = $exerciseRepository->findExercise($query);
@@ -77,8 +75,8 @@ class SearchController extends AbstractController
                             <td scope="row" class="px-6 py-4">'.$item->getThematic()->getName().'</td>
                             <td scope="row" class="px-6 py-4">'.$item->getChapter().'</td>
                             <td scope="row" class="px-6 py-4 keywordsContainer">'.$item->getKeywords().'</td>
-                            <td scope="row" class="px-6 py-4">'.$item->getDifficulty().'</td>
-                            <td scope="row" class="px-6 py-4">'.$item->getDuration().'</td>
+                            <td scope="row" class="px-6 py-4">Niveau&nbsp;'.$item->getDifficulty().'</td>
+                            <td scope="row" class="px-6 py-4 durationToDatetime">'.$item->getDuration().'</td>
                             <td scope="row" class="px-6 py-4">'.$item->getOrigin()->getName().'</td>
                             <td scope="row" class="px-6 py-4">'.$item->getOriginInformation().'</td>
                             <td scope="row" class="px-6 py-4">'.$item->getProposedByType().'</td>

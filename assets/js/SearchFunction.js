@@ -1,5 +1,6 @@
 import { initFlowbite } from 'flowbite'
 import { keywordsSplit } from './keywordsSplit';
+import { durationToDatetime } from './durationToDatetime';
 
 
 class AdminSearch {
@@ -49,6 +50,8 @@ class AdminSearch {
                     });
                     initFlowbite(); // refresh data-modal attribute
                     document.querySelector(".keywordsContainer") && keywordsSplit(); // refresh keywords attribute
+                    document.querySelector(".durationToDatetime") && durationToDatetime(); // refresh duration attribute
+                    
                 })
                 .catch(error => {
                     document.querySelector("tbody").innerHTML = TableContent;

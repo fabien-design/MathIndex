@@ -1,13 +1,6 @@
-{# tailwindcss Sliding pagination control implementation #}
 {% if pageCount > 1 %}
     <div class="inline-block">
         <div class="flex gap-2 pagination">
-
-        {# {% if first is defined and current != first %}
-            <span class="">
-                <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">&lt;&lt;</a>
-            </span>
-        {% endif %} #}
 
         {% if previous is defined %}
             <span class="prev">
@@ -85,11 +78,6 @@
             </span>
         {% endif %}
 
-        {# {% if last is defined and current != last %}
-            <span class="">
-                <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">&gt;&gt;</a>
-            </span>
-        {% endif %} #}
         </div>
     </div>
 {% endif %}
