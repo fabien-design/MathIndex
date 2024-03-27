@@ -98,7 +98,7 @@ class SearchController extends AbstractController
                 case 'course':
                     $values = $courseRepository->findByName($query);
                     if (empty($values)) {
-                        $html = '<tr><td colspan="2" class="text-center text-lg p-4">Aucune matière trouvée.</td></tr>';
+                        $html = '<tr><td colspan="2" class="text-center text-lg p-4">Aucune matière "'.$query.'" n\'a été trouvée.</td></tr>';
                     }
                     foreach ($values as $item) {
                         $html .= '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="'.$item->getId().'">
