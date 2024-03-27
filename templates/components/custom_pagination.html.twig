@@ -21,7 +21,26 @@
             </span>
         {% endif %}
 
-        {% for page in pagesInRange %}
+        {% if current > 2  %}
+            <span class="">
+                <a href="{{ path(route, query|merge({(pageParameterName): 1 })) }}">{{ 1 }}</a>
+            </span>
+
+            {% if current > 3 and current == pageCount %}
+            <span class="">
+                <a href="{{ path(route, query|merge({(pageParameterName): 2 })) }}">{{ 2 }}</a>
+            </span>
+            {% endif %}
+            
+
+            {% if current > 3 and pageCount > 4 %}
+            <span class="">
+                <span>...</span>
+            </span>
+            {% endif %}
+        {% endif %}
+
+        {% for page in range(current - 1 < 1 ? 1 : current - 1, current + 1 > pageCount ? pageCount : current + 1 ) %}
             {% if page != current %}
                 <span class="">
                     <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
@@ -32,6 +51,27 @@
                 </span>
             {% endif %}
         {% endfor %}
+
+        {% if current < pageCount - 1  %}
+
+            {% if current < pageCount - 2  and pageCount > 4 %}
+                <span class="">
+                    <span>...</span>
+                </span>
+            {% endif %}
+            
+            {% if current < pageCount - 2 and current == 1 %}
+            <span class="">
+                <a href="{{ path(route, query|merge({(pageParameterName): pageCount - 1 })) }}">{{ pageCount - 1 }}</a>
+            </span>
+            {% endif %}
+
+            {% if current < pageCount - 1 %}
+            <span class="">
+                <a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}">{{ pageCount }}</a>
+            </span>
+            {% endif %}
+        {% endif %}
 
         {% if next is defined %}
             <span class="next">
