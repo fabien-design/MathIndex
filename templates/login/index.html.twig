@@ -33,7 +33,7 @@
     {# Bouton de soumission #}
     <div class="flex items-center justify-between">
         {{ form_widget(form.submit) }}
-        <a href="#" class="text-gray-500">Mot de passe oublié ?</a>     
+        <a href="{{ path('app_reset_password') }}" class="text-gray-500">Mot de passe oublié ?</a>     
     </div>
 
     {# Fin du formulaire #}
