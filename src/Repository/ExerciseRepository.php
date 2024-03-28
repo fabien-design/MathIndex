@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Classroom;
 use App\Entity\Exercise;
+use App\Entity\Thematic;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,28 +23,40 @@ class ExerciseRepository extends ServiceEntityRepository
         parent::__construct($registry, Exercise::class);
     }
 
-    //    /**
-    //     * @return Exercise[] Returns an array of Exercise objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findExercisesByResearch(?Thematic $thematic, ?Classroom $classroom, ?array $keywords)
+    {
+        $qb = $this->createQueryBuilder('ex');
 
-    //    public function findOneBySomeField($value): ?Exercise
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+            // Cas où tous les champs sont remplis
+            $qb->join('ex.thematic', 't')
+                ->join('ex.classroom', 'c');
+                if ($thematic != null){
+                    $qb->where('t.name = :thematicName')
+                        ->setParameter('thematicName', $thematic->getName());
+                }
+               if ($classroom != null){
+                   $qb->andWhere('c.name = :className')
+                       ->setParameter('className', $classroom->getName());
+               }
+                if (!empty($keywords)) {
+                    // Cas où seulement les mots-clés sont remplis
+                    $andExpr = null;
+
+                    foreach ($keywords as $keyword) {
+                        $likeExpr = $qb->expr()->like('ex.keywords', $qb->expr()->literal('%'.$keyword.'%'));
+
+                        if (null === $andExpr) {
+                            $andExpr = $likeExpr;
+                        } else {
+                            $andExpr = $qb->expr()->andX($andExpr, $likeExpr);
+                        }
+                    }
+
+                    if (null !== $andExpr) {
+                        $qb->andWhere($andExpr);
+                    }
+                }
+
+        return $qb->getQuery()->getResult();
+    }
 }

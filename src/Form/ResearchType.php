@@ -18,14 +18,13 @@ class ResearchType extends AbstractType
     {
         $builder
             ->add('keywords', TextType::class, [
-                    'label' => 'Mots-clés',
-                    'required' => false,
-                    'attr' => [
+                'label' => 'Mots-clés',
+                'required' => false,
+                'attr' => [
                     'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] ',
-                    ],
-                ]
-            )
-            ->add('thematics', EntityType::class, [
+                ],
+            ])
+            ->add('thematic', EntityType::class, [
                 'class' => Thematic::class,
                 'choice_label' => 'name',
                 'label' => 'Thématiques',
@@ -35,7 +34,7 @@ class ResearchType extends AbstractType
                     'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] ',
                 ],
             ])
-            ->add('levels', EntityType::class, [
+            ->add('classroom', EntityType::class, [
                 'class' => Classroom::class,
                 'choice_label' => 'name',
                 'label' => 'Niveaux',
@@ -48,7 +47,7 @@ class ResearchType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher',
                 'attr' => [
-                'class' => 'flex items-center justify-center px-8 bg-gray-100 rounded-lg w-full h-[56px] text-[#757575] hover:bg-gray-200 transition-all hover:text-[#4D4D4D]',
+                    'class' => 'flex items-center justify-center px-8 bg-gray-100 rounded-lg w-full h-[56px] text-[#757575] hover:bg-gray-200 transition-all hover:text-[#4D4D4D]',
                 ],
             ])
         ;

@@ -69,12 +69,12 @@ class Exercise
     #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]
     private \DateTimeImmutable $createdAt;
 
-    #[Assert\NotBlank(groups: ['new'], message: "Le fichier du sujet est obligatoire")]
+    #[Assert\NotBlank(groups: ['new'], message: 'Le fichier du sujet est obligatoire')]
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?File $exerciseFile = null;
 
-    #[Assert\NotBlank(groups: ['new'], message: "Le fichier de correction est obligatoire")]
+    #[Assert\NotBlank(groups: ['new'], message: 'Le fichier de correction est obligatoire')]
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?File $correctionFile = null;
@@ -87,7 +87,6 @@ class Exercise
     {
         $this->createdAt = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
     }
-
 
     public function getId(): ?int
     {
@@ -302,5 +301,4 @@ class Exercise
     {
         return $this->createdAt->format('Y-m-d H:i:s');
     }
-
 }

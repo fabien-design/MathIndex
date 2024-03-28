@@ -5,19 +5,17 @@ namespace App\Form;
 use App\Entity\Classroom;
 use App\Entity\Course;
 use App\Entity\Exercise;
-use App\Entity\File;
 use App\Entity\Origin;
 use App\Entity\Thematic;
 use App\Entity\User;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class ExerciseType extends AbstractType
 {
@@ -54,7 +52,7 @@ class ExerciseType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'attr' => [
-                    'accept' => '.pdf, application/pdf, .doc, .docx, .odt'
+                    'accept' => '.pdf, application/pdf, .doc, .docx, .odt',
                 ],
                 'constraints' => [
                     new \Symfony\Component\Validator\Constraints\File([
@@ -65,14 +63,14 @@ class ExerciseType extends AbstractType
                             'application/vnd.oasis.opendocument.text', // MIME type for .odt files
                         ],
                     ]),
-                ]
+                ],
             ])
-            
+
             ->add('correctFile', FileType::class, [
                 'mapped' => false,
                 'required' => false,
                 'attr' => [
-                    'accept' => '.pdf, application/pdf, .doc, .docx, .odt'
+                    'accept' => '.pdf, application/pdf, .doc, .docx, .odt',
                 ],
                 'constraints' => [
                     new \Symfony\Component\Validator\Constraints\File([
@@ -83,7 +81,7 @@ class ExerciseType extends AbstractType
                             'application/vnd.oasis.opendocument.text', // MIME type for .odt files
                         ],
                     ]),
-                ]
+                ],
             ])
             ->add('createdBy', EntityType::class, [
                 'class' => User::class,

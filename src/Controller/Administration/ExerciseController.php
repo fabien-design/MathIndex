@@ -40,12 +40,12 @@ class ExerciseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($form['enonceFile']->getData()){
+            if ($form['enonceFile']->getData()) {
                 $file = new File($form['enonceFile']->getData());
                 $entityManager->persist($file);
                 $exercise->setExerciseFile($file);
             }
-            if($form['correctFile']->getData()){
+            if ($form['correctFile']->getData()) {
                 $correctionFile = new File($form['correctFile']->getData());
                 $entityManager->persist($correctionFile);
                 $exercise->setCorrectionFile($correctionFile);
@@ -69,17 +69,17 @@ class ExerciseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($form['enonceFile']->getData()){
+            if ($form['enonceFile']->getData()) {
                 $enonceFile = new File($form['enonceFile']->getData());
                 $entityManager->persist($enonceFile);
                 $exercise->setExerciseFile($enonceFile);
             }
-            if($form['correctFile']->getData()){
+            if ($form['correctFile']->getData()) {
                 $correctionFile = new File($form['correctFile']->getData());
                 $entityManager->persist($correctionFile);
                 $exercise->setCorrectionFile($correctionFile);
             }
-            
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_administration_exercise_index', [], Response::HTTP_SEE_OTHER);

@@ -69,13 +69,23 @@ class ExerciseController extends AbstractController
     #[Route('/exercise/research', name: 'app_research')]
     public function research(ExerciseRepository $exerciseRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $form = $this->createForm(ResearchType::class);
+        $form = $this->createForm(ResearchType::class)->handleRequest($request);
+        $exercises = $exerciseRepository->findAll();
 
-        $exercices = $exerciseRepository->findAll();
-        $results = count($exercices);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+
+            $classroom = $formData->getClassroom();
+            $thematic = $formData->getThematic();
+            $keywords = explode('/', $formData->getKeywords());
+
+            $exercises = $exerciseRepository->findExercisesByResearch($thematic, $classroom, $keywords);
+        }
+
+        $results = count($exercises);
 
         $pagination = $paginator->paginate(
-            $exercices,
+            $exercises,
             $request->query->getInt('page', 1),
             10
         );
@@ -83,7 +93,7 @@ class ExerciseController extends AbstractController
         return $this->render('exercise/research.html.twig', [
             'researchForm' => $form,
             'exercises' => $pagination,
-            'results' => $results
+            'results' => $results,
          ]);
     }
 }

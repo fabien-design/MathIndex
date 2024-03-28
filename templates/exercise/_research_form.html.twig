@@ -1,0 +1,17 @@
+{{ form_start(researchForm) }}
+<div class="levels flex flex-col ">
+    {{ form_label(researchForm.classroom) }}
+    {{ form_widget(researchForm.classroom) }}
+</div>
+<div class="thematics flex flex-col ">
+    {{ form_label(researchForm.thematic) }}
+    {{ form_widget(researchForm.thematic) }}
+</div>
+<div class="keywords flex flex-col ">
+    {{ form_label(researchForm.keywords) }}
+    {{ form_widget(researchForm.keywords) }}
+</div>
+<div class="submitButton">
+    {{ form_label(researchForm.submit)}}
+</div>
+{{ form_end(researchForm) }}
