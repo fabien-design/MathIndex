@@ -45,7 +45,7 @@ class ExerciseType extends AbstractType
         ->add('chapter', TextType::class, [
             'label' => 'Chapitre du cours :',
             ])
-        ->add('keywords', TextareaType::class, [
+        ->add('keywords', TextType::class, [
             'label' => 'Mots clés :',
             'attr' => ['class' => 'exerciseKeywords'],
             ])
