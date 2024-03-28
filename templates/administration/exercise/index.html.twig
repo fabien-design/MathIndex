@@ -6,10 +6,10 @@
     {{ component('DeleteModal', {  message: 'Êtes-vous certain de vouloir supprimer cet exercice ?' } ) }}
     <h2 class="text-xl font-bold py-5">Gestion des Exercices</h2>
     <div class="flex w-full mb-5 justify-between">
-        <form class="flex items-end  pr-10">   
+        <form class="flex items-end  pr-10" id="researchForm">   
             <div class="relative w-full">
-                <label for="voice-search" class="text-stone-500 text-md">Rechercher un exercice par nom :</label>
-                <input type="text" id="voice-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+                <label for="search" class="text-stone-500 text-md">Rechercher un exercice par n'importe quel champ :</label>
+                <input type="text" id="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
             </div>
             <button type="submit" class="inline-flex items-center py-2.5 px-3 ms-2 text-md font-medium  bg-gray-100 rounded-lg border border-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300">
                 Rechercher
@@ -25,6 +25,9 @@
             <thead>
                 <tr>
                     <th>Nom</th>
+                    <th>Matière</th>
+                    <th>Classe</th>
+                    <th>Thématique</th>
                     <th>Chapitre</th>
                     <th>Mots Clés</th>
                     <th>Difficulté</th>
@@ -42,10 +45,13 @@
             {% for exercise in exercises %}
                 <tr>
                     <td>{{ exercise.name }}</td>
+                    <td>{{ exercise.course.name }}</td>
+                    <td>{{ exercise.classroom.name }}</td>
+                    <td>{{ exercise.thematic.name }}</td>
                     <td>{{ exercise.chapter }}</td>
                     <td class="keywordsContainer">{{ exercise.keywords }}</td>
-                    <td>{{ exercise.difficulty }}</td>
-                    <td>{{ exercise.duration }}</td>
+                    <td>Niveau&nbsp;{{ exercise.difficulty }}</td>
+                    <td class="durationToDatetime">{{ exercise.duration }}</td>
                     <td>{{ exercise.originName }}</td>
                     <td>{{ exercise.originInformation }}</td>
                     <td>{{ exercise.proposedByType }}</td>
@@ -61,7 +67,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="13">no records found</td>
+                    <td colspan="13">Aucun exercice n'a été trouvée.</td>
                 </tr>
             {% endfor %}
             </tbody>

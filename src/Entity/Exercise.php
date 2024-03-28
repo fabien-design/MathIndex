@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\ExerciseRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ExerciseRepository::class)]
@@ -69,12 +68,10 @@ class Exercise
     #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]
     private \DateTimeImmutable $createdAt;
 
-    #[Assert\NotBlank(groups: ['new'], message: "Le fichier du sujet est obligatoire")]
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?File $exerciseFile = null;
 
-    #[Assert\NotBlank(groups: ['new'], message: "Le fichier de correction est obligatoire")]
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?File $correctionFile = null;
@@ -87,7 +84,6 @@ class Exercise
     {
         $this->createdAt = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
     }
-
 
     public function getId(): ?int
     {
@@ -302,5 +298,4 @@ class Exercise
     {
         return $this->createdAt->format('Y-m-d H:i:s');
     }
-
 }

@@ -213,9 +213,9 @@
 			{# Main Content #}
 			<div class="p-4 md:border-2 border-gray-200 md:border-dashed rounded-lg dark:border-gray-700 md:mt-0 mt-3 transition-all md:m-4 ">
 				<div class="md:bg-gray-100 dark:bg-gray-800 md:px-8 md:py-14 h-full">
-					<h1 class="text-cse text-2xl font-bold pb-8">Administration</h1>
+					<h1 class="text-cse text-3xl font-semibold">Administration</h1>
 
-					<ul id="navigation" class="flex flex-wrap text-sm  gap-3 font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+					<ul id="navigation" class="flex flex-wrap text-sm  gap-3 font-medium text-center border-b md:border-0 text-gray-500 dark:text-gray-400 pb-3 md:pb-0">
 						<li class="me-2">
 							<a href="{{path("app_administration_user_index") }}" class="bg-cse text-white opacity-80 inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Contributeurs</a>
 						</li>
@@ -240,7 +240,7 @@
 						
 					</ul>
 
-					<div class="bg-white rounded-b-lg px-12 pb-6">
+					<div class="administrationContainer md:bg-white rounded-b-lg px-4 md:px-12 md:pb-6">
 						{% block body %}
 							{# First Square #}
 							<div class="flex items-center justify-center h-24 rounded dark:bg-gray-800"></div>

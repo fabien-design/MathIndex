@@ -21,28 +21,33 @@ class ExerciseRepository extends ServiceEntityRepository
         parent::__construct($registry, Exercise::class);
     }
 
-    //    /**
-    //     * @return Exercise[] Returns an array of Exercise objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findExercise($searchTerm): array
+    {
+        $qb = $this->createQueryBuilder('c');
 
-    //    public function findOneBySomeField($value): ?Exercise
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $qb->innerJoin('c.course', 'course')
+        ->innerJoin('c.classroom', 'classroom')
+        ->innerJoin('c.thematic', 'thematic')
+        ->innerJoin('c.origin', 'origin')
+        ->innerJoin('c.createdBy', 'createdBy')
+        ->andWhere(
+            $qb->expr()->orX(
+                $qb->expr()->like('c.name', ':search'),
+                $qb->expr()->like('c.chapter', ':search'),
+                $qb->expr()->like('c.keywords', ':search'),
+                $qb->expr()->like('c.originName', ':search'),
+                $qb->expr()->like('c.proposedByType', ':search'),
+                $qb->expr()->like('c.proposedByFirstName', ':search'),
+                $qb->expr()->like('c.proposedByLasName', ':search'),
+                $qb->expr()->like('c.createdAt', ':search'),
+                $qb->expr()->like('course.name', ':search'),
+                $qb->expr()->like('classroom.name', ':search'),
+                $qb->expr()->like('thematic.name', ':search'),
+                $qb->expr()->like('origin.name', ':search'),
+            )
+        )
+        ->setParameter('search', '%'.$searchTerm.'%');
+
+        return $qb->getQuery()->getResult();
+    }
 }

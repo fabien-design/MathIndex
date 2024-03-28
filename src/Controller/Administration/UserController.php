@@ -42,7 +42,7 @@ class UserController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['user_roles' => $user->getRoles()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -69,7 +69,7 @@ class UserController extends AbstractController
     #[Route('/user/{id}/edit', name: 'app_administration_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['user_roles' => $user->getRoles()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

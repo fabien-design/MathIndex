@@ -11,3 +11,5 @@ import './js/DeleteExercice.js';
 import './js/AddElementIdToDeleteModal.js';
 import './js/SearchFunction.js';
 import './js/keywordsSplit.js';
+import './js/showRepeatPassword.js';
+import './js/durationToDatetime.js';

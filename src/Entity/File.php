@@ -4,9 +4,8 @@ namespace App\Entity;
 
 use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
-use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 #[Vich\Uploadable]
@@ -19,7 +18,7 @@ class File
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
-    
+
     #[Vich\UploadableField(mapping: 'file', fileNameProperty: 'name', originalName: 'originalName', size: 'size', mimeType: 'extension')]
     private ?SymfonyFile $imageFile = null;
 
@@ -116,5 +115,4 @@ class File
     {
         return $this->imageFile;
     }
-
 }
