@@ -20,7 +20,23 @@ export function keywordsToTags(){
     let div = textarea.parentElement;
     let keywordsContainer = div.appendChild(document.createElement("div"));
     keywordsContainer.classList.add("keywordsContainer");
-    console.log(keywordsContainer);
+    keywordsContainer.classList.add("cross");
+
+    if(textarea.value != ""){
+        let keywords = textarea.value;
+        let splittedKeywords = keywords.split("@");
+        splittedKeywords.forEach((keyword) => {
+            if (keyword != ""){
+                let span = document.createElement('span');
+                span.classList.add('keyword');
+                span.textContent = keyword;
+                keywordsContainer.appendChild(span);
+                keywordsContainer.style.paddingTop = "10px";
+                textarea.value = "";
+            }
+        });
+    }
+
     textarea.addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             keywordsContainer.style.paddingTop = "10px";
