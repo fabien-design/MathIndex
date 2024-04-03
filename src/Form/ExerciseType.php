@@ -45,10 +45,57 @@ class ExerciseType extends AbstractType
         ->add('chapter', TextType::class, [
             'label' => 'Chapitre du cours :',
             ])
+
         ->add('keywords', TextareaType::class, [
             'label' => 'Mots clés :',
             'attr' => ['class' => 'exerciseKeywords'],
-            ])
+        ])
+        ->add('thematic', EntityType::class, [
+            'class' => Thematic::class,
+            'choice_label' => 'name',
+        ])
+        ->add('origin', EntityType::class, [
+            'class' => Origin::class,
+            'choice_label' => 'name',
+        ])
+        ->add('enonceFile', FileType::class, [
+            'mapped' => false,
+            'required' => false,
+            'attr' => [
+                'accept' => '.pdf, application/pdf, .doc, .docx, .odt',
+            ],
+            'constraints' => [
+                new \Symfony\Component\Validator\Constraints\File([
+                    'mimeTypes' => [
+                        'application/pdf',
+                        'application/msword',       // MIME type for .doc files
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // MIME type for .docx files
+                        'application/vnd.oasis.opendocument.text', // MIME type for .odt files
+                    ],
+                ]),
+            ],
+        ])
+        ->add('correctFile', FileType::class, [
+            'mapped' => false,
+            'required' => false,
+            'attr' => [
+                'accept' => '.pdf, application/pdf, .doc, .docx, .odt',
+            ],
+            'constraints' => [
+                new \Symfony\Component\Validator\Constraints\File([
+                    'mimeTypes' => [
+                        'application/pdf',
+                        'application/msword',       // MIME type for .doc files
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // MIME type for .docx files
+                        'application/vnd.oasis.opendocument.text', // MIME type for .odt files
+                    ],
+                ]),
+            ],
+        ])
+        ->add('createdBy', EntityType::class, [
+            'class' => User::class,
+            'choice_label' => 'id',
+        ])
         ->add('difficulty', ChoiceType::class, [
             'label' => 'Difficulté * :',
             'choices' => [
