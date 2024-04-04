@@ -115,6 +115,44 @@ aside{
     align-items: center;
 }
 
+.cross{
+    span{
+        transition: all 0.3s ease-in-out;
+        position: relative;
+        display: flex;
+        &:hover{
+
+            &::after{
+                background-color: #ef9a9a;
+                cursor: pointer;
+                color: white;
+            }
+        }
+        &::after {
+            font-family: "FontAwesome";
+            content: '\f00d';
+            position: relative;
+            margin-left: 5px;
+            padding: 2px;
+            border: 0px solid red;
+            border-radius: 5rem;
+            width: 20px;
+            display: flex;
+            height: 20px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            color: #757575;
+            font-weight: 500;
+            transition: all 0.3s ease-in-out;
+        }
+    }
+    span::after:hover {
+        background-color: #ee8282;
+        transform: scale(1.1);
+    }
+}
+
 .keyword {
     display: block;
     height: fit-content;

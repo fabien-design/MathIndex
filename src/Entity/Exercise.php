@@ -34,7 +34,7 @@ class Exercise
     #[ORM\Column(length: 255)]
     private ?string $chapter = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $keywords = null;
 
     #[ORM\Column]
@@ -68,12 +68,10 @@ class Exercise
     #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]
     private \DateTimeImmutable $createdAt;
 
-    #[Assert\NotBlank(groups: ['new'], message: 'Le fichier du sujet est obligatoire')]
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?File $exerciseFile = null;
 
-    #[Assert\NotBlank(groups: ['new'], message: 'Le fichier de correction est obligatoire')]
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?File $correctionFile = null;
@@ -157,7 +155,7 @@ class Exercise
         return $this->keywords;
     }
 
-    public function setKeywords(string $keywords): static
+    public function setKeywords(?string $keywords): static
     {
         $this->keywords = $keywords;
 

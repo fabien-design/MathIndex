@@ -12,8 +12,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -45,57 +45,17 @@ class ExerciseType extends AbstractType
         ->add('chapter', TextType::class, [
             'label' => 'Chapitre du cours :',
             ])
-
-        ->add('keywords', TextareaType::class, [
-            'label' => 'Mots clés :',
-            'attr' => ['class' => 'exerciseKeywords'],
-        ])
-        ->add('thematic', EntityType::class, [
-            'class' => Thematic::class,
-            'choice_label' => 'name',
-        ])
-        ->add('origin', EntityType::class, [
-            'class' => Origin::class,
-            'choice_label' => 'name',
-        ])
-        ->add('enonceFile', FileType::class, [
-            'mapped' => false,
+        ->add('keywords', HiddenType::class, [
+            'label' => 'Les vrais ots clés :',
+            'attr' => ['class' => 'hidden realExerciseKeywords'],
             'required' => false,
-            'attr' => [
-                'accept' => '.pdf, application/pdf, .doc, .docx, .odt',
-            ],
-            'constraints' => [
-                new \Symfony\Component\Validator\Constraints\File([
-                    'mimeTypes' => [
-                        'application/pdf',
-                        'application/msword',       // MIME type for .doc files
-                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // MIME type for .docx files
-                        'application/vnd.oasis.opendocument.text', // MIME type for .odt files
-                    ],
-                ]),
-            ],
-        ])
-        ->add('correctFile', FileType::class, [
-            'mapped' => false,
-            'required' => false,
-            'attr' => [
-                'accept' => '.pdf, application/pdf, .doc, .docx, .odt',
-            ],
-            'constraints' => [
-                new \Symfony\Component\Validator\Constraints\File([
-                    'mimeTypes' => [
-                        'application/pdf',
-                        'application/msword',       // MIME type for .doc files
-                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // MIME type for .docx files
-                        'application/vnd.oasis.opendocument.text', // MIME type for .odt files
-                    ],
-                ]),
-            ],
-        ])
-        ->add('createdBy', EntityType::class, [
-            'class' => User::class,
-            'choice_label' => 'id',
-        ])
+            ])
+        ->add('fakeKeywords', TextType::class, [
+                'label' => 'Mots clés :',
+                'mapped' => false,
+                'attr' => ['class' => 'exerciseKeywords'],
+                'required' => false,
+                ])
         ->add('difficulty', ChoiceType::class, [
             'label' => 'Difficulté * :',
             'choices' => [
@@ -124,6 +84,7 @@ class ExerciseType extends AbstractType
 
         ->add('duration', NumberType::class, [
             'label' => 'Durée (en heure) :',
+            'html5' => true,
         ])
         ->add('originName', TextType::class, [
             'label' => 'Provenance de l\'exercice :',
@@ -157,7 +118,7 @@ class ExerciseType extends AbstractType
                         'application/vnd.oasis.opendocument.text',
                     ],
                     'groups' => ['new'],
-                    'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF, DOC ou ODT valide.',
+                    'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF, DOCX ou ODT valide.',
                 ]),
             ],
             'attr' => [
@@ -177,7 +138,7 @@ class ExerciseType extends AbstractType
                         'application/vnd.oasis.opendocument.text',
                     ],
                     'groups' => ['new'],
-                    'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF, DOC ou ODT valide.',
+                    'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF, DOCX ou ODT valide.',
                 ]),
             ],
             'attr' => [
@@ -197,6 +158,7 @@ class ExerciseType extends AbstractType
             'data_class' => Exercise::class,
             'allow_extra_fields' => true,
             'validation_groups' => ['new', 'edit'],
+            'attr' => ['id' => 'exerciceForm'],
         ]);
     }
 }
