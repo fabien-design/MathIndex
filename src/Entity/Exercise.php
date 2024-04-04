@@ -34,7 +34,7 @@ class Exercise
     #[ORM\Column(length: 255)]
     private ?string $chapter = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $keywords = null;
 
     #[ORM\Column]
@@ -155,7 +155,7 @@ class Exercise
         return $this->keywords;
     }
 
-    public function setKeywords(string $keywords): static
+    public function setKeywords(?string $keywords): static
     {
         $this->keywords = $keywords;
 
