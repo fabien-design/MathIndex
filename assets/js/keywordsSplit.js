@@ -33,6 +33,12 @@ export function keywordsToTags(){
                 keywordsContainer.appendChild(span);
                 keywordsContainer.style.paddingTop = "10px";
                 textarea.value = "";
+                let spans = keywordsContainer.querySelectorAll('span');
+            spans.forEach((span) => {
+                span.addEventListener('click', function (e) {
+                    e.target.parentElement.removeChild(e.target);
+                });
+            });
             }
         });
     }
