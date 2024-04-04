@@ -5,23 +5,56 @@
 {% block body %}
     <h1 class="text-cse font-bold text-3xl pb-6">Rechercher un exercice</h1>
     <div class="bg-white rounded-lg p-4 flex flex-col justify-start">
-        {{ form_start(researchForm) }}
-        <div class="levels flex flex-col ">
-            {{ form_label(researchForm.levels) }}
-            {{ form_widget(researchForm.levels) }}
+        {% include 'exercise/_research_form.html.twig' with {researchForm} only %}
+        <h1 class="text-cse font-bold text-2xl pb-6 mt-10">{{ results }} exercices trouvés</h1>
+            <div>
+                <table>
+                    <thead class="tableHeader">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Nom
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Difficultés
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Mots Clés
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Durée
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Fichiers
+                            </th>
+                        </tr>
+                    </thead>
+                <tbody>
+                {% if exercises is not empty %}
+                    {% for exercise in exercises %}
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="{{ exercise.id }}">
+                            <th scope="row" class="px-6 py-4">
+                                {{ exercise.name }}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ exercise.difficulty }}
+                            </td>
+                            <td class="keywordsContainer px-6 py-4">
+                                {{ exercise.keywords }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ exercise.duration }}
+                            </td>
+                            <td class="px-6 py-4 grid">
+                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{ exercise.exerciseFile.originalName }}" download="enonce"><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{ exercise.correctionFile.originalName }}" download="correction"><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="6" class='text-center text-lg p-4'>Aucun exercice trouvé.</td></tr>
+                {% endif %}
+                </tbody>
+            </table>
         </div>
-        <div class="thematics flex flex-col ">
-            {{ form_label(researchForm.thematics) }}
-            {{ form_widget(researchForm.thematics) }}
-        </div>
-        <div class="keywords flex flex-col ">
-            {{ form_label(researchForm.keywords) }}
-            {{ form_widget(researchForm.keywords) }}
-        </div>
-        <div class="submitButton">
-            {{ form_label(researchForm.submit)}}
-        </div>
-         {{ form_end(researchForm) }}
-    <h1 class="text-cse font-bold text-2xl pb-6 mt-10">3 exercices trouvés</h1>
     </div>
 {% endblock %}
