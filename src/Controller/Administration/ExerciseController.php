@@ -6,12 +6,15 @@ use App\Entity\Exercise;
 use App\Entity\File;
 use App\Form\ExerciseType;
 use App\Repository\ExerciseRepository;
+use App\Repository\FileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 #[Route('/administration/exercise')]
 class ExerciseController extends AbstractController
@@ -91,14 +94,38 @@ class ExerciseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_administration_exercise_delete', methods: ['POST'])]
-    public function delete(Request $request, Exercise $exercise, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_administration_exercise_delete', methods: ['POST'])]
+    public function delete(Request $request, Exercise $exercise, EntityManagerInterface $entityManager, Environment $twig, FileRepository $fileRepository): JsonResponse
     {
-        if ($this->isCsrfTokenValid('delete'.$exercise->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($exercise);
-            $entityManager->flush();
+        $user = $this->getUser();
+
+        // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
+        if (!$user) {
+            // Rendre le template Twig
+            $renderedTemplate = $twig->render('components/Alert.html.twig', [
+                'type' => 'error',
+                'message' => "Vous n'avez pas le droit de supprimer cette classe",
+            ]);
+
+            return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
         }
 
-        return $this->redirectToRoute('app_administration_exercise_index', [], Response::HTTP_SEE_OTHER);
+        // Supprimer les fichiers associés à la classe
+        $exerciseCorrectionFile = $exercise->getCorrectionFile();
+        $exerciseExerciseFile = $exercise->getExerciseFile();
+        $exercise->removeFiles();
+        $entityManager->remove($exercise);
+        $entityManager->remove($exerciseExerciseFile);
+        $entityManager->remove($exerciseCorrectionFile);
+        $entityManager->flush();
+
+        // Rendre le template Twig
+        $renderedTemplate = $twig->render('components/Alert.html.twig', [
+            'type' => 'success',
+            'message' => 'Suppression réussie',
+        ]);
+
+        // Retourner une réponse JSON avec le résultat du rendu du template
+        return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_OK);
     }
 }

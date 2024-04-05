@@ -1,3 +1,5 @@
+import { initFlowbite } from "flowbite";
+
 async function deleteExercice(button) {
     var currentUrl = window.location.pathname;
     if(currentUrl.slice(-1)== "/") {
@@ -15,14 +17,16 @@ async function deleteExercice(button) {
                     // Ajoutez d'autres en-têtes si nécessaire
                 },
             });
-
             if (response.ok) {
+                console.log(document.querySelector('tr[data-element-id="'+elementId+'"]'));
                 document.querySelector('tr[data-element-id="'+elementId+'"]').remove();  // remove element from table
                 const responseData = await response.json();
                 console.log(responseData);
                 const decodedHTML = decodeURIComponent(responseData.html); // decode twig component to html 
                 document.querySelector("body").innerHTML += decodedHTML;
                 setTimeout(() => document.querySelectorAll('[role="alert"]').forEach((alert) => alert.remove()), 5000); // remove after 5s
+                // Call initFlowbite() when the XHR request is successful
+                initFlowbite();
             } else if (response.status === 403){
                 
                 const responseData = await response.json();

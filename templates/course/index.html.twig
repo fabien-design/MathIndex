@@ -5,7 +5,7 @@
 {% block body %}
 <h1> {{ course.name }}</h1>
 
-{% if newExercises %}
+{% if newExercises|length > 0 %}
 
 <h2>Nouveautés</h2>
 
@@ -38,25 +38,25 @@
         </thead>
         <tbody>
             {% if newExercises is not empty %}
-                    {% for exercise in newExercises %}
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="{{ exercise.id }}">
+                    {% for i in range(0, newExercises|length > 3 ? 2 : newExercises|length -1) %}
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="{{ newExercises[i].id }}">
                             <th>
-                                {{ exercise.name }}
+                                {{ newExercises[i].name }}
                             </th>
                             <td>
-                                {{ exercise.classroom.name }}
+                                {{ newExercises[i].classroom.name }}
                             </td>
                             <td>
-                                {{ exercise.thematic.name }}
+                                {{ newExercises[i].thematic.name }}
                             </td>
                             <td>
-                                Niveau&nbsp;{{ exercise.difficulty }}
+                                Niveau&nbsp;{{ newExercises[i].difficulty }}
                             </td>
                             <td>
-                                {{ exercise.duration }}
+                                {{ newExercises[i].duration }}
                             </td>
                             <td class="flex">
-                            {% set keywords = exercise.keywords|split('@') %}
+                            {% set keywords = newExercises[i].keywords|split('@') %}
                             {% for keyword in keywords %}
                                 {% if keyword != "" %}
                                 <span class="keyword">{{ keyword }}</span>
@@ -64,13 +64,15 @@
                             {% endfor %}
                             </td>
                             <td>
-                                <a class="flex gap-2 items-center justify-start hover:underline" <a href="{{ asset('images/file/' ~ exercise.exerciseFile.name) }}" download="enonce"><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
-                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.correctionFile.name) }}" download="correction"><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline" <a href="{{ asset('images/file/' ~ newExercises[i].exerciseFile.name) }}" download="enonce"><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ newExercises[i].correctionFile.name) }}" download="correction"><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
                             </td>
                         </tr>
                     {% endfor %}
             {% else %}
-                <tr><td colspan="6" class='text-center text-lg p-4'>Aucun exercice trouvé.</td></tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td colspan="7" class='text-center text-lg p-4'>Aucun exercice trouvé.</td>
+                </tr>
             {% endif %}
             
         </tbody>
@@ -143,7 +145,9 @@
                         </tr>
                     {% endfor %}
             {% else %}
-                <tr><td colspan="6" class='text-center text-lg p-4'>Aucun exercice trouvé.</td></tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td colspan="7" class='text-center text-lg p-4'>Aucun exercice trouvé.</td>
+                </tr>
             {% endif %}
             
         </tbody>

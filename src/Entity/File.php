@@ -48,7 +48,7 @@ class File
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(?string $name): static
     {
         $this->name = $name;
 
@@ -60,7 +60,7 @@ class File
         return $this->originalName;
     }
 
-    public function setOriginalName(string $originalName): static
+    public function setOriginalName(?string $originalName): static
     {
         $this->originalName = $originalName;
 
@@ -72,7 +72,7 @@ class File
         return $this->extension;
     }
 
-    public function setExtension(string $extension): static
+    public function setExtension(?string $extension): static
     {
         $this->extension = $extension;
 
@@ -84,7 +84,7 @@ class File
         return $this->size;
     }
 
-    public function setSize(int $size): static
+    public function setSize(?int $size): static
     {
         $this->size = $size;
 
