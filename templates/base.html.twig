@@ -67,23 +67,26 @@
 								</svg>
 							</button>
 							<ul id="dropdown-example" class="hidden py-2 space-y-2 group">
-								<li>
-									<a href="#" class="flex items-center justify-between pr-2 w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-										Mathématiques
-										<span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="flex items-center justify-between pr-2 w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-										Histoire
-									</a>
-								</li>
-								<li>
-									<a href="#" class="flex items-center justify-between pr-2 w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-										Français
-										<span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">2</span>
-									</a>
-								</li>
+								{% for course in courses %}
+									<li>
+										<a href="{{ path('app_course', {'course' : course.id}) }}" class="flex items-center justify-between pr-2 w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+											{{ course.name }}
+
+											{% set nbOfNewExercises = 0 %}
+											{% for exercice in course.exercises %}
+												{% if exercice.createdAt|date("U") > date()|date_modify("-3 days")|date("U") %}
+													{% set nbOfNewExercises = nbOfNewExercises + 1 %}
+												{% endif %}
+											{% endfor %}
+											{% if nbOfNewExercises %}
+												<span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
+													{{ nbOfNewExercises }}
+												</span>
+											{% endif %}
+										</a>
+									</li>
+								{% endfor %}
+
 							</ul>
 						</li>
 						{% if app.user is defined and app.user is not null %}
