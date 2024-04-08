@@ -37,3 +37,8 @@ app_administration_origin_delete:
     path: /api/administration/origin/{id}/delete
     controller: App\Controller\Administration\OriginController::delete
     methods: [ "POST" ]
+
+app_administration_exercise_delete:
+    path: /api/administration/exercise/{id}/delete
+    controller: App\Controller\Administration\ExerciseController::delete
+    methods: [ "POST" ]

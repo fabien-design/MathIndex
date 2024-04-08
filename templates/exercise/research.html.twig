@@ -45,13 +45,13 @@
                                 {{ exercise.duration }}
                             </td>
                             <td class="px-6 py-4 grid">
-                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{ exercise.exerciseFile.originalName }}" download="enonce"><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
-                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{ exercise.correctionFile.originalName }}" download="correction"><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.exerciseFile.name) }}" download="enonce"><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.correctionFile.name) }}" download="correction"><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
                             </td>
                         </tr>
                     {% endfor %}
                 {% else %}
-                    <tr><td colspan="6" class='text-center text-lg p-4'>Aucun exercice trouvé.</td></tr>
+                    <tr><td colspan="7" class='text-center text-lg p-4'>Aucun exercice trouvé.</td></tr>
                 {% endif %}
                 </tbody>
             </table>

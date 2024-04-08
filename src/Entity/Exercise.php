@@ -298,4 +298,12 @@ class Exercise
     {
         return $this->createdAt->format('Y-m-d H:i:s');
     }
+
+    public function removeFiles(): static
+    {
+        $this->correctionFile = null;
+        $this->exerciseFile = null;
+
+        return $this;
+    }
 }

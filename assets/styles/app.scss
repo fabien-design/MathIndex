@@ -52,7 +52,7 @@ h2 {
 }
 
 div:has(> table) {
-    @apply relative overflow-x-auto shadow-md sm:rounded-lg;
+    @apply relative overflow-x-auto shadow-md rounded-lg;
 }
 
 table {
@@ -81,18 +81,18 @@ table {
     }
     border-collapse: collapse;
 
-    td{
-      border: solid;
-      border-width: 1px 0 0 0;
-      border-color: #e9e9e9;
-    }
+    // td{
+    //   border: solid;
+    //   border-width: 1px 0 0 0;
+    //   border-color: #e9e9e9;
+    // }
 }
 
 aside{
     box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px !important;
 }
 #navigation{
-    z-index: 1;
+    z-index: 0;
     position: relative;
     bottom: -4px;
     li{
@@ -103,7 +103,6 @@ aside{
 }
 .administrationContainer{
     position: relative;
-    z-index: 2;
     h2 {
         @apply text-2xl font-bold py-5;
         margin: 0 !important;
@@ -287,3 +286,30 @@ div:has(>.user_password_second){
         transition: all 0.5s ease;
     }
 }
+
+
+
+div:has(>table) {
+//   scrollbar-color: lightgray transparent;
+  scrollbar-width: auto;
+
+
+  &::-webkit-scrollbar-track
+  {
+      border-radius: 10px;
+      background-color: transparent;
+  }
+//   &::-webkit-scrollbar
+//   {
+//       width: 6px;
+//       background-color: transparent;
+//   }
+  
+//   &::-webkit-scrollbar-thumb
+//   {
+//       border-radius: 10px;
+//       box-shadow: inset 0 0 5px rgba(0,0,0,.3);
+//       background-color: transparent;
+//   }
+}
+
