@@ -18,7 +18,6 @@
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	</head>
 	<body>
@@ -67,23 +66,27 @@
 								</svg>
 							</button>
 							<ul id="dropdown-example" class="hidden py-2 space-y-2 group">
-								<li>
-									<a href="#" class="flex items-center justify-between pr-2 w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-										Mathématiques
-										<span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="flex items-center justify-between pr-2 w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-										Histoire
-									</a>
-								</li>
-								<li>
-									<a href="#" class="flex items-center justify-between pr-2 w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-										Français
-										<span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">2</span>
-									</a>
-								</li>
+							{% set allCourses = allCourses.getCourses %}
+								{% for course in allCourses %}
+									<li>
+										<a href="{{ path('app_course', {'course' : course.id}) }}" class="flex items-center justify-between pr-2 w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+											{{ course.name }}
+
+											{% set nbOfNewExercises = 0 %}
+											{% for exercice in course.exercises %}
+												{% if exercice.createdAt|date("U") > date()|date_modify("- "~ new_exercises_days_offset ~" days")|date("U") %}
+													{% set nbOfNewExercises = nbOfNewExercises + 1 %}
+												{% endif %}
+											{% endfor %}
+											{% if nbOfNewExercises %}
+												<span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
+													{% if nbOfNewExercises > 3 %}&nbsp;3+{% else %}{{ nbOfNewExercises }}{% endif %}
+												</span>
+											{% endif %}
+										</a>
+									</li>
+								{% endfor %}
+
 							</ul>
 						</li>
 						{% if app.user is defined and app.user is not null %}
@@ -147,7 +150,7 @@
 									<ul class="py-2" aria-labelledby="user-menu-button">
 										{% if 'ROLE_ADMIN' in app.user.roles %}
 											<li>
-												<a href="#" class="flex items-center justify-between  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+												<a href="{{ path('app_administration_user_index')}}" class="flex items-center justify-between  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
 													Administation
 													<svg class="flex-shrink-0 w-4 h-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-cse group-hover:transition-all dark:group-hover:text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewbox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H392.6c-5.4-9.4-8.6-20.3-8.6-32V352c0-2.1 .1-4.2 .3-6.3c-31-26-71-41.7-114.6-41.7H178.3zM528 240c17.7 0 32 14.3 32 32v48H496V272c0-17.7 14.3-32 32-32zm-80 32v48c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H608c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32V272c0-44.2-35.8-80-80-80s-80 35.8-80 80z"/></svg>
 												</a>

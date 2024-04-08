@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Matière - {{ course.name }}{% endblock %}
+
+{% block body %}
+<h1> {{ course.name }}</h1>
+
+{% if newExercises|length > 0 %}
+
+<h2>Nouveautés</h2>
+
+<div class="mb-12">
+    <table>
+        <thead class="tableHeader">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Nom
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Niveau
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Thématique
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Difficulté
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Durée
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Mots Clés
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Fichiers
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if newExercises is not empty %}
+                    {% for i in range(0, newExercises|length > 3 ? 2 : newExercises|length -1) %}
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="{{ newExercises[i].id }}">
+                            <th>
+                                {{ newExercises[i].name }}
+                            </th>
+                            <td>
+                                {{ newExercises[i].classroom.name }}
+                            </td>
+                            <td>
+                                {{ newExercises[i].thematic.name }}
+                            </td>
+                            <td>
+                                Niveau&nbsp;{{ newExercises[i].difficulty }}
+                            </td>
+                            <td class="durationToDatetime">
+                                {{ newExercises[i].duration }}
+                            </td>
+                            <td class="flex">
+                            {% set keywords = newExercises[i].keywords|split('@') %}
+                            {% for keyword in keywords %}
+                                {% if keyword != "" %}
+                                <span class="keyword">{{ keyword }}</span>
+                                {% endif %}
+                            {% endfor %}
+                            </td>
+                            <td>
+                                <a class="flex gap-2 items-center justify-start hover:underline" <a href="{{ asset('images/file/' ~ newExercises[i].exerciseFile.name) }}" download={{"Énoncé-" ~ newExercises[i].name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ newExercises[i].correctionFile.name) }}" download={{"Correction-" ~ newExercises[i].name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+            {% else %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td colspan="7" class='text-center text-lg p-4'>Aucun exercice trouvé.</td>
+                </tr>
+            {% endif %}
+            
+        </tbody>
+    </table>
+</div>
+
+{% endif %}
+
+
+<h2>Tous les exercices</h2>
+
+<div>
+    <table>
+        <thead class="tableHeader">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Nom
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Niveau
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Thématique
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Difficulté
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Durée
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Mots Clés
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Fichiers
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if exercises is not empty %}
+                    {% for exercise in exercises %}
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="{{ exercise.id }}">
+                            <th>
+                                {{ exercise.name }}
+                            </th>
+                            <td>
+                                {{ exercise.classroom.name }}
+                            </td>
+                            <td>
+                                {{ exercise.thematic.name }}
+                            </td>
+                            <td>
+                                Niveau&nbsp;{{ exercise.difficulty }}
+                            </td>
+                            <td class="durationToDatetime">
+                                {{ exercise.duration }}
+                            </td>
+                            <td class="flex">
+                            {% set keywords = exercise.keywords|split('@') %}
+                            {% for keyword in keywords %}
+                                {% if keyword != "" %}
+                                <span class="keyword">{{ keyword }}</span>
+                                {% endif %}
+                            {% endfor %}
+                            </td>
+                            <td>
+                                <a class="flex gap-2 items-center justify-start hover:underline" <a href="{{ asset('images/file/' ~ exercise.exerciseFile.name) }}" download={{"Énoncé-" ~ exercise.name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.correctionFile.name) }}" download={{"Correction-" ~ exercise.name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+            {% else %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td colspan="7" class='text-center text-lg p-4'>Aucun exercice trouvé.</td>
+                </tr>
+            {% endif %}
+            
+        </tbody>
+    </table>
+</div>
+<div class="flex justify-center h-16 items-center">
+    {{ knp_pagination_render(exercises) }}
+</div>
+{% endblock %}

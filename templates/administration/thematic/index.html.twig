@@ -1,0 +1,58 @@
+{% extends 'base_administration.html.twig' %}
+
+{% block title %}Gestion des Thématiques{% endblock %}
+
+{% block body %}
+    <twig:DeleteModal message="Êtes-vous sûr de vouloir supprimer cette thématique ?" />
+    <h2>Gestion des Thématiques</h2>
+
+    <div class="flex w-full mb-5 justify-between">
+        <form class="flex items-end  " id="researchForm">
+            <div class="relative w-full">
+                <label for="search" class="text-stone-500 text-md">Rechercher une thématique par nom :</label>
+                <input type="text" id="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+            </div>
+            <button type="submit" class="inline-flex items-center py-2.5 px-3 ms-2 text-md font-medium  bg-gray-100 rounded-lg border border-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300">
+                Rechercher
+            </button>
+        </form>
+        <div class="flex items-end">
+            <a href="{{ path('app_administration_thematic_new') }}" class="!ml-5 focus:outline-none text-white bg-green-400 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-8 py-5 ">Ajouter&nbsp;+</a>
+        </div>
+    </div>
+
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Nom
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for thematic in thematics %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="{{ thematic.id }}">
+                    <td scope="row" class="px-6 py-4">
+                        {{ thematic.name }}
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                        <div class="flex gap-4">
+                            <a href="{{ path('app_administration_thematic_edit', {'id': thematic.id}) }}" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2"><i class="fa-solid fa-pen-to-square"></i>Modifier</a>
+                            <button class="open-delete-modal font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2" data-modal-target="popup-modal" data-modal-toggle="popup-modal" data-modal-element-id="{{ thematic.id }}" ><i class="fa-solid fa-trash-can"></i>Supprimer</button>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr><td colspan="2" class='text-center text-lg p-4'>Aucune thématique n'a été trouvée.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="flex justify-center h-16 items-center">
+        {{ knp_pagination_render(thematics) }}
+    </div>
+{% endblock %}

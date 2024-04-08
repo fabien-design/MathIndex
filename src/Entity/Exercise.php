@@ -5,9 +5,10 @@ namespace App\Entity;
 use App\Repository\ExerciseRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ExerciseRepository::class)]
+#[Vich\Uploadable]
 class Exercise
 {
     #[ORM\Id]
@@ -33,7 +34,7 @@ class Exercise
     #[ORM\Column(length: 255)]
     private ?string $chapter = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $keywords = null;
 
     #[ORM\Column]
@@ -65,7 +66,6 @@ class Exercise
      * @var string A "Y-m-d H:i:s" formatted value
      */
     #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]
-    #[Assert\DateTime]
     private \DateTimeImmutable $createdAt;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
@@ -79,6 +79,11 @@ class Exercise
     #[ORM\ManyToOne(inversedBy: 'exercises')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $createdBy = null;
+
+    public function __construct()
+    {
+        $this->createdAt = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
+    }
 
     public function getId(): ?int
     {
@@ -150,7 +155,7 @@ class Exercise
         return $this->keywords;
     }
 
-    public function setKeywords(string $keywords): static
+    public function setKeywords(?string $keywords): static
     {
         $this->keywords = $keywords;
 
@@ -291,12 +296,13 @@ class Exercise
 
     public function getCreatedAt(): string
     {
-        return $this->createdAt;
+        return $this->createdAt->format('Y-m-d H:i:s');
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function removeFiles(): static
     {
-        $this->createdAt = $createdAt;
+        $this->correctionFile = null;
+        $this->exerciseFile = null;
 
         return $this;
     }
