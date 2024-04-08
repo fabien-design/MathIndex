@@ -14,3 +14,5 @@ import './js/keywordsSplit.js';
 import './js/showRepeatPassword.js';
 import './js/durationToDatetime.js';
 import './js/DeleteAlertPopup.js';
+import './js/formByStep.js';
+
