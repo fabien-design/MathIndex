@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExerciseRepository::class)]
 #[Vich\Uploadable]
@@ -84,6 +83,7 @@ class Exercise
     private ?User $createdBy = null;
 
     #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: "exercises")]
+    #[ORM\JoinTable(name: 'exercise_skill')]
     private Collection $skills;
 
     public function __construct()
@@ -301,9 +301,16 @@ class Exercise
         return $this;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt()
     {
-        return $this->createdAt->format('Y-m-d H:i:s');
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 
     public function removeFiles(): static
@@ -312,5 +319,19 @@ class Exercise
         $this->exerciseFile = null;
 
         return $this;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+            $skill->addExercise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill){
+        $skill->removeExercise($this);
     }
 }

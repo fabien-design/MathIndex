@@ -97,7 +97,8 @@ aside{
     bottom: -4px;
     li{
         a{
-            border-radius: 7px
+            border-top-left-radius: 7px;
+            border-top-right-radius: 7px;
         }
     }
 }

@@ -38,4 +38,12 @@ function formByStep() {
     }
 }
 
-document.getElementById('form-new-exercise') && formByStep();
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('form-new-exercise') && formByStep();
+    document.getElementById('continue1').addEventListener('click', function() {
+        window.location.search = "?page=2";
+    });
+    document.getElementById('continue2').addEventListener('click', function() {
+        window.location.search = "?page=3";
+    });
+})

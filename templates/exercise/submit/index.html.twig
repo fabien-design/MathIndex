@@ -1,5 +1,21 @@
 {% extends 'base.html.twig' %}
 
+{% block form_title %}
+    <h1 class="text-cse text-3xl font-semibold">Soumettre un exercice</h1>
+{% endblock %}
+
+{% block nav_links %}
+    <li class="me-2">
+        <a href="{{path("app_administration_user_index") }}" class="bg-cse text-white opacity-80 inline-block py-4 px-8 hover:opacity-100">Informations Générales</a>
+    </li>
+    <li class="me-2">
+        <a href="{{path("app_administration_user_index") }}" class="bg-cse text-white opacity-80 inline-block py-4 px-8 hover:opacity-100">Sources</a>
+    </li>
+    <li class="me-2">
+        <a href="{{path("app_administration_user_index") }}" class="bg-cse text-white opacity-80 inline-block py-4 px-8 hover:opacity-100">Fichiers</a>
+    </li>
+{% endblock %}
+
 {% block body %}
 
     {% include 'exercise/submit/_form.html.twig' with {form} only %}

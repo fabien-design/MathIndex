@@ -1,21 +1,42 @@
 {{ form_start(form, { 'attr':
     {'id':'form-new-exercise'}
 }) }}
-    <div id="block1">
-        <div>
-            {{ form_row(form.name) }}
-            {{ form_row(form.course) }}
-            {{ form_row(form.classroom) }}
-            {{ form_row(form.thematic) }}
-            {{ form_row(form.chapter) }}
+    <div id="bloc1" class="bg-white">
+        <h2 class="pt-6">Informations Générales</h2>
+        <div class="flex">
+            <div class="w-full pr-6">
+                {{ form_row(form.name) }}
+                {{ form_row(form.course) }}
+                {{ form_row(form.classroom) }}
+                {{ form_row(form.thematic) }}
+                {{ form_row(form.chapter) }}
+            </div>
+            <div class="w-full pl-6">
+                {{ form_row(form.keywords) }}
+                {{ form_row(form.difficulty) }}
+                {{ form_row(form.duration) }}
+            </div>
         </div>
         <div>
-            {{ form_row(form.exercise.skill) }}
+            <button id="continue1" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="formByStep()">Continuer</button>
         </div>
     </div>
-
-<div class="flex gap-8">
-    <a href="{{ path('app_administration_exercise_index') }}" class="px-[2.5rem] rounded-lg py-5 bg-gray-100 text-neutral-600"><i class="fa-solid fa-chevron-left pr-5"></i>Retour à la liste</a>
-    <button class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600">Enregistrer</button>
-</div>
+    <div id="bloc2">
+        <h2>Sources</h2>
+        <div>
+            
+        </div>
+        <div>
+            <button id="continue2" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="formByStep()" onclick="">Continuer</button>
+        </div>
+    </div>
+    <div id="bloc3">
+        <h2>Fichiers</h2>
+        <div>
+           
+        </div>
+        <div>
+            <button onclick="">Enregistrer</button>
+        </div>
+    </div>
 {{ form_end(form) }}
