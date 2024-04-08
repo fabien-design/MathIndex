@@ -4,6 +4,13 @@
 {% endblock %}
 
 {% block body %}
+    {% for type, messages in app.flashes(['success', 'error']) %}
+        {% for message in messages %}
+            {{ component('Alert', { type: type, message: message } ) }}
+        {% endfor %}
+    {% endfor %}
+
+
     <h1 class="text-cse font-bold text-3xl pb-6">Accueil</h1>
     <div class="bg-gray-100 p-2 md:bg-white rounded-lg md:p-8 text-justify">
         <p>Nous sommes ravis de vous accueillir sur <span class="font-bold">{{project_name}}</span>, la plateforme mathématique exclusive du lycée Saint-Vincent Senlis. Développée avec passion pour enrichir l'expérience éducative de nos étudiants, cette ressource en ligne offre un accès simplifié à une vaste bibliothèque d'exercices mathématiques de qualité.</p>

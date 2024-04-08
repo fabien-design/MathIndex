@@ -313,3 +313,21 @@ div:has(>table) {
 //   }
 }
 
+
+
+// Effet slide up sur les alerts
+@keyframes slideUp {
+    0% {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -200px);
+        opacity: 0;
+    }
+}
+
+
+.error-msg-container ul li{
+    color: #FF0000;
+}

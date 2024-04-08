@@ -74,4 +74,8 @@ Lancement de la compilation de sass sur terminal SSH
 ```bash
   npm run build
 ```
+Lancement des messenger workers (pour les mail qui sont en async)
+```bash
+  bin/console messenger:consume async
+```
 
