@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\File as FileValid;
 
 class ExerciseType extends AbstractType
 {
@@ -110,19 +111,20 @@ class ExerciseType extends AbstractType
             'required' => false,
             'constraints' => [
                 new NotBlank(['groups' => ['new'], 'message' => 'Le fichier du sujet est obligatoire.']),
-                new \Symfony\Component\Validator\Constraints\File([
-                    'mimeTypes' => [
-                        'application/pdf',
-                        'application/msword',
-                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                        'application/vnd.oasis.opendocument.text',
+                new FileValid([
+                    'extensions' => [
+                        'pdf',
+                        'docx',
+                        'doc',
+                        'odt',
+                        'odp',
                     ],
                     'groups' => ['new'],
-                    'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF, DOCX ou ODT valide.',
+                    'extensionsMessage' => 'Veuillez téléverser un fichier PDF, DOCX, DOC, ODT ou ODP valide.',
                 ]),
             ],
             'attr' => [
-                'accept' => '.pdf,.doc,.docx,.odt',
+                'accept' => '.pdf,.doc,.docx,.odt,.odp',
             ],
         ])
         ->add('correctFile', FileType::class, [
@@ -130,19 +132,20 @@ class ExerciseType extends AbstractType
             'required' => false,
             'constraints' => [
                 new NotBlank(['groups' => ['new'], 'message' => 'Le fichier de correction est obligatoire.']),
-                new \Symfony\Component\Validator\Constraints\File([
-                    'mimeTypes' => [
-                        'application/pdf',
-                        'application/msword',
-                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                        'application/vnd.oasis.opendocument.text',
+                new FileValid([
+                    'extensions' => [
+                        'pdf',
+                        'docx',
+                        'doc',
+                        'odt',
+                        'odp',
                     ],
                     'groups' => ['new'],
-                    'mimeTypesMessage' => 'Veuillez télécharger un fichier PDF, DOCX ou ODT valide.',
+                    'extensionsMessage' => 'Veuillez téléverser un fichier PDF, DOCX, DOC, ODT ou ODP valide.',
                 ]),
             ],
             'attr' => [
-                'accept' => '.pdf,.doc,.docx,.odt',
+                'accept' => '.pdf,.doc,.docx,.odt,.odp',
             ],
         ])
         ->add('createdBy', EntityType::class, [
