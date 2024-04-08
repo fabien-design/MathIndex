@@ -1,4 +1,5 @@
 import { initFlowbite } from "flowbite";
+import { addElementToDeleteModal } from "./AddElementIdToDeleteModal";
 
 async function deleteExercice(button) {
     var currentUrl = window.location.pathname;
@@ -25,6 +26,9 @@ async function deleteExercice(button) {
                 setTimeout(() => document.querySelectorAll('[role="alert"]').forEach((alert) => alert.remove()), 5000); // remove after 5s
                 // Call initFlowbite() when the XHR request is successful
                 initFlowbite();
+                document.getElementById("submit-delete-btn").addEventListener("click", (e) => deleteExercice(e));
+                addElementToDeleteModal();
+
             } else if (response.status === 403){
                 
                 const responseData = await response.json();
