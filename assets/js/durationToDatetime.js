@@ -36,7 +36,6 @@ export function durationToDatetime(){
         //convert the duration float to hours
         element.textContent = convertNumToTime(element.textContent);
     });
-    console.log("oui");
 }
 
 document.querySelector(".durationToDatetime") && durationToDatetime();

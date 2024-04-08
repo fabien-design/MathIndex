@@ -18,10 +18,8 @@ async function deleteExercice(button) {
                 },
             });
             if (response.ok) {
-                console.log(document.querySelector('tr[data-element-id="'+elementId+'"]'));
                 document.querySelector('tr[data-element-id="'+elementId+'"]').remove();  // remove element from table
                 const responseData = await response.json();
-                console.log(responseData);
                 const decodedHTML = decodeURIComponent(responseData.html); // decode twig component to html 
                 document.querySelector("body").innerHTML += decodedHTML;
                 setTimeout(() => document.querySelectorAll('[role="alert"]').forEach((alert) => alert.remove()), 5000); // remove after 5s

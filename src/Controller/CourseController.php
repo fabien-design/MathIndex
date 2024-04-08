@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Course;
 use App\Repository\CourseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,11 +17,18 @@ class CourseController extends AbstractController
     public function index(Course $course, Request $request, PaginatorInterface $paginator, CourseRepository $courseRepository): Response
     {
         $exercises = $course->getExercises();
+        // Convert the Collection to a regular array
+        $exercisesArray = $exercises->toArray();
+        // Reverse the array
+        $reversedExercisesArray = array_reverse($exercisesArray);
+        // Convert the reversed array back to a Collection
+        $reversedExercisesCollection = new ArrayCollection($reversedExercisesArray);
+        $exercises = $reversedExercisesCollection;
 
         $pagination = $paginator->paginate(
             $exercises,
             $request->query->getInt('page', 1),
-            2
+            5
         );
         $newExercises = [];
         if (0 == $request->query->getInt('page')) {
