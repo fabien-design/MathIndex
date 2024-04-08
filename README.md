@@ -59,7 +59,7 @@ Initialisation du projet
   make install
 ```
 
-OU Initialisation du projet de A-Z
+**OU** Initialisation du projet de A-Z
 
 ```bash
   docker compose up
