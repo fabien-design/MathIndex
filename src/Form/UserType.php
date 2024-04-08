@@ -22,11 +22,12 @@ class UserType extends AbstractType
             ->add('email')
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'Les mots de pass ne correspondent pas.',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => false,
                 'mapped' => false,
                 'first_options' => [
+                    'hash_property_path' => 'password',
                     'label' => 'Nouveau mot de passe',
                     'attr' => ['autocomplete' => 'new-password', 'class' => 'user_password_first'], // Disable autocomplete for first password field
                 ],

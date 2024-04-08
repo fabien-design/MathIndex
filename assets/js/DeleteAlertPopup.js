@@ -1,4 +1,4 @@
-function alertsEvent(){
+export function alertsEvent(){
     const alerts = document.querySelectorAll('[role="alert"]');
 
     alerts.forEach((alert) => {
