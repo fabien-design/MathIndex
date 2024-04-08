@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\ExerciseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExerciseRepository::class)]
 #[Vich\Uploadable]
@@ -80,8 +83,12 @@ class Exercise
     #[ORM\JoinColumn(nullable: false)]
     private ?User $createdBy = null;
 
+    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: "exercises")]
+    private Collection $skills;
+
     public function __construct()
     {
+        $this->skills = new ArrayCollection();
         $this->createdAt = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
     }
 

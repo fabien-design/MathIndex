@@ -1,0 +1,21 @@
+{{ form_start(form, { 'attr':
+    {'id':'form-new-exercise'}
+}) }}
+    <div id="block1">
+        <div>
+            {{ form_row(form.name) }}
+            {{ form_row(form.course) }}
+            {{ form_row(form.classroom) }}
+            {{ form_row(form.thematic) }}
+            {{ form_row(form.chapter) }}
+        </div>
+        <div>
+            {{ form_row(form.exercise.skill) }}
+        </div>
+    </div>
+
+<div class="flex gap-8">
+    <a href="{{ path('app_administration_exercise_index') }}" class="px-[2.5rem] rounded-lg py-5 bg-gray-100 text-neutral-600"><i class="fa-solid fa-chevron-left pr-5"></i>Retour à la liste</a>
+    <button class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600">Enregistrer</button>
+</div>
+{{ form_end(form) }}

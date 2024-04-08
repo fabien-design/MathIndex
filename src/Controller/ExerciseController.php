@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Exercise;
+use App\Entity\File;
+use App\Form\ExerciseType;
 use App\Form\ResearchType;
 use App\Repository\ExerciseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,7 +74,7 @@ class ExerciseController extends AbstractController
         $entityManager->flush();
 
         // Rendre le template Twig
-        $renderedTemplate = $twig->render('components/Alert.html.twig', [
+            $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',
             'message' => 'Suppression réussie',
         ]);
@@ -110,4 +113,34 @@ class ExerciseController extends AbstractController
             'results' => $results,
          ]);
     }
+
+    #[Route('/exercise/new', name: 'app_exercise_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $exercise = new Exercise();
+        $form = $this->createForm(ExerciseType::class, $exercise, ['validation_groups' => ['new']]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form['enonceFile']->getData()) {
+                $file = new File($form['enonceFile']->getData());
+                $entityManager->persist($file);
+                $exercise->setExerciseFile($file);
+            }
+            if ($form['correctFile']->getData()) {
+                $correctionFile = new File($form['correctFile']->getData());
+                $entityManager->persist($correctionFile);
+                $exercise->setCorrectionFile($correctionFile);
+            }
+            $entityManager->persist($exercise);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_exercise', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('exercise/submit/index.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
 }
