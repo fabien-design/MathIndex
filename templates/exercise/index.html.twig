@@ -50,8 +50,8 @@
                                     {{ exercise.thematic.name }}
                                 </td>
                                 <td class="px-6 py-4 grid">
-                                    <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.exerciseFile.name) }}" download="enonce"><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
-                                    <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.correctionFile.name) }}" download="correction"><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
+                                    <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.exerciseFile.name) }}" download={{"Énoncé-" ~ exercise.name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                                    <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.correctionFile.name) }}" download={{"Correction-" ~ exercise.name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <div class="flex gap-4">
@@ -70,6 +70,8 @@
             </tbody>
         </table>
     </div>
-
+<div class="flex justify-center h-16 items-center">
+    {{ knp_pagination_render(exercises) }}
+</div>
 </div>
 {% endblock %}

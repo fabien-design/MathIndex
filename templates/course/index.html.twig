@@ -64,8 +64,8 @@
                             {% endfor %}
                             </td>
                             <td>
-                                <a class="flex gap-2 items-center justify-start hover:underline" <a href="{{ asset('images/file/' ~ newExercises[i].exerciseFile.name) }}" download="enonce"><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
-                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ newExercises[i].correctionFile.name) }}" download="correction"><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline" <a href="{{ asset('images/file/' ~ newExercises[i].exerciseFile.name) }}" download={{"Énoncé-" ~ newExercises[i].name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ newExercises[i].correctionFile.name) }}" download={{"Correction-" ~ newExercises[i].name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -139,8 +139,8 @@
                             {% endfor %}
                             </td>
                             <td>
-                                <a class="flex gap-2 items-center justify-start hover:underline" <a href="{{ asset('images/file/' ~ exercise.exerciseFile.name) }}" download="enonce"><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
-                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.correctionFile.name) }}" download="correction"><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline" <a href="{{ asset('images/file/' ~ exercise.exerciseFile.name) }}" download={{"Énoncé-" ~ exercise.name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.correctionFile.name) }}" download={{"Correction-" ~ exercise.name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -153,7 +153,7 @@
         </tbody>
     </table>
 </div>
-    <div class="flex justify-center h-16 items-center">
-        {{ knp_pagination_render(exercises) }}
-    </div>
+<div class="flex justify-center h-16 items-center">
+    {{ knp_pagination_render(exercises) }}
+</div>
 {% endblock %}

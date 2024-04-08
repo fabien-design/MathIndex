@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Exercise;
 use App\Form\ResearchType;
 use App\Repository\ExerciseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ExerciseController extends AbstractController
 {
     #[Route('/exercises', name: 'app_exercise')]
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
         // Récupérer l'utilisateur connecté
         $user = $this->getUser();
@@ -25,13 +26,26 @@ class ExerciseController extends AbstractController
         if ($user) {
             $user->getExercises()->initialize(); // pas touché Important
             $exercises = $user->getExercises();
+            // Convert the Collection to a regular array
+            $exercisesArray = $exercises->toArray();
+            // Reverse the array
+            $reversedExercisesArray = array_reverse($exercisesArray);
+            // Convert the reversed array back to a Collection
+            $reversedExercisesCollection = new ArrayCollection($reversedExercisesArray);
+            $exercises = $reversedExercisesCollection;
         } else {
             return $this->redirectToRoute('app_login');
         }
 
+        $pagination = $paginator->paginate(
+            $exercises,
+            $request->query->getInt('page', 1),
+            5
+        );
+
         return $this->render('exercise/index.html.twig', [
             'controller_name' => 'ExerciseController',
-            'exercises' => $exercises,
+            'exercises' => $pagination,
         ]);
     }
 
