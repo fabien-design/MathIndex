@@ -16,12 +16,12 @@ class SkillType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom',
+                'label' => 'Nom :',
             ])
             ->add('course', EntityType::class, [
                 'class' => Course::class,
                 'choice_label' => 'name',
-                'label' => 'Matière',
+                'label' => 'Matière associée :',
             ])
         ;
     }

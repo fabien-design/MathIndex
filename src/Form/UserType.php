@@ -17,9 +17,9 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('lastname', TextType::class, ['label' => 'Nom'])
-            ->add('firstname', TextType::class, ['label' => 'Prénom'])
-            ->add('email')
+            ->add('lastname', TextType::class, ['label' => 'Nom :'])
+            ->add('firstname', TextType::class, ['label' => 'Prénom :'])
+            ->add('email', TextType::class, ['label' => 'Email :'])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de pass ne correspondent pas.',
@@ -28,11 +28,11 @@ class UserType extends AbstractType
                 'mapped' => false,
                 'first_options' => [
                     'hash_property_path' => 'password',
-                    'label' => 'Nouveau mot de passe',
+                    'label' => 'Nouveau mot de passe :',
                     'attr' => ['autocomplete' => 'new-password', 'class' => 'user_password_first'], // Disable autocomplete for first password field
                 ],
                 'second_options' => [
-                    'label' => 'Répéter le mot de passe',
+                    'label' => 'Répéter le mot de passe :',
                     'attr' => ['autocomplete' => 'new-password', 'class' => 'user_password_second'], // Disable autocomplete for second password field
                 ],
             ]);
@@ -43,6 +43,7 @@ class UserType extends AbstractType
                 'required' => true,
                 'multiple' => false,
                 'expanded' => false,
+                'label' => 'Rôle :',
                 'choices' => [
                     'Étudiant' => 'ROLE_STUDENT',
                     'Enseignant' => 'ROLE_TEACHER',
