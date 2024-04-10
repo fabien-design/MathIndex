@@ -331,3 +331,16 @@ div:has(>table) {
 .error-msg-container ul li{
     color: #FF0000;
 }
+
+aside{
+    li{
+        .active{
+             background-color: rgb(243 244 246);
+                svg,span{
+                    color : rgb(27 49 104);
+                    font-weight: bold;
+    
+                }
+            }
+    }
+}
