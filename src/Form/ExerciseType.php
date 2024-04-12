@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -106,7 +107,7 @@ class ExerciseType extends AbstractType
         ->add('originName', TextType::class, [
             'label' => 'Nom du livre/lien du site :',
         ])
-        ->add('originInformation', TextType::class, [
+        ->add('originInformation', TextareaType::class, [
             'label' => 'Informations complémentaires :',
         ])
         ->add('proposedByType', ChoiceType::class, [
@@ -166,10 +167,6 @@ class ExerciseType extends AbstractType
             'attr' => [
                 'accept' => '.pdf,.doc,.docx,.odt,.odp',
             ],
-        ])
-        ->add('createdBy', EntityType::class, [
-            'class' => User::class,
-            // 'choice_label' => 'email', //Pas de choice_label, User::__toString() prend le dessus
         ])
         ;
     }

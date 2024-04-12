@@ -8,7 +8,7 @@
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet"/>
+		{# <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet"/> 	 #}
 
 		<link rel="icon" href="{{asset('images/logo_st_vincent_propre.png')}}">
 		{% block stylesheets %}
@@ -188,10 +188,10 @@
 					{% block form_title %}
 					{% endblock %}
 
-					<ul id="navigation" class="flex flex-wrap text-sm  gap-3 font-medium text-center border-b md:border-0 text-gray-500 dark:text-gray-400 pb-3 md:pb-0">
-						{% block nav_links %}
-						{% endblock %}
-					</ul>
+					{% block nav_links %}
+						<ul id="navigation" class="flex flex-wrap text-sm  gap-3 font-medium text-center border-b md:border-0 text-gray-500 dark:text-gray-400 pb-3 md:pb-0">
+						</ul>
+					{% endblock %}
 			
 					<div class="md:bg-white rounded-b-lg px-4 md:px-12 md:pb-6 z-auto">
 						{% block body %}

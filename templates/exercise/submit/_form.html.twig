@@ -1,7 +1,7 @@
 {{ form_start(form, { 'attr':
-    {'id':'form-new-exercise'}
+    {'id':'exerciceForm'}
 }) }}
-    <div id="bloc1" class="bg-white">
+    <div class="hidden" id="infos" role="tabpanel" aria-labelledby="infos-tab">
         <h2 class="pt-6">Informations Générales</h2>
         <div class="flex">
             <div class="w-full pr-6">
@@ -13,35 +13,44 @@
             </div>
             <div class="w-full pl-6">
                 {{ form_row(form.skills) }}
+                {{ form_row(form.fakeKeywords) }}
                 {{ form_row(form.keywords) }}
                 {{ form_row(form.difficulty) }}
                 {{ form_row(form.duration) }}
             </div>
         </div>
         <div>
-            <button id="continue1" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="formByStep()">Continuer</button>
+            <button class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('sources-tab').click()">Continuer</button>
         </div>
     </div>
-    <div class="hidden" id="bloc2">
-        <h2>Sources</h2>
+    <div class="hidden" id="sources" role="tabpanel" aria-labelledby="sources-tab">
+        <h2 class="pt-6">Sources</h2>
         <div class="flex">
-            <div class="w-full pr-6">
+            <div class="w-full pr-6 ">
                 {{ form_row(form.origin) }}
+                {{ form_row(form.originName) }}
+                {{ form_row(form.originInformation) }}
             </div>
             <div class="w-full pl-6">
+                {{ form_row(form.proposedByType) }}
+                {{ form_row(form.proposedByLasName) }}
+                {{ form_row(form.proposedByFirstName) }}
             </div>
         </div>
         <div>
-            <button id="continue2" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="formByStep()" onclick="">Continuer</button>
+            <button class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('files-tab').click()">Continuer</button>
         </div>
     </div>
-    <div id="bloc3">
-        <h2>Fichiers</h2>
-        <div>
-           
+    <div class="hidden" id="files" role="tabpanel" aria-labelledby="files-tab">
+        <h2 class="pt-6">Fichiers</h2>
+        <div class="flex">
+            <div class="w-full pr-6 ">
+                {{ form_row(form.enonceFile) }}
+                {{ form_row(form.correctFile) }}
+            </div>  
         </div>
         <div>
-            <button onclick="">Enregistrer</button>
+            <button class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="this.preventDefault( )" onclick="">Enregistrer</button>
         </div>
     </div>
 {{ form_end(form) }}

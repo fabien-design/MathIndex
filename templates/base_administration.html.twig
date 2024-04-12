@@ -187,31 +187,31 @@
 						<h1 class="text-cse text-3xl font-semibold">Administration</h1>
 					{% endblock %}
 
-					<ul id="navigation" class="flex flex-wrap text-sm  gap-3 font-medium text-center border-b md:border-0 text-gray-500 dark:text-gray-400 pb-3 md:pb-0">
-						{% block nav_links %}
-						<li class="me-2">
-							<a href="{{path("app_administration_user_index") }}" class="bg-cse text-white opacity-80 inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Contributeurs</a>
-						</li>
-						<li class="me-2">
-							<a href="{{path("app_administration_exercise_index") }}" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Exercices</a>
-						</li>
-						<li class="me-2">
-							<a href="{{path("app_administration_course_index") }}" class="active bg-cse text-white opacity-80 inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Matières</a>
-						</li>
-						<li class="me-2">
-							<a href="{{path("app_administration_classroom_index") }}" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Classes</a>
-						</li>
-						<li class="me-2">
-							<a href="{{ path("app_administration_thematic_index") }}" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Thématiques</a>
-						</li>
-						<li class="me-2">
-							<a href="{{ path("app_administration_skill_index") }}" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Compétences</a>
-						</li>
-						<li class="me-2">
-							<a href="{{ path("app_administration_origin_index") }}" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Origines</a>
-						</li>
-						{% endblock %}
-					</ul>
+					{% block nav_links %}
+						<ul id="navigation" class="flex flex-wrap text-sm  gap-3 font-medium text-center border-b md:border-0 text-gray-500 dark:text-gray-400 pb-3 md:pb-0">
+							<li class="me-2">
+								<a href="{{path("app_administration_user_index") }}" class="bg-cse text-white opacity-80 inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Contributeurs</a>
+							</li>
+							<li class="me-2">
+								<a href="{{path("app_administration_exercise_index") }}" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Exercices</a>
+							</li>
+							<li class="me-2">
+								<a href="{{path("app_administration_course_index") }}" class="active bg-cse text-white opacity-80 inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Matières</a>
+							</li>
+							<li class="me-2">
+								<a href="{{path("app_administration_classroom_index") }}" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Classes</a>
+							</li>
+							<li class="me-2">
+								<a href="{{ path("app_administration_thematic_index") }}" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Thématiques</a>
+							</li>
+							<li class="me-2">
+								<a href="{{ path("app_administration_skill_index") }}" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Compétences</a>
+							</li>
+							<li class="me-2">
+								<a href="{{ path("app_administration_origin_index") }}" class="bg-cse text-white opacity-80  inline-block py-4 px-8 rounded-t-lg hover:opacity-100">Origines</a>
+							</li>
+						</ul>
+					{% endblock %}
 
 					<div class="administrationContainer md:bg-white rounded-b-lg px-4 md:px-12 md:pb-6 z-auto">
 						{% block body %}
