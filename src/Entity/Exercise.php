@@ -82,14 +82,13 @@ class Exercise
     #[ORM\JoinColumn(nullable: false)]
     private ?User $createdBy = null;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: "exercises")]
-    #[ORM\JoinTable(name: 'exercise_skill')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'exercises')]
     private Collection $skills;
 
     public function __construct()
     {
-        $this->skills = new ArrayCollection();
         $this->createdAt = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -321,17 +320,27 @@ class Exercise
         return $this;
     }
 
-    public function addSkill(Skill $skill): self
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): static
     {
         if (!$this->skills->contains($skill)) {
             $this->skills->add($skill);
-            $skill->addExercise($this);
         }
 
         return $this;
     }
 
-    public function removeSkill(Skill $skill){
-        $skill->removeExercise($this);
+    public function removeSkill(Skill $skill): static
+    {
+        $this->skills->removeElement($skill);
+
+        return $this;
     }
 }

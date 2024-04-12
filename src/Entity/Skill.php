@@ -22,14 +22,14 @@ class Skill
     #[ORM\JoinColumn(nullable: false)]
     private ?Course $course = null;
 
-    #[ORM\ManyToMany(targetEntity: Exercise::class, mappedBy:'exercises')]
+    #[ORM\ManyToMany(targetEntity: Exercise::class, mappedBy: 'skills')]
     private Collection $exercises;
 
     public function __construct()
     {
         $this->exercises = new ArrayCollection();
     }
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -59,7 +59,15 @@ class Skill
         return $this;
     }
 
-    public function addExercise(Exercise $exercise): self
+    /**
+     * @return Collection<int, Exercise>
+     */
+    public function getExercises(): Collection
+    {
+        return $this->exercises;
+    }
+
+    public function addExercise(Exercise $exercise): static
     {
         if (!$this->exercises->contains($exercise)) {
             $this->exercises->add($exercise);
@@ -69,7 +77,12 @@ class Skill
         return $this;
     }
 
-    public function removeExercise(Exercise $exercise){
-        $exercise->removeSkill($this);
+    public function removeExercise(Exercise $exercise): static
+    {
+        if ($this->exercises->removeElement($exercise)) {
+            $exercise->removeSkill($this);
+        }
+
+        return $this;
     }
 }

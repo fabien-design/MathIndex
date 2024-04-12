@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Skill;
+use App\Entity\Course;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -26,6 +27,16 @@ class SkillRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->andWhere('s.name LIKE :val')
             ->setParameter('val', '%'.$value.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findSkillsByCourse(?Course $course): array
+    {
+        return $this->createQueryBuilder('s')
+            ->join('s.course', 'c')
+            ->where('c.name = :courseName')
+            ->setParameter('courseName', $course->getName())
             ->getQuery()
             ->getResult();
     }

@@ -14,8 +14,8 @@ class SkillFixtures extends Fixture
 
     public const SKILLS = [
         [
-          'skill' => 'Lecture',
-          'course' => 0,
+            'skill' => 'Lecture',
+            'course' => 0,
         ],
         [
             'skill' => 'Écriture',

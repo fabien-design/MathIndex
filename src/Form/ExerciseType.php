@@ -6,10 +6,12 @@ use App\Entity\Classroom;
 use App\Entity\Course;
 use App\Entity\Exercise;
 use App\Entity\Origin;
+use App\Entity\Skill;
 use App\Entity\Thematic;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -43,6 +45,13 @@ class ExerciseType extends AbstractType
             'label' => 'Thématique * :',
             'class' => Thematic::class,
             'choice_label' => 'name',
+        ])
+        ->add('skills', EntityType::class, [
+            'class' => Skill::class,
+            'label' => 'Compétences * :',
+            'multiple' => true, 
+            'expanded' => true, 
+            'choice_label' => 'name', 
         ])
         ->add('chapter', TextType::class, [
             'label' => 'Chapitre du cours :',
