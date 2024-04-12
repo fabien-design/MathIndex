@@ -1,4 +1,6 @@
 import { initFlowbite } from "flowbite";
+import { alertsEvent } from "./DeleteAlertPopup";
+import { addElementToDeleteModal } from "./AddElementIdToDeleteModal";
 
 async function deleteExercice(button) {
     var currentUrl = window.location.pathname;
@@ -22,15 +24,18 @@ async function deleteExercice(button) {
                 const responseData = await response.json();
                 const decodedHTML = decodeURIComponent(responseData.html); // decode twig component to html 
                 document.querySelector("body").innerHTML += decodedHTML;
-                setTimeout(() => document.querySelectorAll('[role="alert"]').forEach((alert) => alert.remove()), 5000); // remove after 5s
+                alertsEvent();
                 // Call initFlowbite() when the XHR request is successful
                 initFlowbite();
+                document.getElementById("submit-delete-btn").addEventListener("click", (e) => deleteExercice(e));
+                addElementToDeleteModal();
+
             } else if (response.status === 403){
                 
                 const responseData = await response.json();
                 const decodedHTML = decodeURIComponent(responseData.html);
                 document.querySelector("body").innerHTML += decodedHTML;
-                setTimeout(() => document.querySelectorAll('[role="alert"]').forEach((alert) => alert.remove()), 5000);
+                alertsEvent();
 
             } else {
                 console.error("Une erreur s'est produite lors de la suppression de l'exercice :", response.status);

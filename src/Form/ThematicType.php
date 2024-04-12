@@ -16,10 +16,10 @@ class ThematicType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom',
+                'label' => 'Nom : ',
             ])
             ->add('course', EntityType::class, [
-                'label' => 'Matière',
+                'label' => 'Matière associée :',
                 'class' => Course::class,
                 'choice_label' => 'name',
             ])

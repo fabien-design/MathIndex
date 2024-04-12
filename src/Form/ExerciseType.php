@@ -25,6 +25,7 @@ class ExerciseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+        //Tab 1
         ->add('name', TextType::class, [
             'label' => 'Nom de l\'exercice * :',
             ])
@@ -47,7 +48,7 @@ class ExerciseType extends AbstractType
             'label' => 'Chapitre du cours :',
             ])
         ->add('keywords', HiddenType::class, [
-            'label' => 'Les vrais ots clés :',
+            'label' => 'Les vrais mots clés :',
             'attr' => ['class' => 'hidden realExerciseKeywords'],
             'required' => false,
             ])
@@ -87,26 +88,34 @@ class ExerciseType extends AbstractType
             'label' => 'Durée (en heure) :',
             'html5' => true,
         ])
-        ->add('originName', TextType::class, [
-            'label' => 'Provenance de l\'exercice :',
-        ])
-        ->add('originInformation', TextType::class, [
-            'label' => 'Nom de l\'exercice :',
-        ])
-        ->add('proposedByType', TextType::class, [
-            'label' => 'Nom de l\'exercice :',
-        ])
-        ->add('proposedByFirstName', TextType::class, [
-            'label' => 'Nom de l\'exercice :',
-        ])
-        ->add('proposedByLasName', TextType::class, [
-            'label' => 'Nom de l\'exercice :',
-        ])
+        //Tab 2
         ->add('origin', EntityType::class, [
+            'label' => 'Origine :',
             'class' => Origin::class,
             'choice_label' => 'name',
         ])
+        ->add('originName', TextType::class, [
+            'label' => 'Nom du livre/lien du site :',
+        ])
+        ->add('originInformation', TextType::class, [
+            'label' => 'Informations complémentaires :',
+        ])
+        ->add('proposedByType', ChoiceType::class, [
+            'label' => 'Proposé par un :',
+            'choices' => [
+                'Enseignant' => "Enseignant",
+                'Étudiant' => "Étudiant",
+            ],
+        ])
+        ->add('proposedByLasName', TextType::class, [
+            'label' => 'Nom :',
+        ])
+        ->add('proposedByFirstName', TextType::class, [
+            'label' => 'Prénom :',
+        ])
+        //Tab 3
         ->add('enonceFile', FileType::class, [
+            'label' => 'Fiche exercice (PDF, word) * :',
             'mapped' => false,
             'required' => false,
             'constraints' => [
@@ -128,6 +137,7 @@ class ExerciseType extends AbstractType
             ],
         ])
         ->add('correctFile', FileType::class, [
+            'label' => 'Fiche corrigé (PDF, word) * :',
             'mapped' => false,
             'required' => false,
             'constraints' => [
@@ -150,7 +160,7 @@ class ExerciseType extends AbstractType
         ])
         ->add('createdBy', EntityType::class, [
             'class' => User::class,
-            'choice_label' => 'id',
+            // 'choice_label' => 'email', //Pas de choice_label, User::__toString() prend le dessus
         ])
         ;
     }
