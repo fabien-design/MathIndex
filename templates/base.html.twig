@@ -8,7 +8,7 @@
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-		{# <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet"/> 	 #}
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet"/>
 
 		<link rel="icon" href="{{asset('images/logo_st_vincent_propre.png')}}">
 		{% block stylesheets %}
@@ -185,20 +185,11 @@
 			{# Main Content #}
 			<div class="p-4 md:border-2 border-gray-200 md:border-dashed rounded-lg dark:border-gray-700 md:mt-0 mt-3 transition-all md:m-4 ">
 				<div class="md:bg-gray-100 dark:bg-gray-800 md:px-8 md:py-14 h-full">
-					{% block form_title %}
+					{% block body %}
+						{# First Square #}
+						<div class="flex items-center justify-center h-24 rounded dark:bg-gray-800"></div>
 					{% endblock %}
-
-					{% block nav_links %}
-						<ul id="navigation" class="flex flex-wrap text-sm  gap-3 font-medium text-center border-b md:border-0 text-gray-500 dark:text-gray-400 pb-3 md:pb-0">
-						</ul>
-					{% endblock %}
-			
-					<div class="md:bg-white rounded-b-lg px-4 md:px-12 md:pb-6 z-auto">
-						{% block body %}
-							{# First Square #}
-							<div class="flex items-center justify-center h-24 rounded dark:bg-gray-800"></div>
-						{% endblock %}
-					</div>
+				</div>
 			</div>
 			<ul class="flex p-6 w-full h-fit-content md:justify-start flex-wrap justify-center list-disc gap-6">
 				<li class="list-none">
