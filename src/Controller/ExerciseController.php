@@ -73,9 +73,9 @@ class ExerciseController extends AbstractController
         $entityManager->flush();
 
         // Rendre le template Twig
-            $renderedTemplate = $twig->render('components/Alert.html.twig', [
-            'type' => 'success',
-            'message' => 'Suppression réussie',
+        $renderedTemplate = $twig->render('components/Alert.html.twig', [
+        'type' => 'success',
+        'message' => 'Suppression réussie',
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template
@@ -142,5 +142,4 @@ class ExerciseController extends AbstractController
             'form' => $form,
         ]);
     }
-
 }

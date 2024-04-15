@@ -8,14 +8,13 @@ use App\Entity\Exercise;
 use App\Entity\Origin;
 use App\Entity\Skill;
 use App\Entity\Thematic;
-use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,7 +27,7 @@ class ExerciseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        //Tab 1
+        // Tab 1
         ->add('name', TextType::class, [
             'label' => 'Nom de l\'exercice * :',
             ])
@@ -50,9 +49,9 @@ class ExerciseType extends AbstractType
         ->add('skills', EntityType::class, [
             'class' => Skill::class,
             'label' => 'Compétences * :',
-            'multiple' => true, 
-            'expanded' => true, 
-            'choice_label' => 'name', 
+            'multiple' => true,
+            'expanded' => true,
+            'choice_label' => 'name',
         ])
         ->add('chapter', TextType::class, [
             'label' => 'Chapitre du cours :',
@@ -98,7 +97,7 @@ class ExerciseType extends AbstractType
             'label' => 'Durée (en heure) :',
             'html5' => true,
         ])
-        //Tab 2
+        // Tab 2
         ->add('origin', EntityType::class, [
             'label' => 'Origine :',
             'class' => Origin::class,
@@ -113,8 +112,8 @@ class ExerciseType extends AbstractType
         ->add('proposedByType', ChoiceType::class, [
             'label' => 'Proposé par un :',
             'choices' => [
-                'Enseignant' => "Enseignant",
-                'Étudiant' => "Étudiant",
+                'Enseignant' => 'Enseignant',
+                'Étudiant' => 'Étudiant',
             ],
         ])
         ->add('proposedByLasName', TextType::class, [
@@ -123,7 +122,7 @@ class ExerciseType extends AbstractType
         ->add('proposedByFirstName', TextType::class, [
             'label' => 'Prénom :',
         ])
-        //Tab 3
+        // Tab 3
         ->add('enonceFile', FileType::class, [
             'label' => 'Fiche exercice (PDF, word) * :',
             'mapped' => false,

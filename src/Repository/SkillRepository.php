@@ -2,8 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\Skill;
 use App\Entity\Course;
+use App\Entity\Skill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

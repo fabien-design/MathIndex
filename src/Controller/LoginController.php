@@ -73,11 +73,11 @@ class LoginController extends AbstractController
             } else {
                 $canHaveAccessToForm = false;
             }
-        }
-        if (!$canHaveAccessToForm) {
-            $this->addFlash('error', 'Vous devez attendre 5 minutes pour changer de mot de passe. il reste '.(5 * 60 - (time() - $time)).' secondes.');
-
-            return $this->redirectToRoute('app_home');
+            if (!$canHaveAccessToForm) {
+                $this->addFlash('error', 'Vous devez attendre 5 minutes pour changer de mot de passe. il reste '.(5 * 60 - (time() - $time)).' secondes.');
+    
+                return $this->redirectToRoute('app_home');
+            }
         }
 
         $form = $this->createForm(ResetPasswordType::class);
