@@ -15,3 +15,4 @@ import './js/showRepeatPassword.js';
 import './js/durationToDatetime.js';
 import './js/DeleteAlertPopup.js';
 import './js/tabActiveOpacity.js';
+import './js/ChooseOriginOrProposedBy.js';

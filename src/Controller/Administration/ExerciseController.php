@@ -54,6 +54,7 @@ class ExerciseController extends AbstractController
                 $exercise->setCorrectionFile($correctionFile);
             }
             $entityManager->persist($exercise);
+            $exercise->setCreatedBy($this->getUser());
             $entityManager->flush();
 
             return $this->redirectToRoute('app_administration_exercise_index', [], Response::HTTP_SEE_OTHER);

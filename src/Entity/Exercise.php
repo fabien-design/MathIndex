@@ -18,7 +18,7 @@ class Exercise
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'exercises')]
@@ -33,7 +33,7 @@ class Exercise
     #[ORM\JoinColumn(nullable: false)]
     private ?Thematic $thematic = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $chapter = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -42,20 +42,20 @@ class Exercise
     #[ORM\Column]
     private ?int $difficulty = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $duration = null;
 
     #[ORM\ManyToOne(inversedBy: 'exercises')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Origin $origin = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $originName = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $originInformation = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $proposedByType = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -83,6 +83,7 @@ class Exercise
     private ?User $createdBy = null;
 
     #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'exercises')]
+    #[ORM\JoinColumn(nullable: true)]
     private Collection $skills;
 
     public function __construct()

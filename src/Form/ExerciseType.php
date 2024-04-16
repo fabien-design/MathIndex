@@ -20,7 +20,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File as FileValid;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ExerciseType extends AbstractType
 {
@@ -30,25 +32,37 @@ class ExerciseType extends AbstractType
         // Tab 1
         ->add('name', TextType::class, [
             'label' => 'Nom de l\'exercice * :',
+            'constraints' => [
+                new NotBlank(['groups' => ['new', 'edit'], 'message' => 'Le nom est obligatoire.']),
+            ],
             ])
         ->add('course', EntityType::class, [
             'label' => 'Matière * :',
             'class' => Course::class,
             'choice_label' => 'name',
+            'constraints' => [
+                new NotBlank(['groups' => ['new', 'edit'], 'message' => 'La matière est obligatoire.']),
+            ],
         ])
         ->add('classroom', EntityType::class, [
             'label' => 'Classe * :',
             'class' => Classroom::class,
             'choice_label' => 'name',
+            'constraints' => [
+                new NotBlank(['groups' => ['new', 'edit'], 'message' => 'La classe est obligatoire.']),
+            ],
         ])
         ->add('thematic', EntityType::class, [
             'label' => 'Thématique * :',
             'class' => Thematic::class,
             'choice_label' => 'name',
+            'constraints' => [
+                new NotBlank(['groups' => ['new', 'edit'], 'message' => 'La thématique est obligatoire.']),
+            ],
         ])
         ->add('skills', EntityType::class, [
             'class' => Skill::class,
-            'label' => 'Compétences * :',
+            'label' => 'Compétences :',
             'multiple' => true,
             'expanded' => true,
             'choice_label' => 'name',
@@ -91,6 +105,9 @@ class ExerciseType extends AbstractType
                 'Niveau 19' => 19,
                 'Niveau 20' => 20,
             ],
+            'constraints' => [
+                new NotBlank(['groups' => ['new', 'edit'], 'message' => 'La difficulté est obligatoire.']),
+            ],
         ])
 
         ->add('duration', NumberType::class, [
@@ -102,6 +119,7 @@ class ExerciseType extends AbstractType
             'label' => 'Origine :',
             'class' => Origin::class,
             'choice_label' => 'name',
+            'placeholder' => 'Choisir une origine',
         ])
         ->add('originName', TextType::class, [
             'label' => 'Nom du livre/lien du site :',
@@ -115,6 +133,7 @@ class ExerciseType extends AbstractType
                 'Enseignant' => 'Enseignant',
                 'Étudiant' => 'Étudiant',
             ],
+            'placeholder' => 'Choisir une option',
         ])
         ->add('proposedByLasName', TextType::class, [
             'label' => 'Nom :',
@@ -177,6 +196,80 @@ class ExerciseType extends AbstractType
             'allow_extra_fields' => true,
             'validation_groups' => ['new', 'edit'],
             'attr' => ['id' => 'exerciceForm'],
+            'constraints' => [
+                new Callback([$this, 'validateOriginOrProposedBy'], ['new', "edit"])
+            ]
         ]);
     }
+    
+
+    public function validateOriginOrProposedBy($data, ExecutionContextInterface $context)
+    {
+        $origin = $data->getOrigin();
+
+        $originName = $data->getOriginName();
+        $originInformation = $data->getOriginInformation();
+
+        $proposedBy = $data->getProposedByType();
+
+        $proposedByLastName = $data->getProposedByLasName();
+        $proposedByFirstName = $data->getProposedByFirstName();
+
+        if (empty($origin) && empty($proposedBy)) {
+            $context->buildViolation('Vous devez renseigner une origine')
+                ->atPath('origin')
+                ->addViolation();
+
+            $context->buildViolation('ou un contributeur.')
+            ->atPath('proposedByType')
+            ->addViolation();
+        }
+
+        if (!empty($origin) &&!empty($proposedBy)) {
+            $context->buildViolation('Vous devez renseigner soit une origine')
+                ->atPath('origin')
+                ->addViolation();
+                $context->buildViolation('soit un contributeur.')
+                ->atPath('proposedByType')
+                ->addViolation();
+        }
+
+        if (!empty($origin && empty($proposedBy))) {
+            if (empty($originName) || empty($originInformation)) {
+                $context->buildViolation('Vous devez renseigner le nom et les informations complémentaires de l\'origine.')
+                    ->atPath('origin')
+                    ->addViolation();
+            }
+            if (!empty($proposedByLastName) || !empty($proposedByFirstName)) {
+                $context->buildViolation('Vous ne devez pas renseigner ces champs.')
+                    ->atPath('proposedByLasName')
+                    ->addViolation();
+                $context->buildViolation('Vous ne devez pas renseigner ces champs.')
+                ->atPath('proposedByFirstName')
+                ->addViolation();
+            }
+        }
+
+        if (!empty($proposedBy && empty($origin))) {
+            if (empty($proposedByLastName)) {
+                $context->buildViolation('Vous devez renseigner le nom du contributeur.')
+                    ->atPath('proposedByLasName')
+                    ->addViolation();
+            }
+            if(empty($proposedByFirstName))
+            {
+                $context->buildViolation('Vous devez renseigner le prénom du contributeur.')
+                ->atPath('proposedByFirstName')
+                ->addViolation();
+            }
+            if (!empty($originName) ||!empty($originInformation)) {
+                $context->buildViolation('Vous ne devez pas renseigner ces champs.')
+                    ->atPath('originName')
+                    ->addViolation();
+                $context->buildViolation('Vous ne devez pas renseigner ces champs.')
+                ->atPath('originInformation')
+                ->addViolation();
+            }
+        }
+    } 
 }

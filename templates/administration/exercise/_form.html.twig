@@ -1,8 +1,54 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-     
-    <div class="flex gap-8">
-        <a href="{{ path('app_administration_exercise_index') }}" class="px-[2.5rem] rounded-lg py-5 bg-gray-100 text-neutral-600"><i class="fa-solid fa-chevron-left pr-5"></i>Retour à la liste</a>
-        <button class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600">Enregistrer</button>
+{{ form_start(form, { 'attr':
+    {'id':'navigation'},
+}) }}
+        {{ form_errors(form) }}
+    <div class="" id="infos" role="tabpanel" aria-labelledby="infos-tab">
+        <h2 class="pt-6">Informations Générales</h2>
+        <div class="flex">
+            <div class="w-full pr-6">
+                {{ form_row(form.name) }}
+                {{ form_row(form.course) }}
+                {{ form_row(form.classroom) }}
+                {{ form_row(form.thematic) }}
+                {{ form_row(form.chapter) }}
+            </div>
+            <div class="w-full pl-6">
+                {{ form_row(form.skills) }}
+                {{ form_row(form.fakeKeywords) }}
+                {{ form_row(form.keywords) }}
+                {{ form_row(form.difficulty) }}
+                {{ form_row(form.duration) }}
+            </div>
+        </div>
+    </div>
+    <div class="" id="sources" role="tabpanel" aria-labelledby="sources-tab">
+        <h2 class="pt-6">Sources</h2>
+        <div class="flex relative">
+            <div class="w-full pr-6 originBlock relative">
+                {{ form_row(form.origin) }}
+                {{ form_row(form.originName) }}
+                {{ form_row(form.originInformation) }}
+            </div>
+            <span class="verticalLine relative">
+                <span>OU</span>
+            </span>
+            <div class="w-full pl-6 proposedByBlock relative">
+                {{ form_row(form.proposedByType) }}
+                {{ form_row(form.proposedByLasName) }}
+                {{ form_row(form.proposedByFirstName) }}
+            </div>
+        </div>
+    </div>
+    <div class="" id="files" role="tabpanel" aria-labelledby="files-tab">
+        <h2 class="pt-6">Fichiers</h2>
+        <div class="flex">
+            <div class="w-full pr-6 ">
+                {{ form_row(form.enonceFile) }}
+                {{ form_row(form.correctFile) }}
+            </div>  
+        </div>
+        <div>
+            <button class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600">Enregistrer</button>
+        </div>
     </div>
 {{ form_end(form) }}

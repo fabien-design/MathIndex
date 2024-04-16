@@ -16,14 +16,22 @@ document.querySelector(".keywordsContainer") && keywordsSplit();
 
 
 export function keywordsToTags(){
-    let form = document.getElementById("exerciceForm");
+    let forms = document.querySelectorAll("#navigation");
+    let realForm;
+    forms.forEach(form => {
+        // Check if the element is a real form
+        if (form.tagName.toLowerCase() === 'form') {
+            realForm = form;
+        }
+    });
+
     let textarea = document.querySelector(".exerciseKeywords");
     let realTextarea = document.querySelector(".realExerciseKeywords");
     let div = textarea.parentElement;
     let keywordsContainer = div.appendChild(document.createElement("div"));
     keywordsContainer.classList.add("keywordsContainer", "cross");
 
-    form.addEventListener('submit', function (e) {
+    realForm.addEventListener('submit', function (e) {
         if (textarea.value !== "") {
             textarea.dispatchEvent(new Event('focus'));
             textarea.dispatchEvent(new KeyboardEvent('keypress',{'key':'Enter'}));

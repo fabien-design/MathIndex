@@ -1,6 +1,7 @@
 {{ form_start(form, { 'attr':
-    {'id':'exerciceForm'}
+    {'id':'navigation', 'novalidate': 'novalidate'},
 }) }}
+        {{ form_errors(form) }}
     <div class="hidden" id="infos" role="tabpanel" aria-labelledby="infos-tab">
         <h2 class="pt-6">Informations Générales</h2>
         <div class="flex">
@@ -20,25 +21,28 @@
             </div>
         </div>
         <div>
-            <span class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('sources-tab').click()">Continuer</span>
+            <button type="button" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('sources-tab').click()">Continuer</button type="button">
         </div>
     </div>
     <div class="hidden" id="sources" role="tabpanel" aria-labelledby="sources-tab">
         <h2 class="pt-6">Sources</h2>
-        <div class="flex">
-            <div class="w-full pr-6 ">
+        <div class="flex relative">
+            <div class="w-full pr-6 originBlock relative">
                 {{ form_row(form.origin) }}
                 {{ form_row(form.originName) }}
                 {{ form_row(form.originInformation) }}
             </div>
-            <div class="w-full pl-6">
+            <span class="verticalLine relative">
+                <span>OU</span>
+            </span>
+            <div class="w-full pl-6 proposedByBlock relative">
                 {{ form_row(form.proposedByType) }}
                 {{ form_row(form.proposedByLasName) }}
                 {{ form_row(form.proposedByFirstName) }}
             </div>
         </div>
         <div>
-            <span class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('files-tab').click()">Continuer</span>
+            <button type="button" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('files-tab').click()">Continuer</button type="button">
         </div>
     </div>
     <div class="hidden" id="files" role="tabpanel" aria-labelledby="files-tab">
