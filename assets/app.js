@@ -17,3 +17,4 @@ import './js/DeleteAlertPopup.js';
 import './js/tabActiveOpacity.js';
 import './js/ChooseOriginOrProposedBy.js';
 import  './js/UpdateDropzone.js';
+import  './js/UpdateSkillsCourses.js';
