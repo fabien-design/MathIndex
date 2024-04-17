@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraints\File as FileValid;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class ExerciseType extends AbstractType
 {
@@ -69,6 +70,7 @@ class ExerciseType extends AbstractType
         ])
         ->add('chapter', TextType::class, [
             'label' => 'Chapitre du cours :',
+            'required' => false,
             ])
         ->add('keywords', HiddenType::class, [
             'label' => 'Les vrais mots clés :',
@@ -112,7 +114,7 @@ class ExerciseType extends AbstractType
 
         ->add('duration', NumberType::class, [
             'label' => 'Durée (en heure) :',
-            'html5' => true,
+            'required' => false,
         ])
         // Tab 2
         ->add('origin', EntityType::class, [
@@ -142,7 +144,7 @@ class ExerciseType extends AbstractType
             'label' => 'Prénom :',
         ])
         // Tab 3
-        ->add('enonceFile', FileType::class, [
+        ->add('enonceFile', DropzoneType::class, [
             'label' => 'Fiche exercice (PDF, word) * :',
             'mapped' => false,
             'required' => false,
@@ -162,9 +164,14 @@ class ExerciseType extends AbstractType
             ],
             'attr' => [
                 'accept' => '.pdf,.doc,.docx,.odt,.odp',
+                'class' => 'dropzoneInput dropzone',
+                'title' => ' ',
             ],
+            'label_attr' => [
+                'class' => "dropzoneLabel"
+            ]
         ])
-        ->add('correctFile', FileType::class, [
+        ->add('correctFile', DropzoneType::class, [
             'label' => 'Fiche corrigé (PDF, word) * :',
             'mapped' => false,
             'required' => false,
@@ -184,7 +191,11 @@ class ExerciseType extends AbstractType
             ],
             'attr' => [
                 'accept' => '.pdf,.doc,.docx,.odt,.odp',
+                'class' => 'dropzoneInput dropzone',
             ],
+            'label_attr' => [
+                'class' => "dropzoneLabel"
+            ]
         ])
         ;
     }

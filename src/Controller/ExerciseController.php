@@ -142,4 +142,33 @@ class ExerciseController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/exercise/{id}/edit', name: 'app_exercise_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, Exercise $exercise): Response
+    {
+        $form = $this->createForm(ExerciseType::class, $exercise, ['validation_groups' => ['edit']]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form['enonceFile']->getData()) {
+                $file = new File($form['enonceFile']->getData());
+                $entityManager->persist($file);
+                $exercise->setExerciseFile($file)
+                ->setCreatedBy($this->getUser());
+            }
+            if ($form['correctFile']->getData()) {
+                $correctionFile = new File($form['correctFile']->getData());
+                $entityManager->persist($correctionFile);
+                $exercise->setCorrectionFile($correctionFile);
+            }
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_exercise', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('exercise/submit/edit.html.twig', [
+            'form' => $form,
+            'exercise' => $exercise
+        ]);
+    }
 }

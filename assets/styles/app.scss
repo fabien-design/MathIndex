@@ -197,7 +197,7 @@ form {
     input[type="search"],
     input[type="tel"],
     input[type="color"],
-    input[type="file"],
+    // input[type="file"],
     input[type="range"],
     input[type="search"],
     input[type="tel"],
@@ -207,7 +207,6 @@ form {
     input[type="search"],
     input[type="tel"],
     input[type="color"],
-    input[type="file"],
     input[type="range"],
     input[type="search"] {
         display: block !important;
@@ -222,6 +221,10 @@ form {
 
     :disabled {
         cursor: not-allowed !important;
+    }
+    label{
+        font-weight: 500;
+        color: #666666 !important;
     }
 }
 
@@ -416,7 +419,7 @@ input[type="checkbox"] {
     cursor: pointer;
     position: relative;
 
-    &:focus{
+    &:focus {
         outline: none;
     }
 }
@@ -490,20 +493,21 @@ input[type="checkbox"]:active:not(:checked)::after {
     grid-column-gap: 10px;
     grid-row-gap: 10px;
     margin: 10px 0;
+
     div {
         width: fit-content;
         gap: 10px;
     }
 }
 
-#exerciceForm{
-    .mb-6{
+#exerciceForm {
+    .mb-6 {
         margin-bottom: 20px;
     }
 }
 
-.disabledBlock{
-    div:not(:first-child){
+.disabledBlock {
+    div:not(:first-child) {
         opacity: 0.5;
         pointer-events: none;
         cursor: not-allowed;
@@ -513,9 +517,10 @@ input[type="checkbox"]:active:not(:checked)::after {
 .verticalLine {
     width: 30px;
     display: inline-block;
-    text-align:center;
+    text-align: center;
     left: -10px;
-    span{
+
+    span {
         position: absolute;
         top: 40%;
         padding: 10px 0;
@@ -548,3 +553,65 @@ input[type="checkbox"]:active:not(:checked)::after {
 //     width: 1px;
 //     z-index: 0;
 // }
+
+
+// .dropzoneInput {
+//     display: none !important;
+// }
+
+// .dropzoneLabel {
+//     display: -webkit-box;
+//     display: -ms-flexbox;
+//     display: flex;
+//     -webkit-box-orient: vertical;
+//     -webkit-box-direction: normal;
+//     -ms-flex-direction: column;
+//     flex-direction: column;
+//     -webkit-box-pack: center;
+//     -ms-flex-pack: center;
+//     justify-content: center;
+//     width: 250px;
+//     height: 190px;
+//     border: 2px dashed #ccc;
+//     -webkit-box-align: center;
+//     -ms-flex-align: center;
+//     align-items: center;
+//     text-align: center;
+//     padding: 5px;
+//     color: #404040;
+//     cursor: pointer;
+// }
+
+.dropzoneInput{
+    height: 150px;
+    cursor: pointer;
+}
+.dropzoneContainerBlock{
+    position: relative;
+    .dropzone-container{
+        position: relative;
+        border: 2px dashed lightgray;
+        border-radius: 10px;
+        transition: all 0.1s ease-in-out;
+        &:hover{
+            background-color: #75757515;
+        }
+        &.isHovered{
+            background-color: #75757515;
+        }
+        input{
+            opacity: 0;
+            z-index: 2;
+            position: relative;
+        }
+    }
+    p{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        // white-space:nowrap;
+        // font-size: clamp(0.7rem, 0.3rem + 1vw, 1rem);
+        text-align: center;
+    }
+}

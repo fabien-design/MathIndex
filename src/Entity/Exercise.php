@@ -150,7 +150,7 @@ class Exercise
         return $this->chapter;
     }
 
-    public function setChapter(string $chapter): static
+    public function setChapter(?string $chapter): static
     {
         $this->chapter = $chapter;
 
@@ -186,7 +186,7 @@ class Exercise
         return $this->duration;
     }
 
-    public function setDuration(float $duration): static
+    public function setDuration(?float $duration): static
     {
         $this->duration = $duration;
 
@@ -210,7 +210,7 @@ class Exercise
         return $this->originName;
     }
 
-    public function setOriginName(string $originName): static
+    public function setOriginName(?string $originName): static
     {
         $this->originName = $originName;
 
@@ -222,7 +222,7 @@ class Exercise
         return $this->originInformation;
     }
 
-    public function setOriginInformation(string $originInformation): static
+    public function setOriginInformation(?string $originInformation): static
     {
         $this->originInformation = $originInformation;
 
@@ -234,7 +234,7 @@ class Exercise
         return $this->proposedByType;
     }
 
-    public function setProposedByType(string $proposedByType): static
+    public function setProposedByType(?string $proposedByType): static
     {
         $this->proposedByType = $proposedByType;
 
@@ -246,7 +246,7 @@ class Exercise
         return $this->proposedByFirstName;
     }
 
-    public function setProposedByFirstName(string $proposedByFirstName): static
+    public function setProposedByFirstName(?string $proposedByFirstName): static
     {
         $this->proposedByFirstName = $proposedByFirstName;
 
@@ -258,7 +258,7 @@ class Exercise
         return $this->proposedByLasName;
     }
 
-    public function setProposedByLasName(string $proposedByLasName): static
+    public function setProposedByLasName(?string $proposedByLasName): static
     {
         $this->proposedByLasName = $proposedByLasName;
 
