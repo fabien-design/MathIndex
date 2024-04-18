@@ -11,16 +11,14 @@ use App\Entity\Thematic;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File as FileValid;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\File as FileValid;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\UX\Dropzone\Form\DropzoneType;
@@ -36,7 +34,7 @@ class ExerciseType extends AbstractType
             'constraints' => [
                 new NotBlank(['groups' => ['new', 'edit'], 'message' => 'Le nom est obligatoire.']),
             ],
-            ])
+        ])
         ->add('course', EntityType::class, [
             'label' => 'Matière * :',
             'class' => Course::class,
@@ -67,22 +65,23 @@ class ExerciseType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'choice_label' => 'name',
+            'attr' => ['class' => 'doNotShow !flex lg:!grid flex-wrap'],
         ])
         ->add('chapter', TextType::class, [
             'label' => 'Chapitre du cours :',
             'required' => false,
-            ])
+        ])
         ->add('keywords', HiddenType::class, [
             'label' => 'Les vrais mots clés :',
             'attr' => ['class' => 'hidden realExerciseKeywords'],
             'required' => false,
-            ])
+        ])
         ->add('fakeKeywords', TextType::class, [
-                'label' => 'Mots clés :',
-                'mapped' => false,
-                'attr' => ['class' => 'exerciseKeywords'],
-                'required' => false,
-                ])
+            'label' => 'Mots clés :',
+            'mapped' => false,
+            'attr' => ['class' => 'exerciseKeywords'],
+            'required' => false,
+        ])
         ->add('difficulty', ChoiceType::class, [
             'label' => 'Difficulté * :',
             'choices' => [
@@ -115,6 +114,7 @@ class ExerciseType extends AbstractType
         ->add('duration', NumberType::class, [
             'label' => 'Durée (en heure) :',
             'required' => false,
+            'html5' => true,
         ])
         // Tab 2
         ->add('origin', EntityType::class, [
@@ -168,8 +168,8 @@ class ExerciseType extends AbstractType
                 'title' => ' ',
             ],
             'label_attr' => [
-                'class' => "dropzoneLabel"
-            ]
+                'class' => 'dropzoneLabel',
+            ],
         ])
         ->add('correctFile', DropzoneType::class, [
             'label' => 'Fiche corrigé (PDF, word) * :',
@@ -194,8 +194,8 @@ class ExerciseType extends AbstractType
                 'class' => 'dropzoneInput dropzone',
             ],
             'label_attr' => [
-                'class' => "dropzoneLabel"
-            ]
+                'class' => 'dropzoneLabel',
+            ],
         ])
         ;
     }
@@ -208,11 +208,10 @@ class ExerciseType extends AbstractType
             'validation_groups' => ['new', 'edit'],
             'attr' => ['id' => 'exerciceForm'],
             'constraints' => [
-                new Callback([$this, 'validateOriginOrProposedBy'], ['new', "edit"])
-            ]
+                new Callback([$this, 'validateOriginOrProposedBy'], ['new', 'edit']),
+            ],
         ]);
     }
-    
 
     public function validateOriginOrProposedBy($data, ExecutionContextInterface $context)
     {
@@ -236,13 +235,13 @@ class ExerciseType extends AbstractType
             ->addViolation();
         }
 
-        if (!empty($origin) &&!empty($proposedBy)) {
+        if (!empty($origin) && !empty($proposedBy)) {
             $context->buildViolation('Vous devez renseigner soit une origine')
                 ->atPath('origin')
                 ->addViolation();
-                $context->buildViolation('soit un contributeur.')
-                ->atPath('proposedByType')
-                ->addViolation();
+            $context->buildViolation('soit un contributeur.')
+            ->atPath('proposedByType')
+            ->addViolation();
         }
 
         if (!empty($origin && empty($proposedBy))) {
@@ -267,13 +266,12 @@ class ExerciseType extends AbstractType
                     ->atPath('proposedByLasName')
                     ->addViolation();
             }
-            if(empty($proposedByFirstName))
-            {
+            if (empty($proposedByFirstName)) {
                 $context->buildViolation('Vous devez renseigner le prénom du contributeur.')
                 ->atPath('proposedByFirstName')
                 ->addViolation();
             }
-            if (!empty($originName) ||!empty($originInformation)) {
+            if (!empty($originName) || !empty($originInformation)) {
                 $context->buildViolation('Vous ne devez pas renseigner ces champs.')
                     ->atPath('originName')
                     ->addViolation();
@@ -282,5 +280,5 @@ class ExerciseType extends AbstractType
                 ->addViolation();
             }
         }
-    } 
+    }
 }

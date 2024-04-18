@@ -14,6 +14,3 @@ function UpdateDropzone(value){
 }
 
 (document.getElementById("navigation")) && UpdateDropzone();
-
-
-

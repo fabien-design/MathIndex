@@ -21,7 +21,7 @@
 		</div>
 	</div>
 	<div>
-		<button type="button" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('sources-tab').click()">Continuer</buttontype="button">
+		<button type="button" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('sources-tab').click()">Continuer</button>
 	</div>
 </div>
 <div class="hidden" id="sources" role="tabpanel" aria-labelledby="sources-tab">
@@ -42,18 +42,21 @@
 		</div>
 	</div>
 	<div>
-		<button type="button" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('files-tab').click()">Continuer</buttontype="button">
+		<button type="button" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('files-tab').click()">Continuer</button>
 	</div>
 </div>
 <div class="" id="files" role="tabpanel" aria-labelledby="files-tab">
 	<h2 class="pt-6">Fichiers</h2>
 	<div class="flex">
 		<div
-			class="w-full md:gap-[3.8rem] md:flex">
+			class="w-full lg:gap-[3.8rem] lg:flex">
 			{# {{ form_row(form.correctFile) }} #}
 
 			<div class="mb-6 w-full">
-				{{ form_label(form.enonceFile)}}
+					{{ form_label(form.enonceFile)}}
+					{% if exercise is defined %}
+					<p class="filePresent">Fichier déjà présent : <a class="text-blue-500" href="{{ asset('images/file/' ~ exercise.exerciseFile.name) }}" target="_blank" download={{"Fichier-" ~ exercise.name|slug }}>{{ exercise.exerciseFile.originalName }}</a></p>
+					{% endif %}
 				{{ form_errors(form.enonceFile)}}
 				<div class="dropzoneContainerBlock">
 					{{ form_widget(form.enonceFile, {'attr': {'onChange': 'document.querySelectorAll(".dropzoneContainerBlock")[0].querySelector("p").textContent = this.files[0].name + " - " + (this.files[0].size/1000000).toFixed(2)+"mo"' }}) }}
@@ -63,6 +66,9 @@
 
 			<div class="mb-6 w-full">
 				{{ form_label(form.correctFile)}}
+					{% if exercise is defined %}
+					<p class="filePresent">Fichier déjà présent : <a class="text-blue-500" href="{{ asset('images/file/' ~ exercise.correctionFile.name) }}" target="_blank" download={{"Fichier-" ~ exercise.name|slug }}>{{ exercise.correctionFile.originalName }}</a></p>
+					{% endif %}
 				{{ form_errors(form.correctFile)}}
 				<div class="dropzoneContainerBlock">
 					{{ form_widget(form.correctFile, {'attr': {'onChange': 'document.querySelectorAll(".dropzoneContainerBlock")[1].querySelector("p").textContent = this.files[0].name + " - " + (this.files[0].size/1000000).toFixed(2)+"mo"' }}) }}

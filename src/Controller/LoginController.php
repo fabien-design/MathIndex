@@ -75,7 +75,7 @@ class LoginController extends AbstractController
             }
             if (!$canHaveAccessToForm) {
                 $this->addFlash('error', 'Vous devez attendre 5 minutes pour changer de mot de passe. il reste '.(5 * 60 - (time() - $time)).' secondes.');
-    
+
                 return $this->redirectToRoute('app_home');
             }
         }

@@ -45,6 +45,3 @@ export function hideOriginOrProposedBy(){
 }
 
 (document.getElementById("navigation")) && hideOriginOrProposedBy();
-
-
-

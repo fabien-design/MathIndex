@@ -59,22 +59,20 @@ class CourseController extends AbstractController
     #[Route('/getSkillsCourse/{id}', name: 'app_course_skills', methods: ['GET'])]
     public function getCoursesSkills(Course $course, Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
-
-        if($course){
-            
-            $skills = $entityManager->getRepository(Skill::class)->findBy(['course'=>$course]);
+        if ($course) {
+            $skills = $entityManager->getRepository(Skill::class)->findBy(['course' => $course]);
             $arraySkills = [];
             foreach ($skills as $skill) {
                 $array = [
-                    "id" => $skill->getId(),
-                    "name" => $skill->getName(),
+                    'id' => $skill->getId(),
+                    'name' => $skill->getName(),
                 ];
-                array_push($arraySkills,$array);
+                array_push($arraySkills, $array);
             }
+
             return new JsonResponse($arraySkills, Response::HTTP_OK);
         }
 
         return new JsonResponse([], Response::HTTP_NOT_FOUND);
     }
-
 }

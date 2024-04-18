@@ -74,8 +74,8 @@ class ExerciseController extends AbstractController
 
         // Rendre le template Twig
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
-        'type' => 'success',
-        'message' => 'Suppression réussie',
+            'type' => 'success',
+            'message' => 'Suppression réussie',
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template
@@ -110,7 +110,7 @@ class ExerciseController extends AbstractController
             'researchForm' => $form,
             'exercises' => $pagination,
             'results' => $results,
-         ]);
+        ]);
     }
 
     #[Route('/exercise/new', name: 'app_exercise_new', methods: ['GET', 'POST'])]
@@ -168,7 +168,7 @@ class ExerciseController extends AbstractController
 
         return $this->render('exercise/submit/edit.html.twig', [
             'form' => $form,
-            'exercise' => $exercise
+            'exercise' => $exercise,
         ]);
     }
 }

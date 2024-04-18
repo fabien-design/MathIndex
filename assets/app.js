@@ -18,3 +18,4 @@ import './js/tabActiveOpacity.js';
 import './js/ChooseOriginOrProposedBy.js';
 import  './js/UpdateDropzone.js';
 import  './js/UpdateSkillsCourses.js';
+import  './js/NotifyErrorsSubmitExercise.js';

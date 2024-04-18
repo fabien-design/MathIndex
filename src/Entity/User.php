@@ -35,7 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(groups: ["new"], message:"Le mot de passe ne peut pas être vide.")]
+    #[Assert\NotBlank(groups: ['new'], message: 'Le mot de passe ne peut pas être vide.')]
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Exercise::class)]
