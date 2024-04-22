@@ -6,6 +6,7 @@ use App\Entity\Course;
 use App\Form\CourseType;
 use App\Repository\CourseRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -40,11 +41,16 @@ class CourseController extends AbstractController
         $form = $this->createForm(CourseType::class, $course);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($course);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_administration_course_index', [], Response::HTTP_SEE_OTHER);
+        try{
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($course);
+                $entityManager->flush();
+                $this->addFlash('success', "La matière a bien été sauvegardée !");
+    
+                return $this->redirectToRoute('app_administration_course_index', [], Response::HTTP_SEE_OTHER);
+            }
+        }catch(Exception $e){
+            $this->addFlash('error', "Erreur pendant la création de la matière");
         }
 
         return $this->render('administration/course/new.html.twig', [
@@ -58,11 +64,15 @@ class CourseController extends AbstractController
     {
         $form = $this->createForm(CourseType::class, $course);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_administration_course_index', [], Response::HTTP_SEE_OTHER);
+        try{
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->flush();
+                $this->addFlash('success', "La matière a bien été modifiée!");
+    
+                return $this->redirectToRoute('app_administration_course_index', [], Response::HTTP_SEE_OTHER);
+            }
+        }catch(Exception $e){
+            $this->addFlash('error', 'Erreur lors de le modification de la matière !');
         }
 
         return $this->render('administration/course/edit.html.twig', [
@@ -76,36 +86,40 @@ class CourseController extends AbstractController
     {
         $user = $this->getUser();
 
+        try{
+            if (!$user) {
+                // Rendre le template Twig
+                $renderedTemplate = $twig->render('components/Alert.html.twig', [
+                    'type' => 'error',
+                    'message' => "Vous n'avez pas le droit de supprimer ce cours",
+                ]);
+                
+                return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
+            }
+                // Supprimer les exercices associés au cours
+            foreach ($course->getExercises() as $exercise) {
+                $course->removeExercise($exercise);
+                $entityManager->remove($exercise);
+            }
+            // Supprimer les compétences associées au cours
+            foreach ($course->getSkills() as $skill) {
+                $course->removeSkill($skill);
+                $entityManager->remove($skill);
+            }
+            // Supprimer les thematiques associées au cours
+            foreach ($course->getThematics() as $thematic) {
+                $course->removeThematic($thematic);
+                $entityManager->remove($thematic);
+            }
+
+            // Supprimer le cours lui-même
+            $entityManager->remove($course);
+            $entityManager->flush();
+
+        }catch(Exception $e){
+            $this->addFlash('error', "Erreur pendant la suppression de la matière");
+        }
         // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
-        if (!$user) {
-            // Rendre le template Twig
-            $renderedTemplate = $twig->render('components/Alert.html.twig', [
-                'type' => 'error',
-                'message' => "Vous n'avez pas le droit de supprimer ce cours",
-            ]);
-
-            return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
-        }
-
-        // Supprimer les exercices associés au cours
-        foreach ($course->getExercises() as $exercise) {
-            $course->removeExercise($exercise);
-            $entityManager->remove($exercise);
-        }
-        // Supprimer les compétences associées au cours
-        foreach ($course->getSkills() as $skill) {
-            $course->removeSkill($skill);
-            $entityManager->remove($skill);
-        }
-        // Supprimer les thematiques associées au cours
-        foreach ($course->getThematics() as $thematic) {
-            $course->removeThematic($thematic);
-            $entityManager->remove($thematic);
-        }
-
-        // Supprimer le cours lui-même
-        $entityManager->remove($course);
-        $entityManager->flush();
 
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',

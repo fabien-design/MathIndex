@@ -6,6 +6,7 @@ use App\Entity\Origin;
 use App\Form\OriginType;
 use App\Repository\OriginRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -40,11 +41,16 @@ class OriginController extends AbstractController
         $form = $this->createForm(OriginType::class, $origin);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($origin);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_administration_origin_index', [], Response::HTTP_SEE_OTHER);
+        try{
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($origin);
+                $entityManager->flush();
+                $this->addFlash('success', "L'origine a bien été ajoutée !");
+    
+                return $this->redirectToRoute('app_administration_origin_index', [], Response::HTTP_SEE_OTHER);
+            }        
+        }catch(Exception $e){
+            $this->addFlash('error', "Erreur pendant l\'ajout de l\'origine");
         }
 
         return $this->render('administration/origin/new.html.twig', [
@@ -58,11 +64,16 @@ class OriginController extends AbstractController
     {
         $form = $this->createForm(OriginType::class, $origin);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_administration_origin_index', [], Response::HTTP_SEE_OTHER);
+        
+        try{
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->flush();
+                $this->addFlash('success', 'L\'origine a bien été modifiée !');
+    
+                return $this->redirectToRoute('app_administration_origin_index', [], Response::HTTP_SEE_OTHER);
+            }
+        }catch(Exception $e){
+            $this->addFlash('error', "Erreur pendant la modification de l'origine");
         }
 
         return $this->render('administration/origin/edit.html.twig', [
@@ -76,20 +87,25 @@ class OriginController extends AbstractController
     {
         $user = $this->getUser();
 
-        // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
-        if (!$user) {
-            // Rendre le template Twig
-            $renderedTemplate = $twig->render('components/Alert.html.twig', [
-                'type' => 'error',
-                'message' => "Vous n'avez pas le droit de supprimer cette compétence",
-            ]);
+        try{
+            // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
+            if (!$user) {
+                // Rendre le template Twig
+                $renderedTemplate = $twig->render('components/Alert.html.twig', [
+                    'type' => 'error',
+                    'message' => "Vous n'avez pas le droit de supprimer cette compétence",
+                ]);
+    
+                return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
+            }
+    
+            // Supprimer le cours lui-même
+            $entityManager->remove($origin);
+            $entityManager->flush();
 
-            return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
+        }catch(Exception $e){
+            $this->addFlash('error', "Erreur pendant la suppression de l'origine");
         }
-
-        // Supprimer le cours lui-même
-        $entityManager->remove($origin);
-        $entityManager->flush();
 
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',

@@ -8,6 +8,7 @@ use App\Form\ExerciseType;
 use App\Repository\ExerciseRepository;
 use App\Repository\FileRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -42,28 +43,33 @@ class ExerciseController extends AbstractController
         $form = $this->createForm(ExerciseType::class, $exercise, ['validation_groups' => ['new']]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($form['enonceFile']->getData()) {
-                $file = new File($form['enonceFile']->getData());
-                $entityManager->persist($file);
-                $exercise->setExerciseFile($file);
+        try{
+            if ($form->isSubmitted() && $form->isValid()) {
+                if ($form['enonceFile']->getData()) {
+                    $file = new File($form['enonceFile']->getData());
+                    $entityManager->persist($file);
+                    $exercise->setExerciseFile($file);
+                }
+                if ($form['correctFile']->getData()) {
+                    $correctionFile = new File($form['correctFile']->getData());
+                    $entityManager->persist($correctionFile);
+                    $exercise->setCorrectionFile($correctionFile);
+                }
+                $entityManager->persist($exercise);
+                $exercise->setCreatedBy($this->getUser());
+                $entityManager->flush();
+                $this->addFlash('success', "L'exercice a bien été ajouté !");
+    
+                return $this->redirectToRoute('app_administration_exercise_index', [], Response::HTTP_SEE_OTHER);
             }
-            if ($form['correctFile']->getData()) {
-                $correctionFile = new File($form['correctFile']->getData());
-                $entityManager->persist($correctionFile);
-                $exercise->setCorrectionFile($correctionFile);
-            }
-            $entityManager->persist($exercise);
-            $exercise->setCreatedBy($this->getUser());
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_administration_exercise_index', [], Response::HTTP_SEE_OTHER);
+    
+            return $this->render('administration/exercise/new.html.twig', [
+                'exercise' => $exercise,
+                'form' => $form,
+            ]);
+        }catch(Exception $e){
+            $this->addFlash('error', 'Erreur lors de le l\'ajout de l\'exercice');
         }
-
-        return $this->render('administration/exercise/new.html.twig', [
-            'exercise' => $exercise,
-            'form' => $form,
-        ]);
     }
 
     #[Route('/{id}/edit', name: 'app_administration_exercise_edit', methods: ['GET', 'POST'])]
@@ -71,22 +77,26 @@ class ExerciseController extends AbstractController
     {
         $form = $this->createForm(ExerciseType::class, $exercise, ['validation_groups' => ['edit']]);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($form['enonceFile']->getData()) {
-                $enonceFile = new File($form['enonceFile']->getData());
-                $entityManager->persist($enonceFile);
-                $exercise->setExerciseFile($enonceFile);
+        try{
+            if ($form->isSubmitted() && $form->isValid()) {
+                if ($form['enonceFile']->getData()) {
+                    $enonceFile = new File($form['enonceFile']->getData());
+                    $entityManager->persist($enonceFile);
+                    $exercise->setExerciseFile($enonceFile);
+                }
+                if ($form['correctFile']->getData()) {
+                    $correctionFile = new File($form['correctFile']->getData());
+                    $entityManager->persist($correctionFile);
+                    $exercise->setCorrectionFile($correctionFile);
+                }
+    
+                $entityManager->flush();
+                $this->addFlash('success', "L'exercice a bien été modifié!");
+    
+                return $this->redirectToRoute('app_administration_exercise_index', [], Response::HTTP_SEE_OTHER);
             }
-            if ($form['correctFile']->getData()) {
-                $correctionFile = new File($form['correctFile']->getData());
-                $entityManager->persist($correctionFile);
-                $exercise->setCorrectionFile($correctionFile);
-            }
-
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_administration_exercise_index', [], Response::HTTP_SEE_OTHER);
+        }catch(Exception $e){
+            $this->addFlash('error', "Erreur pendant la modification de l'exercice");
         }
 
         return $this->render('administration/exercise/edit.html.twig', [

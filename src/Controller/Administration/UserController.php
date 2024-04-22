@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,15 +45,19 @@ class UserController extends AbstractController
         $user = new User();
         $form = $this->createForm(UserType::class, $user, ['user_roles' => $user->getRoles(), 'validation_groups' => ['new']]);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($passwordHasher->hashPassword($user, $user->getPlainPassword()));
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_administration_user_index', [], Response::HTTP_SEE_OTHER);
+        try{
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user->setPassword($passwordHasher->hashPassword($user, $user->getPlainPassword()));
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash('success', "Le contributeur a bien été créé !");
+    
+                return $this->redirectToRoute('app_administration_user_index', [], Response::HTTP_SEE_OTHER);
+            }    
+        }catch(Exception $e){
+            $this->addFlash('error', "Erreur pendant la création du contributeur !");
         }
-
+        
         return $this->render('administration/user/new.html.twig', [
             'user' => $user,
             'form' => $form,
@@ -73,13 +78,18 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user, ['user_roles' => $user->getRoles()]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if (null != $user->getPlainPassword()) {
-                $user->setPassword($passwordHasher->hashPassword($user, $user->getPlainPassword()));
+        try{
+            if ($form->isSubmitted() && $form->isValid()) {
+                if (null != $user->getPlainPassword()) {
+                    $user->setPassword($passwordHasher->hashPassword($user, $user->getPlainPassword()));
+                }
+                $entityManager->flush();
+                $this->addFlash('success', "Les modifications ont bien été prises en compte !");
+    
+                return $this->redirectToRoute('app_administration_user_index', [], Response::HTTP_SEE_OTHER);
             }
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_administration_user_index', [], Response::HTTP_SEE_OTHER);
+        }catch(Exception $e){
+            $this->addFlash('error', "Erreur pendant la modification du contributeur !");
         }
 
         return $this->render('administration/user/edit.html.twig', [
@@ -88,14 +98,19 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/{id}', name: 'app_administration_user_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_administration_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($user);
-            $entityManager->flush();
+        try{
+            if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+                $entityManager->remove($user);
+                $entityManager->flush();
+                
+            }
+        }catch(Exception $e){
+            $this->addFlash('error', "Erreur pendant la suppression du contributeur !");
         }
-
+        
         return $this->redirectToRoute('app_administration_user_index', [], Response::HTTP_SEE_OTHER);
     }
 }
