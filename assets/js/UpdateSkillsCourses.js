@@ -7,7 +7,6 @@ function updateSkillsCourses() {
             checkedInputsValue.push(input.value);
         }
     });
-    console.log(checkedInputsValue);
     var courses = document.getElementById("exercise_course");
     var courseId = courses.value;
 

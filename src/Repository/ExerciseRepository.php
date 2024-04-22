@@ -30,7 +30,7 @@ class ExerciseRepository extends ServiceEntityRepository
         $qb->innerJoin('c.course', 'course')
         ->innerJoin('c.classroom', 'classroom')
         ->innerJoin('c.thematic', 'thematic')
-        ->innerJoin('c.origin', 'origin')
+        // ->innerJoin('c.origin', 'origin')
         ->innerJoin('c.createdBy', 'createdBy')
         ->andWhere(
             $qb->expr()->orX(
@@ -45,9 +45,10 @@ class ExerciseRepository extends ServiceEntityRepository
                 $qb->expr()->like('course.name', ':search'),
                 $qb->expr()->like('classroom.name', ':search'),
                 $qb->expr()->like('thematic.name', ':search'),
-                $qb->expr()->like('origin.name', ':search'),
+                // $qb->expr()->like('origin.name', ':search'),
             )
         )
+        ->orderBy("c.createdAt", "desc")
         ->setParameter('search', '%'.$searchTerm.'%');
 
         return $qb->getQuery()->getResult();

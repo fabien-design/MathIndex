@@ -89,7 +89,7 @@ class ExerciseController extends AbstractController
     public function research(ExerciseRepository $exerciseRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $form = $this->createForm(ResearchType::class)->handleRequest($request);
-        $exercises = $exerciseRepository->findAll();
+        $exercises = $exerciseRepository->findBy([], ['createdAt' => 'DESC']);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();

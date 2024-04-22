@@ -68,6 +68,9 @@ class SearchController extends AbstractController
                         $html = '<tr><td colspan="12" class="text-center text-lg p-4">Aucun exercice "'.$query.'" n\'a été trouvée.</td></tr>';
                     }
                     foreach ($values as $item) {
+                        $origin = $item->getOrigin() != null ? '<td scope="row" class="px-6 py-4">'.$item->getOrigin()->getName().'</td>' :  '<td scope="row" class="px-6 py-4">'.$item->getProposedByType().'</td>' ;
+                        $originName = $item->getOrigin() != null ? '<td scope="row" class="px-6 py-4">'.$item->getOriginName().'</td>' :  '<td scope="row" class="px-6 py-4">'.$item->getProposedByFirstName().'</td>' ;
+                        $originInformation = $item->getOrigin() != null ? '<td scope="row" class="px-6 py-4">'.$item->getOriginInformation().'</td>' :  '<td scope="row" class="px-6 py-4">'.$item->getProposedByLasName().'</td>' ;
                         $html .= '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="'.$item->getId().'">
                             <td scope="row" class="px-6 py-4">'.$item->getName().'</td>
                             <td scope="row" class="px-6 py-4">'.$item->getCourse()->getName().'</td>
@@ -77,12 +80,16 @@ class SearchController extends AbstractController
                             <td scope="row" class="px-6 py-4 keywordsContainer">'.$item->getKeywords().'</td>
                             <td scope="row" class="px-6 py-4">Niveau&nbsp;'.$item->getDifficulty().'</td>
                             <td scope="row" class="px-6 py-4 durationToDatetime">'.$item->getDuration().'</td>
-                            <td scope="row" class="px-6 py-4">'.$item->getOrigin()->getName().'</td>
-                            <td scope="row" class="px-6 py-4">'.$item->getOriginInformation().'</td>
-                            <td scope="row" class="px-6 py-4">'.$item->getProposedByType().'</td>
-                            <td scope="row" class="px-6 py-4">'.$item->getProposedByFirstName().'</td>
-                            <td scope="row" class="px-6 py-4">'.$item->getProposedByLasName().'</td>
+                            '. $origin.'
+                            '. $originName.'
+                            '. $originInformation.'
                             <td scope="row" class="px-6 py-4">'.$item->getCreatedAt()->format('Y-m-d H:i:s').'</td>
+                            <td class="px-6 py-4">
+                                <a class="flex gap-2 items-center justify-start hover:underline"
+                                    href="/images/file/'.$item->getExerciseFile()->getName().'" download="Énoncé-' . $item->getName().'"><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                                <a class="flex gap-2 items-center justify-start hover:underline"
+                                    href="/images/file/'.$item->getCorrectionFile()->getName().'" download="Correction-' . $item->getName().'"><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
+                            </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex gap-4">
                                     <a href="'.$urlGenerator->generate('app_administration_exercise_edit', ['id' => $item->getId()]).'" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2"><i class="fa-solid fa-pen-to-square"></i>Modifier</a>

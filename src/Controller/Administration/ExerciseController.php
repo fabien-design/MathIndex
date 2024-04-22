@@ -23,7 +23,7 @@ class ExerciseController extends AbstractController
     #[Route('/', name: 'app_administration_exercise_index', methods: ['GET'])]
     public function index(ExerciseRepository $exerciseRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $exercises = $exerciseRepository->findAll();
+        $exercises = $exerciseRepository->findBy([], ['createdAt' => 'DESC']);
 
         $pagination = $paginator->paginate(
             $exercises,

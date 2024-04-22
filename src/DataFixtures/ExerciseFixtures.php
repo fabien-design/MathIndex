@@ -20,12 +20,12 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'chapter' => 'Chapitre 2',
             'keywords' => '@algèbre@maths@calcul',
             'difficulty' => 3,
-            'duration' => 45.5,
+            'duration' => 1.25,
             'original_name' => 'Mathématiques avancées',
             'originInformation' => 'Exercice tiré du livre "Mathématiques avancées".',
-            'proposedByType' => 'Enseignant',
-            'proposedByFirstName' => 'Laurent',
-            'proposedByLasName' => 'Guyard',
+            'proposedByType' => '',
+            'proposedByFirstName' => '',
+            'proposedByLasName' => '',
             'file' => 'file_0',
             'correction_file' => 'file_5',
             'created_by' => 'user_1',
@@ -37,9 +37,9 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'keywords' => '@algèbre@maths@calcul',
             'thematic' => 'thematic_4',
             'difficulty' => 4,
-            'duration' => 200,
-            'original_name' => 'Mathématiques avancées',
-            'originInformation' => 'Exercice tiré du livre "Mathématiques avancées".',
+            'duration' => 0.20,
+            'original_name' => '',
+            'originInformation' => '',
             'proposedByType' => 'Enseignant',
             'proposedByFirstName' => 'Laurent',
             'proposedByLasName' => 'Guyard',
@@ -54,9 +54,9 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'keywords' => '@algèbre@maths@calcul',
             'thematic' => 'thematic_5',
             'difficulty' => 2,
-            'duration' => 150,
-            'original_name' => 'Mathématiques avancées',
-            'originInformation' => 'Exercice tiré du livre "Mathématiques avancées".',
+            'duration' => 0.10,
+            'original_name' => '',
+            'originInformation' => '',
             'proposedByType' => 'Enseignant',
             'proposedByFirstName' => 'Laurent',
             'proposedByLasName' => 'Guyard',
@@ -71,10 +71,12 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'keywords' => '@théatre@molière',
             'thematic' => 'thematic_2',
             'difficulty' => 2,
-            'duration' => 150,
+            'duration' => 1.842,
             'original_name' => 'Le Malade Imaginaire',
             'originInformation' => 'Livre de molière',
-            'proposedByType' => 'Livre',
+            'proposedByType' => '',
+            'proposedByFirstName' => '',
+            'proposedByLasName' => '',
             'file' => 'file_2',
             'correction_file' => 'file_8',
             'created_by' => 'user_2',
@@ -86,9 +88,9 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
             'thematic' => 'thematic_1',
             'keywords' => '@paris@littérature@arts',
             'difficulty' => 2,
-            'duration' => 90,
-            'original_name' => 'classique&cie BTS',
-            'origin_information' => 'Johan Faerber',
+            'duration' => 2,
+            'original_name' => '',
+            'originInformation' => '',
             'proposedByType' => 'Enseignant',
             'proposedByFirstName' => 'Virginie',
             'proposedByLasName' => 'Hougron',
@@ -111,14 +113,14 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
                 ->setThematic($this->getReference($exerciseInfo['thematic']))
                 ->setChapter($exerciseInfo['chapter'])
                 ->setKeywords($exerciseInfo['keywords'])
-                ->setDifficulty(3)
-                ->setDuration(45.5)
-                ->setOrigin($this->getReference(OriginFixtures::REFERENCE_IDENTIFIER.random_int(0, count(OriginFixtures::ORIGINS) - 1)))
+                ->setDifficulty($exerciseInfo['difficulty'])
+                ->setDuration($exerciseInfo['duration'])
+                ->setOrigin($exerciseInfo['proposedByType'] ? null : $this->getReference(OriginFixtures::REFERENCE_IDENTIFIER.random_int(0, count(OriginFixtures::ORIGINS) - 1)))
                 ->setoriginName($exerciseInfo['original_name'])
-                ->setOriginInformation('Exercice tiré du livre "Mathématiques avancées".')
-                ->setProposedByType('Enseignant')
-                ->setProposedByFirstName('Laurent')
-                ->setProposedByLasName('Guyard')
+                ->setOriginInformation($exerciseInfo['originInformation'])
+                ->setProposedByType($exerciseInfo['proposedByType'])
+                ->setProposedByFirstName($exerciseInfo['proposedByFirstName'])
+                ->setProposedByLasName($exerciseInfo['proposedByLasName'])
                 ->setExerciseFile($this->getReference($exerciseInfo['file']))
                 ->setCorrectionFile($this->getReference($exerciseInfo['correction_file']))
                 ->setCreatedBy($this->getReference($exerciseInfo['created_by']));

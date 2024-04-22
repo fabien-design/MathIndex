@@ -48,7 +48,7 @@
 
 			<div class="mb-6 w-full">
 				{{ form_label(form.enonceFile)}}
-					{% if exercise is defined %}
+					{% if exercise.exerciseFile.name is defined %}
 					<p class="filePresent">Fichier déjà présent : <a class="text-blue-500" href="{{ asset('images/file/' ~ exercise.exerciseFile.name) }}" target="_blank" download={{"Fichier-" ~ exercise.name|slug }}>{{ exercise.exerciseFile.originalName }}</a></p>
 					{% endif %}
 				{{ form_errors(form.enonceFile)}}
@@ -60,7 +60,7 @@
 
 			<div class="mb-6 w-full">
 				{{ form_label(form.correctFile)}}
-					{% if exercise is defined %}
+					{% if exercise.correctionFile.name is defined %}
 					<p class="filePresent">Fichier déjà présent : <a class="text-blue-500" href="{{ asset('images/file/' ~ exercise.correctionFile.name) }}" target="_blank" download={{"Fichier-" ~ exercise.name|slug }}>{{ exercise.correctionFile.originalName }}</a></p>
 					{% endif %}
 				{{ form_errors(form.correctFile)}}

@@ -26,7 +26,7 @@ class UserController extends AbstractController
     #[Route('/user', name: 'app_administration_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $users = $userRepository->findAll();
+        $users = $userRepository->findBy([], ['id' => 'DESC']);
 
         $pagination = $paginator->paginate(
             $users,
