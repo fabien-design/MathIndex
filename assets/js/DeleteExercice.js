@@ -12,6 +12,7 @@ async function deleteExercice(button) {
     try {
         if(elementId && elementId != "undefined") {
             const url = '/api'+currentUrl+"/"+elementId+'/delete'
+            console.log(url);
             const response = await fetch(url , {
                 method: 'POST',
                 headers: {

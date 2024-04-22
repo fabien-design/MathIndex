@@ -42,3 +42,8 @@ app_administration_exercise_delete:
     path: /api/administration/exercise/{id}/delete
     controller: App\Controller\Administration\ExerciseController::delete
     methods: [ "POST" ]
+
+app_administration_user_delete:
+    path: /api/administration/user/{id}/delete
+    controller: App\Controller\Administration\UserController::delete
+    methods: [ "POST" ]

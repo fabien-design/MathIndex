@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(groups: ['new'], message: 'Le mot de passe ne peut pas être vide.')]
     private ?string $plainPassword = null;
 
-    #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Exercise::class)]
+    #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Exercise::class, cascade: ['remove'])]
     private Collection $exercises;
 
     public function __construct()
