@@ -14,5 +14,8 @@ import './js/keywordsSplit.js';
 import './js/showRepeatPassword.js';
 import './js/durationToDatetime.js';
 import './js/DeleteAlertPopup.js';
-import './js/formByStep.js';
-
+import './js/tabActiveOpacity.js';
+import './js/ChooseOriginOrProposedBy.js';
+import  './js/UpdateDropzone.js';
+import  './js/UpdateSkillsCourses.js';
+import  './js/NotifyErrorsSubmitExercise.js';

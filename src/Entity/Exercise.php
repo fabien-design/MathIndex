@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExerciseRepository::class)]
 #[Vich\Uploadable]
@@ -19,7 +18,7 @@ class Exercise
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'exercises')]
@@ -34,7 +33,7 @@ class Exercise
     #[ORM\JoinColumn(nullable: false)]
     private ?Thematic $thematic = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $chapter = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -43,20 +42,20 @@ class Exercise
     #[ORM\Column]
     private ?int $difficulty = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $duration = null;
 
     #[ORM\ManyToOne(inversedBy: 'exercises')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Origin $origin = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $originName = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $originInformation = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $proposedByType = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -83,13 +82,14 @@ class Exercise
     #[ORM\JoinColumn(nullable: false)]
     private ?User $createdBy = null;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: "exercises")]
+    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'exercises')]
+    #[ORM\JoinColumn(nullable: true)]
     private Collection $skills;
 
     public function __construct()
     {
-        $this->skills = new ArrayCollection();
         $this->createdAt = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -150,7 +150,7 @@ class Exercise
         return $this->chapter;
     }
 
-    public function setChapter(string $chapter): static
+    public function setChapter(?string $chapter): static
     {
         $this->chapter = $chapter;
 
@@ -186,7 +186,7 @@ class Exercise
         return $this->duration;
     }
 
-    public function setDuration(float $duration): static
+    public function setDuration(?float $duration): static
     {
         $this->duration = $duration;
 
@@ -210,7 +210,7 @@ class Exercise
         return $this->originName;
     }
 
-    public function setOriginName(string $originName): static
+    public function setOriginName(?string $originName): static
     {
         $this->originName = $originName;
 
@@ -222,7 +222,7 @@ class Exercise
         return $this->originInformation;
     }
 
-    public function setOriginInformation(string $originInformation): static
+    public function setOriginInformation(?string $originInformation): static
     {
         $this->originInformation = $originInformation;
 
@@ -234,7 +234,7 @@ class Exercise
         return $this->proposedByType;
     }
 
-    public function setProposedByType(string $proposedByType): static
+    public function setProposedByType(?string $proposedByType): static
     {
         $this->proposedByType = $proposedByType;
 
@@ -246,7 +246,7 @@ class Exercise
         return $this->proposedByFirstName;
     }
 
-    public function setProposedByFirstName(string $proposedByFirstName): static
+    public function setProposedByFirstName(?string $proposedByFirstName): static
     {
         $this->proposedByFirstName = $proposedByFirstName;
 
@@ -258,7 +258,7 @@ class Exercise
         return $this->proposedByLasName;
     }
 
-    public function setProposedByLasName(string $proposedByLasName): static
+    public function setProposedByLasName(?string $proposedByLasName): static
     {
         $this->proposedByLasName = $proposedByLasName;
 
@@ -301,15 +301,46 @@ class Exercise
         return $this;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt()
     {
-        return $this->createdAt->format('Y-m-d H:i:s');
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 
     public function removeFiles(): static
     {
         $this->correctionFile = null;
         $this->exerciseFile = null;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): static
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills->add($skill);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): static
+    {
+        $this->skills->removeElement($skill);
 
         return $this;
     }

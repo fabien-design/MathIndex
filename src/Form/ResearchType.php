@@ -41,8 +41,8 @@ class ResearchType extends AbstractType
                 'placeholder' => '---',
                 'required' => false,
                 'attr' => [
-                        'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px]',
-                    ],
+                    'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px]',
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher',

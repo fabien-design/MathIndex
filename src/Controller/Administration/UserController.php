@@ -42,7 +42,7 @@ class UserController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user, ['user_roles' => $user->getRoles()]);
+        $form = $this->createForm(UserType::class, $user, ['user_roles' => $user->getRoles(), 'validation_groups' => ['new']]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
