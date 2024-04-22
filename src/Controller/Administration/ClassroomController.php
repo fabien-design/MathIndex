@@ -6,7 +6,6 @@ use App\Entity\Classroom;
 use App\Form\ClassroomType;
 use App\Repository\ClassroomRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,16 +40,16 @@ class ClassroomController extends AbstractController
         $form = $this->createForm(ClassroomType::class, $classroom);
         $form->handleRequest($request);
 
-        try{
+        try {
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->persist($classroom);
                 $entityManager->flush();
-                $this->addFlash('success', "La classe a bien été enregistrée ! ");
-    
+                $this->addFlash('success', 'La classe a bien été enregistrée ! ');
+
                 return $this->redirectToRoute('app_administration_classroom_index', [], Response::HTTP_SEE_OTHER);
             }
-        }catch(Exception $e){
-            $this->addFlash('error', "Erreur pendant la création de la classe");
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Erreur pendant la création de la classe');
         }
 
         return $this->render('administration/classroom/new.html.twig', [
@@ -65,17 +64,16 @@ class ClassroomController extends AbstractController
         $form = $this->createForm(ClassroomType::class, $classroom);
         $form->handleRequest($request);
 
-        try{
+        try {
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->flush();
                 $this->addFlash('success', 'Les modifications ont bien été prises en compte !');
-    
+
                 return $this->redirectToRoute('app_administration_classroom_index', [], Response::HTTP_SEE_OTHER);
             }
-        }catch(Exception $e){
-            $this->addFlash('error', "Erreur pendant la modification de la classe");
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Erreur pendant la modification de la classe');
         }
-        
 
         return $this->render('administration/classroom/edit.html.twig', [
             'classroom' => $classroom,
@@ -88,7 +86,7 @@ class ClassroomController extends AbstractController
     {
         $user = $this->getUser();
 
-        try{
+        try {
             // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
             if (!$user) {
                 // Rendre le template Twig
@@ -107,11 +105,9 @@ class ClassroomController extends AbstractController
             }
             $entityManager->remove($classroom);
             $entityManager->flush();
-            
-        }catch(Exception $e){
-            $this->addFlash('error', "Erreur pendant la suppression de la classe");
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Erreur pendant la suppression de la classe');
         }
-        
 
         // Rendre le template Twig
         $renderedTemplate = $twig->render('components/Alert.html.twig', [

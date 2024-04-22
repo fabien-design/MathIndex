@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Classroom;
+use App\Entity\Course;
 use App\Entity\Exercise;
 use App\Entity\Thematic;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -42,6 +43,16 @@ class ResearchType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px]',
+                ],
+            ])
+            ->add('course', EntityType::class, [
+                'class' => Course::class,
+                'choice_label' => 'name',
+                'label' => 'Matière',
+                'placeholder' => '---',
+                'required' => false,
+                'attr' => [
+                    'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] ',
                 ],
             ])
             ->add('submit', SubmitType::class, [

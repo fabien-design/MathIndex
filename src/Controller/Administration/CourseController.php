@@ -6,7 +6,6 @@ use App\Entity\Course;
 use App\Form\CourseType;
 use App\Repository\CourseRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,16 +40,16 @@ class CourseController extends AbstractController
         $form = $this->createForm(CourseType::class, $course);
         $form->handleRequest($request);
 
-        try{
+        try {
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->persist($course);
                 $entityManager->flush();
-                $this->addFlash('success', "La matière a bien été sauvegardée !");
-    
+                $this->addFlash('success', 'La matière a bien été sauvegardée !');
+
                 return $this->redirectToRoute('app_administration_course_index', [], Response::HTTP_SEE_OTHER);
             }
-        }catch(Exception $e){
-            $this->addFlash('error', "Erreur pendant la création de la matière");
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Erreur pendant la création de la matière');
         }
 
         return $this->render('administration/course/new.html.twig', [
@@ -64,14 +63,14 @@ class CourseController extends AbstractController
     {
         $form = $this->createForm(CourseType::class, $course);
         $form->handleRequest($request);
-        try{
+        try {
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->flush();
-                $this->addFlash('success', "La matière a bien été modifiée!");
-    
+                $this->addFlash('success', 'La matière a bien été modifiée!');
+
                 return $this->redirectToRoute('app_administration_course_index', [], Response::HTTP_SEE_OTHER);
             }
-        }catch(Exception $e){
+        } catch (\Exception $e) {
             $this->addFlash('error', 'Erreur lors de le modification de la matière !');
         }
 
@@ -86,17 +85,17 @@ class CourseController extends AbstractController
     {
         $user = $this->getUser();
 
-        try{
+        try {
             if (!$user) {
                 // Rendre le template Twig
                 $renderedTemplate = $twig->render('components/Alert.html.twig', [
                     'type' => 'error',
                     'message' => "Vous n'avez pas le droit de supprimer ce cours",
                 ]);
-                
+
                 return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
             }
-                // Supprimer les exercices associés au cours
+            // Supprimer les exercices associés au cours
             foreach ($course->getExercises() as $exercise) {
                 $course->removeExercise($exercise);
                 $entityManager->remove($exercise);
@@ -115,9 +114,8 @@ class CourseController extends AbstractController
             // Supprimer le cours lui-même
             $entityManager->remove($course);
             $entityManager->flush();
-
-        }catch(Exception $e){
-            $this->addFlash('error', "Erreur pendant la suppression de la matière");
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Erreur pendant la suppression de la matière');
         }
         // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
 

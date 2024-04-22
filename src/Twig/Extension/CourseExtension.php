@@ -32,7 +32,7 @@ final class CourseExtension extends AbstractExtension
         ];
     }
 
-    public function getCourses() : array
+    public function getCourses(): array
     {
         return $courses = $this->em->getRepository(Course::class)->findBy([], ['name' => 'ASC']);
     }

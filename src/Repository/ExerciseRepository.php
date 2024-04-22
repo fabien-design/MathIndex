@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Classroom;
+use App\Entity\Course;
 use App\Entity\Exercise;
 use App\Entity\Thematic;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -48,19 +49,20 @@ class ExerciseRepository extends ServiceEntityRepository
                 // $qb->expr()->like('origin.name', ':search'),
             )
         )
-        ->orderBy("c.createdAt", "desc")
+        ->orderBy('c.createdAt', 'desc')
         ->setParameter('search', '%'.$searchTerm.'%');
 
         return $qb->getQuery()->getResult();
     }
 
-    public function findExercisesByResearch(?Thematic $thematic, ?Classroom $classroom, ?array $keywords)
+    public function findExercisesByResearch(?Thematic $thematic, ?Classroom $classroom, Course $course, ?array $keywords)
     {
         $qb = $this->createQueryBuilder('ex');
 
         // Cas où tous les champs sont remplis
         $qb->join('ex.thematic', 't')
-            ->join('ex.classroom', 'c');
+            ->join('ex.classroom', 'c')
+            ->join('ex.course', 'co');
         if (null != $thematic) {
             $qb->where('t.name = :thematicName')
                 ->setParameter('thematicName', $thematic->getName());
@@ -68,6 +70,10 @@ class ExerciseRepository extends ServiceEntityRepository
         if (null != $classroom) {
             $qb->andWhere('c.name = :className')
                 ->setParameter('className', $classroom->getName());
+        }
+        if (null != $course) {
+            $qb->andWhere('co.name = :courseName')
+                ->setParameter('courseName', $course->getName());
         }
         if (!empty($keywords)) {
             // Cas où seulement les mots-clés sont remplis

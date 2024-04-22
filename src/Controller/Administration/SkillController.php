@@ -6,7 +6,6 @@ use App\Entity\Skill;
 use App\Form\SkillType;
 use App\Repository\SkillRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -41,15 +40,15 @@ class SkillController extends AbstractController
         $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
-        try{
+        try {
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->persist($skill);
                 $entityManager->flush();
-                $this->addFlash('success', "La compétence a bien été créée !");
-    
+                $this->addFlash('success', 'La compétence a bien été créée !');
+
                 return $this->redirectToRoute('app_administration_skill_index', [], Response::HTTP_SEE_OTHER);
             }
-        }catch(Exception $e){
+        } catch (\Exception $e) {
             $this->addFlash('error', "Erreur pendant l'ajout de la compétence");
         }
 
@@ -65,17 +64,16 @@ class SkillController extends AbstractController
         $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
-        try{
+        try {
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->flush();
-                $this->addFlash('success', "La compétence a bien été modifiée !");
-    
+                $this->addFlash('success', 'La compétence a bien été modifiée !');
+
                 return $this->redirectToRoute('app_administration_skill_index', [], Response::HTTP_SEE_OTHER);
             }
-        }catch(Exception $e){
-            $this->addFlash('error', "Erreur pendant la modification de la compétence");
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Erreur pendant la modification de la compétence');
         }
-        
 
         return $this->render('administration/skill/edit.html.twig', [
             'skill' => $skill,
@@ -88,7 +86,7 @@ class SkillController extends AbstractController
     {
         $user = $this->getUser();
 
-        try{
+        try {
             // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
             if (!$user) {
                 // Rendre le template Twig
@@ -96,16 +94,15 @@ class SkillController extends AbstractController
                     'type' => 'error',
                     'message' => "Vous n'avez pas le droit de supprimer cette compétence",
                 ]);
-    
+
                 return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
             }
-    
+
             // Supprimer le cours lui-même
             $entityManager->remove($skill);
             $entityManager->flush();
-
-        }catch(Exception $e){
-            $this->addFlash('error', "Erreur pendant la suppression de la compétence");
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Erreur pendant la suppression de la compétence');
         }
 
         $renderedTemplate = $twig->render('components/Alert.html.twig', [

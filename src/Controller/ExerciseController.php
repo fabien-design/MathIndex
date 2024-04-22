@@ -9,7 +9,6 @@ use App\Form\ResearchType;
 use App\Repository\ExerciseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -59,20 +58,24 @@ class ExerciseController extends AbstractController
         // Récupérer l'utilisateur connecté
         $user = $this->getUser();
 
-        // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
-        if (!$user) {
-            // Rendre le template Twig
-            $renderedTemplate = $twig->render('components/Alert.html.twig', [
-                'type' => 'error',
-                'message' => "Vous n'avez pas le droit de supprimer cet exercice",
-            ]);
+        try {
+            // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
+            if (!$user) {
+                // Rendre le template Twig
+                $renderedTemplate = $twig->render('components/Alert.html.twig', [
+                    'type' => 'error',
+                    'message' => "Vous n'avez pas le droit de supprimer cet exercice",
+                ]);
 
-            return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
+                return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_UNAUTHORIZED);
+            }
+            $entityManager->remove($exercise);
+            $entityManager->flush();
+            
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            $this->addFlash('error', "Erreur pendant la suppression de l'exercice");
         }
-
-        // Supprimer l'exercice
-        $entityManager->remove($exercise);
-        $entityManager->flush();
 
         // Rendre le template Twig
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
@@ -95,9 +98,10 @@ class ExerciseController extends AbstractController
 
             $classroom = $formData->getClassroom();
             $thematic = $formData->getThematic();
+            $course = $formData->getCourse();
             $keywords = explode('/', $formData->getKeywords());
 
-            $exercises = $exerciseRepository->findExercisesByResearch($thematic, $classroom, $keywords);
+            $exercises = $exerciseRepository->findExercisesByResearch($thematic, $classroom, $course, $keywords);
         }
 
         $results = count($exercises);
@@ -116,13 +120,13 @@ class ExerciseController extends AbstractController
     }
 
     #[Route('/exercise/new', name: 'app_exercise_new', methods: ['GET', 'POST'])]
-    #[IsGranted("ROLE_STUDENT")]
+    #[IsGranted('ROLE_STUDENT')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $exercise = new Exercise();
         $form = $this->createForm(ExerciseType::class, $exercise, ['validation_groups' => ['new']]);
         $form->handleRequest($request);
-        try{
+        try {
             if ($form->isSubmitted() && $form->isValid()) {
                 if ($form['enonceFile']->getData()) {
                     $file = new File($form['enonceFile']->getData());
@@ -138,10 +142,10 @@ class ExerciseController extends AbstractController
                 $entityManager->persist($exercise);
                 $entityManager->flush();
                 $this->addFlash('success', "L'exercice a bien été ajouté !");
-    
+
                 return $this->redirectToRoute('app_exercise', [], Response::HTTP_SEE_OTHER);
             }
-        }catch(Exception $e){
+        } catch (\Exception $e) {
             $this->addFlash('error', "Erreur pendant l'ajout de l'exercice");
         }
 
@@ -156,7 +160,7 @@ class ExerciseController extends AbstractController
         $form = $this->createForm(ExerciseType::class, $exercise, ['validation_groups' => ['edit']]);
         $form->handleRequest($request);
 
-        try{
+        try {
             if ($form->isSubmitted() && $form->isValid()) {
                 if ($form['enonceFile']->getData()) {
                     $file = new File($form['enonceFile']->getData());
@@ -171,13 +175,13 @@ class ExerciseController extends AbstractController
                 }
                 $entityManager->flush();
                 $this->addFlash('success', "L'exercice a bien été modifié!");
-    
+
                 return $this->redirectToRoute('app_exercise', [], Response::HTTP_SEE_OTHER);
             }
-        }catch(Exception $e){
+        } catch (\Exception $e) {
             $this->addFlash('error', "Erreur pendant la modification de l'exercice");
         }
-        
+
         return $this->render('exercise/submit/edit.html.twig', [
             'form' => $form,
             'exercise' => $exercise,

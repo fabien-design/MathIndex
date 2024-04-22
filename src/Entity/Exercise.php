@@ -82,8 +82,8 @@ class Exercise
     #[ORM\JoinColumn(nullable: false)]
     private ?User $createdBy = null;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'exercises', cascade: ['remove'])]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'exercises')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private Collection $skills;
 
     public function __construct()
