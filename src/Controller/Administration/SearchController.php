@@ -82,7 +82,7 @@ class SearchController extends AbstractController
                             <td scope="row" class="px-6 py-4">'.$item->getProposedByType().'</td>
                             <td scope="row" class="px-6 py-4">'.$item->getProposedByFirstName().'</td>
                             <td scope="row" class="px-6 py-4">'.$item->getProposedByLasName().'</td>
-                            <td scope="row" class="px-6 py-4">'.$item->getCreatedAt().'</td>
+                            <td scope="row" class="px-6 py-4">'.$item->getCreatedAt()->format('Y-m-d H:i:s').'</td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex gap-4">
                                     <a href="'.$urlGenerator->generate('app_administration_exercise_edit', ['id' => $item->getId()]).'" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2"><i class="fa-solid fa-pen-to-square"></i>Modifier</a>
