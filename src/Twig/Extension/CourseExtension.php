@@ -9,13 +9,10 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-class CourseExtension extends AbstractExtension
+final class CourseExtension extends AbstractExtension
 {
-    private $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     public function getFilters(): array
@@ -35,10 +32,8 @@ class CourseExtension extends AbstractExtension
         ];
     }
 
-    public function getCourses()
+    public function getCourses() : array
     {
-        $courses = $this->em->getRepository(Course::class)->findBy([], ['name' => 'ASC']);
-
-        return $courses;
+        return $courses = $this->em->getRepository(Course::class)->findBy([], ['name' => 'ASC']);
     }
 }
