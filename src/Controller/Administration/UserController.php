@@ -39,13 +39,14 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/new', name: 'app_administration_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user, ['user_roles' => $user->getRoles(), 'validation_groups' => ['new']]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($passwordHasher->hashPassword($user, $user->getPlainPassword()));
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -73,8 +74,8 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (null != $form['password']->getData()) {
-                $user->setPassword($passwordHasher->hashPassword($user, $form['password']->getData()));
+            if (null != $user->getPlainPassword()) {
+                $user->setPassword($passwordHasher->hashPassword($user, $user->getPlainPassword()));
             }
             $entityManager->flush();
 

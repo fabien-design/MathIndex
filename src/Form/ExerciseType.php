@@ -122,6 +122,7 @@ class ExerciseType extends AbstractType
             'class' => Origin::class,
             'choice_label' => 'name',
             'placeholder' => 'Choisir une origine',
+            'required' => false,
         ])
         ->add('originName', TextType::class, [
             'label' => 'Nom du livre/lien du site :',
@@ -136,6 +137,7 @@ class ExerciseType extends AbstractType
                 'Étudiant' => 'Étudiant',
             ],
             'placeholder' => 'Choisir une option',
+            'required' => false,
         ])
         ->add('proposedByLasName', TextType::class, [
             'label' => 'Nom :',

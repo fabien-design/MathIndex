@@ -35,8 +35,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(groups: ['new'], message: 'Le mot de passe ne peut pas être vide.')]
     private ?string $password = null;
+
+    #[Assert\NotBlank(groups: ['new'], message: 'Le mot de passe ne peut pas être vide.')]
+    private ?string $plainPassword = null;
 
     #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Exercise::class)]
     private Collection $exercises;
@@ -95,7 +97,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -103,6 +105,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(?string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): static
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
