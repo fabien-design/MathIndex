@@ -73,7 +73,6 @@ class ExerciseController extends AbstractController
         // Supprimer l'exercice
         $entityManager->remove($exercise);
         $entityManager->flush();
-        $this->addFlash('success', "L'exercice à bien été supprimé");
 
         // Rendre le template Twig
         $renderedTemplate = $twig->render('components/Alert.html.twig', [

@@ -82,7 +82,7 @@ class Exercise
     #[ORM\JoinColumn(nullable: false)]
     private ?User $createdBy = null;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'exercises')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'exercises', cascade: ['remove'])]
     #[ORM\JoinColumn(nullable: true)]
     private Collection $skills;
 
