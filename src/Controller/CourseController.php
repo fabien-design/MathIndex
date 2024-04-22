@@ -41,7 +41,7 @@ class CourseController extends AbstractController
             $modifiedDate->modify('-'.$_ENV['NEW_EXERCISES_DAYS_OFFSET'].'day');
 
             foreach ($exercises as $exercise) {
-                $exerciseDate = new \DateTime($exercise->getCreatedAt());
+                $exerciseDate = new \DateTime($exercise->getCreatedAt()->format('Y-m-d H:i:s'), new \DateTimeZone('UTC'));
                 if ($exerciseDate > $modifiedDate) {
                     array_push($newExercises, $exercise);
                 }
