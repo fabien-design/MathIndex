@@ -99,7 +99,7 @@ class ExerciseController extends AbstractController
             $classroom = $formData->getClassroom();
             $thematic = $formData->getThematic();
             $course = $formData->getCourse();
-            $keywords = explode('/', $formData->getKeywords());
+            $keywords = explode(' ', $formData->getKeywords());
 
             $exercises = $exerciseRepository->findExercisesByResearch($thematic, $classroom, $course, $keywords);
         }
