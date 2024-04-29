@@ -96,13 +96,17 @@ Avec ces instructions, vous devriez être en mesure de démarrer rapidement le p
 
 ## 🌐 Accès au projet
 
-1. Accès au site&nbsp;:
+[Accès au site](http://127.0.0.1:8001)&nbsp;:
 ```bash
 127.0.0.1:8001
 ```
-2. Accès à la db avec phpmyadmin (server: mariadb, name: root, pass: root)&nbsp;:
+[Accès à la db](http://127.0.0.1:8888) avec phpmyadmin (server: mariadb, name: root, pass: root)&nbsp;:
 ```bash
 127.0.0.1:8888
+```
+[Accès à mailcatcher](http://127.0.0.1:1080) pour vérifier le mot de passe oublié&nbsp;:
+```bash
+127.0.0.1:1080
 ```
 
 ## Auteurs
