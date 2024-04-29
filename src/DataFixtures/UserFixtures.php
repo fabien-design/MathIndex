@@ -35,6 +35,12 @@ class UserFixtures extends Fixture
             'email' => 'frteacher@example.com',
             'role' => 'ROLE_TEACHER',
         ],
+        [
+            'firstname' => 'Jane',
+            'lastname' => 'Smith',
+            'email' => 'student@example.com',
+            'role' => '',
+        ],
     ];
 
     public function load(ObjectManager $manager): void
