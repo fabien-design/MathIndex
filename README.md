@@ -17,12 +17,12 @@ Pour accéder à différentes parties de l'application, voici les identifiants p
 
 Pour simplifier la gestion du projet, voici quelques commandes Makefile :
 
-| Commande           | Utilisation                                                                                                      |
-|--------------------|------------------------------------------------------------------------------------------------------------------|
-| `make install`     | Installe toutes les dépendances, configure la base de données, exécute les migrations et charge les fixtures.   |
-| `make dcu`         | Arrête, supprime et relance les conteneurs Docker afin de (re)démarrer le projet.                                 |
-| `make fixtures`    | Charge les fixtures dans la base de données.                                                                      |
-| `make bash`        | Ouvre un terminal bash dans le conteneur Symfony.                                                                 |
+| Commande               | Utilisation                                                                                                      |
+|------------------------|------------------------------------------------------------------------------------------------------------------|
+| `make install`         | Installe toutes les dépendances, configure la base de données, exécute les migrations et charge les fixtures.   |
+| `make dcu`             | Arrête, supprime et relance les conteneurs Docker afin de (re)démarrer le projet.                                 |
+| `make fixtures`        | Charge les fixtures dans la base de données.                                                                      |
+| `make bash`            | Ouvre un terminal bash dans le conteneur Symfony.                                                                 |
 
 ## 🚀 Installation avec Docker 
 
