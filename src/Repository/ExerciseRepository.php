@@ -55,7 +55,7 @@ class ExerciseRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findExercisesByResearch(?Thematic $thematic, ?Classroom $classroom, Course $course, ?array $keywords)
+    public function findExercisesByResearch(?Thematic $thematic, ?Classroom $classroom, ?Course $course, ?array $keywords)
     {
         $qb = $this->createQueryBuilder('ex');
 
