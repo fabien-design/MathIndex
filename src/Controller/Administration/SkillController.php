@@ -49,7 +49,7 @@ class SkillController extends AbstractController
                 return $this->redirectToRoute('app_administration_skill_index', [], Response::HTTP_SEE_OTHER);
             }
         } catch (\Exception $e) {
-            $this->addFlash('error', "Erreur pendant l'ajout de la compétence");
+            $this->addFlash('error', "Erreur pendant l'ajout de la compétence.");
         }
 
         return $this->render('administration/skill/new.html.twig', [
@@ -72,7 +72,7 @@ class SkillController extends AbstractController
                 return $this->redirectToRoute('app_administration_skill_index', [], Response::HTTP_SEE_OTHER);
             }
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur pendant la modification de la compétence');
+            $this->addFlash('error', 'Erreur pendant la modification de la compétence.');
         }
 
         return $this->render('administration/skill/edit.html.twig', [
@@ -102,12 +102,12 @@ class SkillController extends AbstractController
             $entityManager->remove($skill);
             $entityManager->flush();
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur pendant la suppression de la compétence');
+            $this->addFlash('error', 'Erreur pendant la suppression de la compétence.');
         }
 
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',
-            'message' => 'Suppression réussie',
+            'message' => 'La suppression de la compétence a bien été effectuée.',
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template

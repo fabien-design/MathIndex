@@ -49,7 +49,7 @@ class ClassroomController extends AbstractController
                 return $this->redirectToRoute('app_administration_classroom_index', [], Response::HTTP_SEE_OTHER);
             }
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur pendant la création de la classe');
+            $this->addFlash('error', 'Erreur pendant la création de la classe.');
         }
 
         return $this->render('administration/classroom/new.html.twig', [
@@ -72,7 +72,7 @@ class ClassroomController extends AbstractController
                 return $this->redirectToRoute('app_administration_classroom_index', [], Response::HTTP_SEE_OTHER);
             }
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur pendant la modification de la classe');
+            $this->addFlash('error', 'Erreur pendant la modification de la classe.');
         }
 
         return $this->render('administration/classroom/edit.html.twig', [
@@ -106,13 +106,13 @@ class ClassroomController extends AbstractController
             $entityManager->remove($classroom);
             $entityManager->flush();
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur pendant la suppression de la classe');
+            $this->addFlash('error', 'Erreur pendant la suppression de la classe.');
         }
 
         // Rendre le template Twig
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',
-            'message' => 'Suppression réussie',
+            'message' => 'La suppression de la classe a bien été effectuée.',
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template

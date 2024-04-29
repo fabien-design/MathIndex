@@ -10,24 +10,18 @@
         Si vous n'avez pas encore de compte, veuillez effectuer votre demande
         directement en envoyant un email à <a href="mailto:contact@lyceestvincent.net?subject=Création d'un compte MathIndex" class="text-blue-600">contact@lyceestvincent.net</a>.
     </p>
-    {# Afficher les éventuelles erreurs de validation du formulaire #}
-    {{ form_errors(form) }}
-
+    
     {# Début du formulaire #}
     {{ form_start(form, {'attr': {'class': 'max-w-sm'}}) }}
 
     {# Champ email #}
     <div class="mb-5">
-        {{ form_label(form.email) }}
-        {{ form_widget(form.email) }}
-        {{ form_errors(form.email) }}
+        {{ form_row(form.email) }}
     </div>
 
     {# Champ mot de passe #}
     <div class="mb-5">
-        {{ form_label(form.password) }}
-        {{ form_widget(form.password) }}
-        {{ form_errors(form.password) }}
+        {{ form_row(form.password) }}
     </div>
 
     {# Bouton de soumission #}

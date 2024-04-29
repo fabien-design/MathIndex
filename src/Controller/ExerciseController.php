@@ -74,13 +74,13 @@ class ExerciseController extends AbstractController
             
         } catch (\Exception $e) {
             dd($e->getMessage());
-            $this->addFlash('error', "Erreur pendant la suppression de l'exercice");
+            $this->addFlash('error', "Erreur pendant la suppression de l'exercice.");
         }
 
         // Rendre le template Twig
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',
-            'message' => 'Suppression réussie',
+            'message' => 'La suppression de l\'exercice a bien été effectuée.',
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template
@@ -146,7 +146,7 @@ class ExerciseController extends AbstractController
                 return $this->redirectToRoute('app_exercise', [], Response::HTTP_SEE_OTHER);
             }
         } catch (\Exception $e) {
-            $this->addFlash('error', "Erreur pendant l'ajout de l'exercice");
+            $this->addFlash('error', "Erreur pendant l'ajout de l'exercice.");
         }
 
         return $this->render('exercise/submit/index.html.twig', [
@@ -179,7 +179,7 @@ class ExerciseController extends AbstractController
                 return $this->redirectToRoute('app_exercise', [], Response::HTTP_SEE_OTHER);
             }
         } catch (\Exception $e) {
-            $this->addFlash('error', "Erreur pendant la modification de l'exercice");
+            $this->addFlash('error', "Erreur pendant la modification de l'exercice.");
         }
 
         return $this->render('exercise/submit/edit.html.twig', [

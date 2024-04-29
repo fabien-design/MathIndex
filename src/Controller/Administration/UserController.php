@@ -102,7 +102,6 @@ class UserController extends AbstractController
     #[Route('/{id}/delete', name: 'app_administration_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $userToDelete, EntityManagerInterface $entityManager, Environment $twig): Response
     {
-<<<<<<< HEAD
         $user = $this->getUser();
 
         try{
@@ -127,22 +126,11 @@ class UserController extends AbstractController
 
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',
-            'message' => 'Suppression réussie',
+            'message' => 'La suppression de l\'utilisateur a bien été effectuée.',
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template
         return new JsonResponse(['html' => $renderedTemplate], Response::HTTP_OK);
-=======
-        try {
-            if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-                $entityManager->remove($user);
-                $entityManager->flush();
-            }
-        } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur pendant la suppression du contributeur !');
-        }
-
-        return $this->redirectToRoute('app_administration_user_index', [], Response::HTTP_SEE_OTHER);
->>>>>>> a2bf71c (Fix Remove exercice)
     }
+
 }

@@ -49,7 +49,7 @@ class CourseController extends AbstractController
                 return $this->redirectToRoute('app_administration_course_index', [], Response::HTTP_SEE_OTHER);
             }
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur pendant la création de la matière');
+            $this->addFlash('error', 'Erreur pendant la création de la matière.');
         }
 
         return $this->render('administration/course/new.html.twig', [
@@ -115,13 +115,13 @@ class CourseController extends AbstractController
             $entityManager->remove($course);
             $entityManager->flush();
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur pendant la suppression de la matière');
+            $this->addFlash('error', 'Erreur pendant la suppression de la matière.');
         }
         // Si l'utilisateur n'est pas connecté, retourner une réponse d'erreur
 
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',
-            'message' => 'Suppression réussie',
+            'message' => 'La suppression de la matière a bien été effectuée.',
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template

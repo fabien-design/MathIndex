@@ -49,7 +49,7 @@ class OriginController extends AbstractController
                 return $this->redirectToRoute('app_administration_origin_index', [], Response::HTTP_SEE_OTHER);
             }
         } catch (\Exception $e) {
-            $this->addFlash('error', "Erreur pendant l\'ajout de l\'origine");
+            $this->addFlash('error', "Erreur pendant l\'ajout de l\'origine.");
         }
 
         return $this->render('administration/origin/new.html.twig', [
@@ -72,7 +72,7 @@ class OriginController extends AbstractController
                 return $this->redirectToRoute('app_administration_origin_index', [], Response::HTTP_SEE_OTHER);
             }
         } catch (\Exception $e) {
-            $this->addFlash('error', "Erreur pendant la modification de l'origine");
+            $this->addFlash('error', "Erreur pendant la modification de l'origine.");
         }
 
         return $this->render('administration/origin/edit.html.twig', [
@@ -102,12 +102,12 @@ class OriginController extends AbstractController
             $entityManager->remove($origin);
             $entityManager->flush();
         } catch (\Exception $e) {
-            $this->addFlash('error', "Erreur pendant la suppression de l'origine");
+            $this->addFlash('error', "Erreur pendant la suppression de l'origine.");
         }
 
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',
-            'message' => 'Suppression réussie',
+            'message' => 'La suppression de l\'origine a bien été effectuée.',
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template

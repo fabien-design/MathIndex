@@ -19,33 +19,39 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     #[Route('/login', name: 'app_login')]
-    public function index(AuthenticationUtils $authenticationUtils, Request $request, UserPasswordHasherInterface $passwordEncoder): Response
-    {
-        // Get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+public function index(AuthenticationUtils $authenticationUtils, Request $request, UserPasswordHasherInterface $passwordEncoder): Response
+{
+    // Get the login error if there is one
+    $error = $authenticationUtils->getLastAuthenticationError();
+    
+    $user = new User();
+    $form = $this->createForm(LoginType::class, $user);
+    
+    // Handle the form submission
+    $form->handleRequest($request);
+    // var_dump($form->getErrors(false, false));
 
-        // Last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
+    // Check if form is submitted and valid
+    if ($form->isSubmitted() && $form->isValid()) {
+        // This block of code will only execute if the form is valid
+        // If you want to perform some action with the submitted data,
+        // you can do it here.
+        $user = $this->getUser();
 
-        $user = new User();
-        $form = $this->createForm(LoginType::class, $user);
-
-        // Handle the form submission
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
-
-            return $this->redirectToRoute('app_home');
-        }
-
-        return $this->render('login/index.html.twig', [
-            'controller_name' => 'LoginController',
-            'form' => $form->createView(),
-            'last_username' => $lastUsername,
-            'error' => $error,
-        ]);
+        return $this->redirectToRoute('app_home');
     }
+    // If form is not valid or not submitted, render the login form
+    if ($error) {
+        $this->addFlash('error', 'Identifiants invalides. Veuillez réessayer.');
+    }
+
+    // If form is not valid or not submitted, render the login form
+    return $this->render('login/index.html.twig', [
+        'controller_name' => 'LoginController',
+        'form' => $form->createView(),
+    ]);
+}
+
 
     #[Route('/logout', name: 'app_logout')]
     public function logout(SecurityBundle $security)

@@ -108,12 +108,12 @@ class ThematicController extends AbstractController
             $entityManager->remove($thematic);
             $entityManager->flush();
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur pendant la suppression de la thématique');
+            $this->addFlash('error', 'Erreur pendant la suppression de la thématique.');
         }
 
         $renderedTemplate = $twig->render('components/Alert.html.twig', [
             'type' => 'success',
-            'message' => 'Suppression réussie',
+            'message' => 'La suppression de la thématique a bien été effectuée.',
         ]);
 
         // Retourner une réponse JSON avec le résultat du rendu du template
