@@ -1,0 +1,85 @@
+{{ form_start(form, { 'attr':
+    {'id':'navigation', 'novalidate': 'novalidate'},
+}) }}
+{{ form_errors(form) }}
+<div class="hidden" id="infos" role="tabpanel" aria-labelledby="infos-tab">
+	<h2 class="pt-6">Informations Générales</h2>
+	<div class="flex">
+		<div class="w-full pr-6">
+			{{ form_row(form.name) }}
+			{{ form_row(form.course) }}
+			{{ form_row(form.classroom) }}
+			{{ form_row(form.thematic) }}
+			{{ form_row(form.chapter) }}
+		</div>
+		<div class="w-full pl-6">
+			{{ form_row(form.skills) }}
+			{{ form_row(form.fakeKeywords) }}
+			{{ form_row(form.keywords) }}
+			{{ form_row(form.difficulty) }}
+			{{ form_row(form.duration) }}
+		</div>
+	</div>
+	<div>
+		<button type="button" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('sources-tab').click()">Continuer</button>
+	</div>
+</div>
+<div class="hidden" id="sources" role="tabpanel" aria-labelledby="sources-tab">
+	<h2 class="pt-6">Sources</h2>
+	<div class="flex relative">
+		<div class="w-full pr-6 originBlock relative">
+			{{ form_row(form.origin) }}
+			{{ form_row(form.originName) }}
+			{{ form_row(form.originInformation) }}
+		</div>
+		<span class="verticalLine relative">
+			<span>OU</span>
+		</span>
+		<div class="w-full pl-6 proposedByBlock relative">
+			{{ form_row(form.proposedByType) }}
+			{{ form_row(form.proposedByLasName) }}
+			{{ form_row(form.proposedByFirstName) }}
+		</div>
+	</div>
+	<div>
+		<button type="button" class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600" onclick="document.getElementById('files-tab').click()">Continuer</button>
+	</div>
+</div>
+<div class="" id="files" role="tabpanel" aria-labelledby="files-tab">
+	<h2 class="pt-6">Fichiers</h2>
+	<div class="flex">
+		<div
+			class="w-full lg:gap-[3.8rem] lg:flex">
+			{# {{ form_row(form.correctFile) }} #}
+
+			<div class="mb-6 w-full">
+					{{ form_label(form.enonceFile)}}
+					{% if exercise is defined %}
+					<p class="filePresent">Fichier déjà présent : <a class="text-blue-500" href="{{ asset('images/file/' ~ exercise.exerciseFile.name) }}" target="_blank" download={{"Fichier-" ~ exercise.name|slug }}>{{ exercise.exerciseFile.originalName }}</a></p>
+					{% endif %}
+				{{ form_errors(form.enonceFile)}}
+				<div class="dropzoneContainerBlock">
+					{{ form_widget(form.enonceFile, {'attr': {'onChange': 'document.querySelectorAll(".dropzoneContainerBlock")[0].querySelector("p").textContent = this.files[0].name + " - " + (this.files[0].size/1000000).toFixed(2)+"mo"' }}) }}
+					<p>Choisissez&nbsp;un&nbsp;ficher OU&nbsp;Drag&nbsp;&amp;&nbsp;Drop</p>
+				</div>
+			</div>
+
+			<div class="mb-6 w-full">
+				{{ form_label(form.correctFile)}}
+					{% if exercise is defined %}
+					<p class="filePresent">Fichier déjà présent : <a class="text-blue-500" href="{{ asset('images/file/' ~ exercise.correctionFile.name) }}" target="_blank" download={{"Fichier-" ~ exercise.name|slug }}>{{ exercise.correctionFile.originalName }}</a></p>
+					{% endif %}
+				{{ form_errors(form.correctFile)}}
+				<div class="dropzoneContainerBlock">
+					{{ form_widget(form.correctFile, {'attr': {'onChange': 'document.querySelectorAll(".dropzoneContainerBlock")[1].querySelector("p").textContent = this.files[0].name + " - " + (this.files[0].size/1000000).toFixed(2)+"mo"' }}) }}
+					<p>Choisissez&nbsp;un&nbsp;ficher OU&nbsp;Drag&nbsp;&amp;&nbsp;Drop</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div>
+		<button class="btn px-12 rounded-lg py-5 bg-gray-100 text-neutral-600">Enregistrer</button>
+	</div>
+</div>
+{{ form_end(form) }}

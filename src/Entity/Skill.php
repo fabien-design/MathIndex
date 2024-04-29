@@ -18,12 +18,16 @@ class Skill
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'skills')]
-    private Collection $course;
+    #[ORM\ManyToOne(inversedBy: 'skills')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Course $course = null;
+
+    #[ORM\ManyToMany(targetEntity: Exercise::class, mappedBy: 'skills')]
+    private Collection $exercises;
 
     public function __construct()
     {
-        $this->course = new ArrayCollection();
+        $this->exercises = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -43,26 +47,41 @@ class Skill
         return $this;
     }
 
-    /**
-     * @return Collection<int, course>
-     */
-    public function getCourse(): Collection
+    public function getCourse(): ?Course
     {
         return $this->course;
     }
 
-    public function addCourse(course $Course): static
+    public function setCourse(?Course $course): static
     {
-        if (!$this->course->contains($Course)) {
-            $this->course->add($Course);
+        $this->course = $course;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Exercise>
+     */
+    public function getExercises(): Collection
+    {
+        return $this->exercises;
+    }
+
+    public function addExercise(Exercise $exercise): static
+    {
+        if (!$this->exercises->contains($exercise)) {
+            $this->exercises->add($exercise);
+            $exercise->addSkill($this);
         }
 
         return $this;
     }
 
-    public function removeCourse(course $Course): static
+    public function removeExercise(Exercise $exercise): static
     {
-        $this->course->removeElement($Course);
+        if ($this->exercises->removeElement($exercise)) {
+            $exercise->removeSkill($this);
+        }
 
         return $this;
     }

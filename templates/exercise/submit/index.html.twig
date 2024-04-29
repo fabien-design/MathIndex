@@ -1,0 +1,25 @@
+{% extends 'base_administration.html.twig' %}
+
+{% block form_title %}
+    <h1 class="text-cse text-3xl font-semibold">Soumettre un exercice</h1>
+{% endblock %}
+
+{% block nav_links %}
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#navigation" data-tabs-active-classes="active" data-tabs-inactive-classes="text-green-500" role="tablist" >
+        <li class="me-2" role="presentation">
+            <button class="bg-cse text-white opacity-80 dark:hover:text-white hover:text-white inline-block py-4 px-8 rounded-t-lg hover:opacity-100 active" id="infos-tab" data-tabs-target="#infos" type="button" role="tab" aria-controls="infos" aria-selected="false">Informations Générales</button>
+        </li>
+        <li class="me-2" role="presentation">
+            <button class="bg-cse text-white opacity-80 dark:hover:text-white hover:text-white inline-block py-4 px-8 rounded-t-lg hover:opacity-100" id="sources-tab" data-tabs-target="#sources" type="button" role="tab" aria-controls="sources" aria-selected="false">Sources</button>
+        </li>
+        <li class="me-2" role="presentation">
+            <button class="bg-cse text-white opacity-80 dark:hover:text-white hover:text-white inline-block py-4 px-8 rounded-t-lg hover:opacity-100" id="files-tab" data-tabs-target="#files" type="button" role="tab" aria-controls="files" aria-selected="false">Fichiers</button>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    {% include 'exercise/submit/_form.html.twig' with {form} only %}
+
+{% endblock %}

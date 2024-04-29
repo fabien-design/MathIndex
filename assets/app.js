@@ -7,8 +7,15 @@
 
 import './styles/app.scss'
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉')
-
-
-
-
+import './js/DeleteExercice.js';
+import './js/AddElementIdToDeleteModal.js';
+import './js/SearchFunction.js';
+import './js/keywordsSplit.js';
+import './js/showRepeatPassword.js';
+import './js/durationToDatetime.js';
+import './js/DeleteAlertPopup.js';
+import './js/tabActiveOpacity.js';
+import './js/ChooseOriginOrProposedBy.js';
+import  './js/UpdateDropzone.js';
+import  './js/UpdateSkillsCourses.js';
+import  './js/NotifyErrorsSubmitExercise.js';

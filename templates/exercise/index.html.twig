@@ -3,14 +3,15 @@
 {% block title %}Mes exercices - {{project_name}}{% endblock %}
 
 {% block body %}
+{{ component('DeleteModal', { message: "Êtes-vous certain de vouloir supprimer cet exercice ?"}) }}
 <h1 class="text-cse font-bold text-3xl pb-6">Mes exercices</h1>
 <div class="bg-white rounded-lg p-8">
     <p class="pb-6">
        Vous pouvez modifier ou supprimer un de vos exercices.
     </p>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+    <div class="relative overflow-x-auto shadow-md rounded-xl overflow-hidden">
+        <table>
+            <thead class="tableHeader">
                 <tr>
                     <th scope="col" class="px-6 py-3">
                         Nom
@@ -35,7 +36,7 @@
             <tbody>
                 {% if exercises is not empty %}
                         {% for exercise in exercises %}
-                           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" data-element-id="{{ exercise.id }}">
                                 <th scope="row" class="px-6 py-4">
                                     {{ exercise.name }}
                                 </th>
@@ -48,25 +49,29 @@
                                 <td class="px-6 py-4">
                                     {{ exercise.thematic.name }}
                                 </td>
-                                <td class="px-6 py-4">
-                                    {{ exercise.exerciseFile.originalName }}
-                                    {{ exercise.correctionFile.originalName }}
+                                <td class="px-6 py-4 grid">
+                                    <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.exerciseFile.name) }}" download={{"Énoncé-" ~ exercise.name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                                    <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.correctionFile.name) }}" download={{"Correction-" ~ exercise.name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
                                 </td>
                                 <td class="px-6 py-4 text-right">
-                                    <div class="flex">
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a>
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Supprimer</a>
+                                    <div class="flex gap-4">
+                                        <a href="{{path('app_exercise_edit',{'id':exercise.id})}}" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2"><i class="fa-solid fa-pen-to-square"></i>Modifier</a>
+                                        <a href="#" class="open-delete-modal font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2" data-modal-target="popup-modal" data-modal-toggle="popup-modal" data-modal-element-id="{{ exercise.id }}" ><i class="fa-solid fa-trash-can"></i>Supprimer</a>
                                     </div>
                                 </td>
                             </tr>
                         {% endfor %}
                 {% else %}
-                    <tr><td colspan="6" class='text-center text-lg p-4'>Aucun exercice trouvé.</td></tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td colspan="6" class='text-center text-lg p-4'>Aucun exercice trouvé.</td>
+                    </tr>
                 {% endif %}
                 
             </tbody>
         </table>
     </div>
-
+<div class="flex justify-center h-16 items-center">
+    {{ knp_pagination_render(exercises) }}
+</div>
 </div>
 {% endblock %}

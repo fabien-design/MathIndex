@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Classroom;
+use App\Entity\Course;
 use App\Entity\Exercise;
 use App\Entity\Thematic;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,14 +19,13 @@ class ResearchType extends AbstractType
     {
         $builder
             ->add('keywords', TextType::class, [
-                    'label' => 'Mots-clés',
-                    'required' => false,
-                    'attr' => [
+                'label' => 'Mots-clés',
+                'required' => false,
+                'attr' => [
                     'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] ',
-                    ],
-                ]
-            )
-            ->add('thematics', EntityType::class, [
+                ],
+            ])
+            ->add('thematic', EntityType::class, [
                 'class' => Thematic::class,
                 'choice_label' => 'name',
                 'label' => 'Thématiques',
@@ -35,20 +35,30 @@ class ResearchType extends AbstractType
                     'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] ',
                 ],
             ])
-            ->add('levels', EntityType::class, [
+            ->add('classroom', EntityType::class, [
                 'class' => Classroom::class,
                 'choice_label' => 'name',
                 'label' => 'Niveaux',
                 'placeholder' => '---',
                 'required' => false,
                 'attr' => [
-                        'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px]',
-                    ],
+                    'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px]',
+                ],
+            ])
+            ->add('course', EntityType::class, [
+                'class' => Course::class,
+                'choice_label' => 'name',
+                'label' => 'Matière',
+                'placeholder' => '---',
+                'required' => false,
+                'attr' => [
+                    'class' => 'flex items-center justify-center rounded-lg w-full h-[56px] sm:min-w-[234px] ',
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Rechercher',
                 'attr' => [
-                'class' => 'flex items-center justify-center px-8 bg-gray-100 rounded-lg w-full h-[56px] text-[#757575] hover:bg-gray-200 transition-all hover:text-[#4D4D4D]',
+                    'class' => 'flex items-center justify-center px-8 bg-gray-100 rounded-lg w-full h-[56px] text-[#757575] hover:bg-gray-200 transition-all hover:text-[#4D4D4D]',
                 ],
             ])
         ;

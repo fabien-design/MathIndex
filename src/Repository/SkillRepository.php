@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Course;
 use App\Entity\Skill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,28 +22,22 @@ class SkillRepository extends ServiceEntityRepository
         parent::__construct($registry, Skill::class);
     }
 
-    //    /**
-    //     * @return Skill[] Returns an array of Skill objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('s.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findByName($value): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.name LIKE :val')
+            ->setParameter('val', '%'.$value.'%')
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Skill
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findSkillsByCourse(?Course $course): array
+    {
+        return $this->createQueryBuilder('s')
+            ->join('s.course', 'c')
+            ->where('c.name = :courseName')
+            ->setParameter('courseName', $course->getName())
+            ->getQuery()
+            ->getResult();
+    }
 }

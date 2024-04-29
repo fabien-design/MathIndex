@@ -21,19 +21,25 @@ class UserFixtures extends Fixture
             'firstname' => 'Super',
             'lastname' => 'Admin',
             'email' => 'admin@example.com',
-            'role' => 'ROLE_SUPER_ADMIN',
+            'role' => 'ROLE_ADMIN',
         ],
         [
             'firstname' => 'Laurent',
             'lastname' => 'Guyard',
             'email' => 'mathteacher@example.com',
-            'role' => 'ROLE_ADMIN',
+            'role' => 'ROLE_TEACHER',
         ],
         [
             'firstname' => 'Virginie',
             'lastname' => 'Hougron',
             'email' => 'frteacher@example.com',
-            'role' => 'ROLE_ADMIN',
+            'role' => 'ROLE_TEACHER',
+        ],
+        [
+            'firstname' => 'Jane',
+            'lastname' => 'Smith',
+            'email' => 'student@example.com',
+            'role' => '',
         ],
     ];
 

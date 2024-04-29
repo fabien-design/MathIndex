@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MathIndex | Connexion{% endblock %}
+{% block title %}MatIndex | Connexion{% endblock %}
 
 {% block body %}
 <h1 class="text-cse font-bold text-3xl pb-6">Connexion</h1>
@@ -10,30 +10,24 @@
         Si vous n'avez pas encore de compte, veuillez effectuer votre demande
         directement en envoyant un email à <a href="mailto:contact@lyceestvincent.net?subject=Création d'un compte MathIndex" class="text-blue-600">contact@lyceestvincent.net</a>.
     </p>
-    {# Afficher les éventuelles erreurs de validation du formulaire #}
-    {{ form_errors(form) }}
-
+    
     {# Début du formulaire #}
     {{ form_start(form, {'attr': {'class': 'max-w-sm'}}) }}
 
     {# Champ email #}
     <div class="mb-5">
-        {{ form_label(form.email) }}
-        {{ form_widget(form.email) }}
-        {{ form_errors(form.email) }}
+        {{ form_row(form.email) }}
     </div>
 
     {# Champ mot de passe #}
     <div class="mb-5">
-        {{ form_label(form.password) }}
-        {{ form_widget(form.password) }}
-        {{ form_errors(form.password) }}
+        {{ form_row(form.password) }}
     </div>
 
     {# Bouton de soumission #}
     <div class="flex items-center justify-between">
         {{ form_widget(form.submit) }}
-        <a href="#" class="text-gray-500">Mot de passe oublié ?</a>     
+        <a href="{{ path('app_reset_password') }}" class="text-gray-500">Mot de passe oublié ?</a>     
     </div>
 
     {# Fin du formulaire #}

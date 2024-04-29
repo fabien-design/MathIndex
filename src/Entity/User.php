@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -24,6 +25,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: false)]
     private ?string $firstname = null;
 
+    /**
+     * @ORM\Column(type="json")
+     */
     #[ORM\Column]
     private array $roles = [];
 
@@ -33,7 +37,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Exercise::class)]
+    #[Assert\NotBlank(groups: ['new'], message: 'Le mot de passe ne peut pas être vide.')]
+    private ?string $plainPassword = null;
+
+    #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Exercise::class, cascade: ['remove'])]
     private Collection $exercises;
 
     public function __construct()
@@ -74,8 +81,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // guarantee every user at least has ROLE_STUDENT
+        $roles[] = 'ROLE_STUDENT';
 
         return array_unique($roles);
     }
@@ -90,14 +97,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(?string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): static
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }
@@ -163,5 +182,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getFirstname().' '.$this->getLastname().' ('.$this->getEmail().')';
     }
 }

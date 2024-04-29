@@ -7,3 +7,43 @@ controllers:
 app_logout:
     path: /logout
     methods: GET
+
+app_api_exercise_delete:
+    path: /api/exercises/{id}/delete
+    controller: App\Controller\ExerciseController::delete
+    methods: ["POST"]
+
+app_administration_classroom_delete:
+    path: /api/administration/classroom/{id}/delete
+    controller: App\Controller\Administration\ClassroomController::delete
+    methods: ["POST"]
+
+app_administration_course_delete:
+    path: /api/administration/course/{id}/delete
+    controller: App\Controller\Administration\CourseController::delete
+    methods: ["POST"]
+
+app_administration_thematic_delete:
+    path: /api/administration/thematic/{id}/delete
+    controller: App\Controller\Administration\ThematicController::delete
+    methods: [ "POST" ]
+
+app_administration_skill_delete:
+    path: /api/administration/skill/{id}/delete
+    controller: App\Controller\Administration\SkillController::delete
+    methods: [ "POST" ]
+
+app_administration_origin_delete:
+    path: /api/administration/origin/{id}/delete
+    controller: App\Controller\Administration\OriginController::delete
+    methods: [ "POST" ]
+
+app_administration_exercise_delete:
+    path: /api/administration/exercise/{id}/delete
+    controller: App\Controller\Administration\ExerciseController::delete
+    methods: [ "POST" ]
+
+app_administration_user_delete:
+    path: /api/administration/user/{id}/delete
+    controller: App\Controller\Administration\UserController::delete
+    methods: [ "POST" ]
