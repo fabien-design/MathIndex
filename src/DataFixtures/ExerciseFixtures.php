@@ -123,7 +123,8 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
                 ->setProposedByLasName($exerciseInfo['proposedByLasName'])
                 ->setExerciseFile($this->getReference($exerciseInfo['file']))
                 ->setCorrectionFile($this->getReference($exerciseInfo['correction_file']))
-                ->setCreatedBy($this->getReference($exerciseInfo['created_by']));
+                ->setCreatedBy($this->getReference($exerciseInfo['created_by']))
+                ->setIsOnline(rand(0,1));
 
             $manager->persist($exercise);
             $this->addReference(self::REFERENCE_IDENTIFIER.$i, $exercise);

@@ -89,6 +89,14 @@ class Course
         return $this->exercises;
     }
 
+    /**
+     * @return Collection<int, Exercise>
+     */
+    public function getOnlineExercices(): Collection
+    {
+        return $this->exercises->filter(fn (Exercise $exercise) => $exercise->isIsOnline());
+    }
+
     public function addExercise(Exercise $exercise): static
     {
         if (!$this->exercises->contains($exercise)) {

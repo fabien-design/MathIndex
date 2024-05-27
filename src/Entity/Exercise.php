@@ -86,6 +86,9 @@ class Exercise
     #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private Collection $skills;
 
+    #[ORM\Column(options: ["default" => 0])]
+    private bool $isOnline = false;
+
     public function __construct()
     {
         $this->createdAt = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
@@ -341,6 +344,18 @@ class Exercise
     public function removeSkill(Skill $skill): static
     {
         $this->skills->removeElement($skill);
+
+        return $this;
+    }
+
+    public function isIsOnline(): ?bool
+    {
+        return $this->isOnline;
+    }
+
+    public function setIsOnline(bool $isOnline): static
+    {
+        $this->isOnline = $isOnline;
 
         return $this;
     }

@@ -19,7 +19,7 @@ class CourseController extends AbstractController
     #[Route('/matiere/{course}', name: 'app_course')]
     public function index(Course $course, Request $request, PaginatorInterface $paginator, CourseRepository $courseRepository): Response
     {
-        $exercises = $course->getExercises();
+        $exercises = $course->getOnlineExercices();
         // Convert the Collection to a regular array
         $exercisesArray = $exercises->toArray();
         // Reverse the array

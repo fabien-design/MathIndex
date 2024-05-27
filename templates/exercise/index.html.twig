@@ -31,6 +31,9 @@
                     <th scope="col" class="px-6 py-3">
                         Action
                     </th>
+                    <th scope="col" class="px-6 py-3">
+                        En ligne ?
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -58,6 +61,13 @@
                                         <a href="{{path('app_exercise_edit',{'id':exercise.id})}}" class="font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2"><i class="fa-solid fa-pen-to-square"></i>Modifier</a>
                                         <a href="#" class="open-delete-modal font-medium text-neutral-500 dark:text-neutral-300 hover:underline flex items-start gap-2" data-modal-target="popup-modal" data-modal-toggle="popup-modal" data-modal-element-id="{{ exercise.id }}" ><i class="fa-solid fa-trash-can"></i>Supprimer</a>
                                     </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    {% if exercise.isOnline %}
+                                        <span class="online">En ligne</span>
+                                    {% else %}
+                                        <span class="offline">Brouillon</span>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}

@@ -79,8 +79,10 @@
 
 											{% set nbOfNewExercises = 0 %}
 											{% for exercice in course.exercises %}
-												{% if exercice.createdAt|date("U") > date()|date_modify("- "~ new_exercises_days_offset ~" days")|date("U") %}
-													{% set nbOfNewExercises = nbOfNewExercises + 1 %}
+												{% if exercice.isOnline == 1 %}
+													{% if exercice.createdAt|date("U") > date()|date_modify("- "~ new_exercises_days_offset ~" days")|date("U") %}
+														{% set nbOfNewExercises = nbOfNewExercises + 1 %}
+													{% endif %}
 												{% endif %}
 											{% endfor %}
 											{% if nbOfNewExercises %}

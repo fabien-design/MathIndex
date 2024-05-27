@@ -33,6 +33,8 @@ class ExerciseRepository extends ServiceEntityRepository
         ->innerJoin('c.thematic', 'thematic')
         // ->innerJoin('c.origin', 'origin')
         ->innerJoin('c.createdBy', 'createdBy')
+        //where isOnline true
+        ->where('c.isOnline = 1')
         ->andWhere(
             $qb->expr()->orX(
                 $qb->expr()->like('c.name', ':search'),
@@ -62,9 +64,10 @@ class ExerciseRepository extends ServiceEntityRepository
         // Cas où tous les champs sont remplis
         $qb->join('ex.thematic', 't')
             ->join('ex.classroom', 'c')
-            ->join('ex.course', 'co');
+            ->join('ex.course', 'co')
+            ->where('ex.isOnline = 1');
         if (null != $thematic) {
-            $qb->where('t.name = :thematicName')
+            $qb->andWhere('t.name = :thematicName')
                 ->setParameter('thematicName', $thematic->getName());
         }
         if (null != $classroom) {

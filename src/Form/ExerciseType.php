@@ -8,8 +8,10 @@ use App\Entity\Exercise;
 use App\Entity\Origin;
 use App\Entity\Skill;
 use App\Entity\Thematic;
+use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -198,7 +200,14 @@ class ExerciseType extends AbstractType
             'label_attr' => [
                 'class' => 'dropzoneLabel',
             ],
-        ])
+            ])
+
+            ->add('isOnline', CheckboxType::class, [
+                'label' => 'En ligne ? :',
+                // 'constraints' => [
+                //     new NotBlank(['groups' => ['new']]),
+                // ],
+            ])
         ;
     }
 
