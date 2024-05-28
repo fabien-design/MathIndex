@@ -124,6 +124,11 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
                 ->setExerciseFile($this->getReference($exerciseInfo['file']))
                 ->setCorrectionFile($this->getReference($exerciseInfo['correction_file']))
                 ->setCreatedBy($this->getReference($exerciseInfo['created_by']));
+                if (random_int(0, 1) === 1) {
+                    $recommandationIndex = random_int(0, count(RecommandationFixtures::RECOMMANDATIONS) - 1);
+                    $exercise->setRecommandation($this->getReference(RecommandationFixtures::REFERENCE_IDENTIFIER . $recommandationIndex));
+                }
+    
 
             $manager->persist($exercise);
             $this->addReference(self::REFERENCE_IDENTIFIER.$i, $exercise);

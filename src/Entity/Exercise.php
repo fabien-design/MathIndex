@@ -86,6 +86,9 @@ class Exercise
     #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private Collection $skills;
 
+    #[ORM\ManyToOne(inversedBy: 'exercises')]
+    private ?Recommandation $recommandation = null;
+
     public function __construct()
     {
         $this->createdAt = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
@@ -341,6 +344,18 @@ class Exercise
     public function removeSkill(Skill $skill): static
     {
         $this->skills->removeElement($skill);
+
+        return $this;
+    }
+
+    public function getRecommandation(): ?Recommandation
+    {
+        return $this->recommandation;
+    }
+
+    public function setRecommandation(?Recommandation $recommandation): static
+    {
+        $this->recommandation = $recommandation;
 
         return $this;
     }

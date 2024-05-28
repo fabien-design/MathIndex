@@ -47,3 +47,8 @@ app_administration_user_delete:
     path: /api/administration/user/{id}/delete
     controller: App\Controller\Administration\UserController::delete
     methods: [ "POST" ]
+
+app_administration_recommandation_delete:
+    path: /api/administration/recommandation/{id}/delete
+    controller: App\Controller\Administration\RecommandationController::delete
+    methods: [ "POST" ]

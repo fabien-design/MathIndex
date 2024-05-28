@@ -6,6 +6,7 @@ use App\Entity\Classroom;
 use App\Entity\Course;
 use App\Entity\Exercise;
 use App\Entity\Origin;
+use App\Entity\Recommandation;
 use App\Entity\Skill;
 use App\Entity\Thematic;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -115,6 +116,13 @@ class ExerciseType extends AbstractType
             'label' => 'Durée (en heure) :',
             'required' => false,
             'html5' => true,
+        ])
+        ->add('recommandation', EntityType::class, [
+            'label' => 'Recommandation :',
+            'class' => Recommandation::class,
+            'choice_label' => 'name',
+            'placeholder' => 'Choisir une recommandation',
+            'required' => false,
         ])
         // Tab 2
         ->add('origin', EntityType::class, [

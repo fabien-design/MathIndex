@@ -23,6 +23,9 @@
                     Thématique
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Thématique
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Difficulté
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -48,6 +51,12 @@
                             </td>
                             <td>
                                 {{ newExercises[i].thematic.name }}
+                            </td>
+                            <td>
+                            {% if newExercises[i].recommandation is not null  %}
+                                
+                                {{ newExercises[i].recommandation.name  }}
+                            {% endif %}
                             </td>
                             <td>
                                 Niveau&nbsp;{{ newExercises[i].difficulty }}
@@ -98,6 +107,9 @@
                     Thématique
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Recommandation
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Difficulté
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -124,6 +136,12 @@
                             <td>
                                 {{ exercise.thematic.name }}
                             </td>
+                            <td>
+                                {% if exercise.recommandation is not null %}
+                                    {{ exercise.recommandation.name }}
+                                {% endif %}
+                            </td>
+
                             <td>
                                 Niveau&nbsp;{{ exercise.difficulty }}
                             </td>

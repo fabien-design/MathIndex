@@ -26,6 +26,9 @@
                         Thématique
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Recommandation
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Fichiers
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -48,6 +51,11 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ exercise.thematic.name }}
+                                </td>
+                                <td>
+                                    {% if exercise.recommandation is not empty %}
+                                        {{ exercise.recommandation.name }}
+                                    {% endif %}
                                 </td>
                                 <td class="px-6 py-4 grid">
                                     <a class="flex gap-2 items-center justify-start hover:underline" href="{{  asset('images/file/' ~ exercise.exerciseFile.name) }}" download={{"Énoncé-" ~ exercise.name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
