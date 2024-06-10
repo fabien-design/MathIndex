@@ -2,6 +2,8 @@
 
 Projet de fin d'année BTS2 - Symfony
 
+git clone https://github.com/fabien-design/MathIndex.git
+
 ## Identifiants
 
 Pour accéder à différentes parties de l'application, voici les identifiants par défaut&nbsp;:
