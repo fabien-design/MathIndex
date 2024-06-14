@@ -2,7 +2,9 @@
 
 Projet de fin d'année BTS2 - Symfony
 
+```bash
 git clone https://github.com/fabien-design/MathIndex.git
+```
 
 ## Identifiants
 
