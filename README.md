@@ -23,7 +23,7 @@ Pour simplifier la gestion du projet, voici quelques commandes Makefile&nbsp;:
 
 | Commande               | Utilisation                                                                                                      |
 |------------------------|------------------------------------------------------------------------------------------------------------------|
-| `make install`         | Installe toutes les dépendances, configure la base de données, exécute les migrations et charge les fixtures.    |
+| `make install`         | Installe toutes les dépendances, configure la base de données, exécute les migrations, charge les fixtures et démarre le projet.    |
 | `make dcu`             | Arrête, supprime et relance les conteneurs Docker afin de (re)démarrer le projet.                                |
 | `make fixtures`        | Charge les fixtures dans la base de données.                                                                     |
 | `make bash`            | Ouvre un terminal bash dans le conteneur Symfony.                                                                |
