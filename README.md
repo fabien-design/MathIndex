@@ -97,13 +97,13 @@ npm run watch
 ```bash
 symfony console doctrine:database:create
 symfony console doctrine:schema:update --force
-symfony console doctrine:fixtures:load
+symfony console doctrine:fixtures:load -y
 ```
 OR
 ```bash
 php bin/console doctrine:database:create
 php bin/console doctrine:schema:update --force
-php bin/console doctrine:fixtures:load
+php bin/console doctrine:fixtures:load -y
 ```
 
 Avec ces instructions, vous devriez être en mesure de démarrer rapidement le projet, que ce soit avec Docker ou sans.
