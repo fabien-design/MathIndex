@@ -81,6 +81,10 @@ Si vous préférez ne pas utiliser Docker, vous pouvez toujours configurer votre
 ```bash
 composer install
 ```
+OU
+```bash
+php composer.phar install
+```
 
 2. Compilez les fichiers Sass en exécutant&nbsp;:
 ```bash
