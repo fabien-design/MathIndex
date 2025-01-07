@@ -5,7 +5,7 @@ Projet de fin d'année BTS2 - Symfony
 ```bash
 git clone https://github.com/fabien-design/MathIndex.git
 ```
-[Url en ligne]([https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04](https://mathindex.lyceestvincent.fr))
+[Url en ligne](https://mathindex.lyceestvincent.fr)
 
 ## Identifiants
 
