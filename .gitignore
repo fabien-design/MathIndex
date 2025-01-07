@@ -38,3 +38,5 @@ yarn-error.log
 
 public/images/file
 .idea
+.env
+composer.phar

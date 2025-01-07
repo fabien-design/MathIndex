@@ -60,12 +60,23 @@
                 <td>{{ exercise.origin ? exercise.originInformation : exercise.proposedByFirstName }}</td>
                 <td>{{ exercise.createdAt ? exercise.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td class="px-6 py-4">
+                    {% set exerciseFileUrl = asset('images/file/' ~ exercise.exerciseFile.name) %}
+                    {% set correctionFileUrl = asset('images/file/' ~ exercise.correctionFile.name) %}
+                    {% set exerciseFileIsPdf = exercise.exerciseFile.name|lower ends with '.pdf' %}
+                    {% set correctionFileIsPdf = exercise.correctionFile.name|lower ends with '.pdf' %}
+
                     <a class="flex gap-2 items-center justify-start hover:underline"
-                        href="{{  asset('images/file/' ~ exercise.exerciseFile.name) }}" download={{"Énoncé-" ~
-                        exercise.name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Énoncé</a>
+                    href="{{ exerciseFileUrl }}"
+                    {% if not exerciseFileIsPdf %} download="{{ 'Énoncé-' ~ exercise.name|slug }}" {% else %} target="_blank" {% endif %}>
+                        <i class="fa-solid fa-file-arrow-down"></i>Énoncé
+                    </a>
+
                     <a class="flex gap-2 items-center justify-start hover:underline"
-                        href="{{  asset('images/file/' ~ exercise.correctionFile.name) }}" download={{"Correction-" ~
-                        exercise.name|slug }}><i class="fa-solid fa-file-arrow-down"></i>Correction</a>
+                    href="{{ correctionFileUrl }}"
+                    {% if not correctionFileIsPdf %} download="{{ 'Correction-' ~ exercise.name|slug }}" {% else %} target="_blank" {% endif %}>
+                        <i class="fa-solid fa-file-arrow-down"></i>Correction
+                    </a>
+
                 </td>
                 <td class="px-6 py-4 text-right">
                     <div class="flex gap-4">

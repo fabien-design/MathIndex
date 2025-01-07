@@ -10,6 +10,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - db-data:/var/lib/mysql
+    networks:
+      - default
     
   symfony:
     image: docker.io/bitnami/symfony:7.0

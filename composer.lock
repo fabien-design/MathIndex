@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6792456dacd7d74eaa958a8a49e08d4d",
+    "content-hash": "3173f747201a1cf2b58c98f8e4d816b8",
     "packages": [
         {
             "name": "composer/semver",
@@ -7068,16 +7068,16 @@
         },
         {
             "name": "symfony/ux-dropzone",
-            "version": "v2.16.0",
+            "version": "v2.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-dropzone.git",
-                "reference": "fb7b5336a51b99b57f116a5a66cf4e6962839e28"
+                "reference": "b801dd87ad5182c1db5d1ca2b6ed6307220596bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-dropzone/zipball/fb7b5336a51b99b57f116a5a66cf4e6962839e28",
-                "reference": "fb7b5336a51b99b57f116a5a66cf4e6962839e28",
+                "url": "https://api.github.com/repos/symfony/ux-dropzone/zipball/b801dd87ad5182c1db5d1ca2b6ed6307220596bb",
+                "reference": "b801dd87ad5182c1db5d1ca2b6ed6307220596bb",
                 "shasum": ""
             },
             "require": {
@@ -7127,7 +7127,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-dropzone/tree/v2.16.0"
+                "source": "https://github.com/symfony/ux-dropzone/tree/v2.17.0"
             },
             "funding": [
                 {
@@ -7143,7 +7143,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-14T07:27:47+00:00"
+            "time": "2024-04-19T06:36:45+00:00"
         },
         {
             "name": "symfony/ux-turbo",

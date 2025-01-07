@@ -36,7 +36,7 @@ gp:
 	git pull && \
 	bin/console c:cl && \
 	npm run build && \
-	cd .. && chmod -R 777 PhotoGodard
+	cd .. && chmod -R 777 MathIndex
 
 dcu:
 	$(COMPOSE) stop  && \
