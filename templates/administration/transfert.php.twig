@@ -1,0 +1,16 @@
+{# templates/administration/transfert.php.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Transférer un fichier CSV</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit">Transférer</button>
+    {{ form_end(form) }}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endblock %}
